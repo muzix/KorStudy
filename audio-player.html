@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Korean Audio Player</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans KR', Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.5;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    
+    h1 {
+      color: #5782BB;
+      margin-top: 0;
+      border-bottom: 2px solid #5782BB;
+      padding-bottom: 10px;
+    }
+    
+    .input-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 18px;
+      font-family: 'Noto Sans KR', Arial, sans-serif;
+    }
+    
+    button {
+      background-color: #5782BB;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-right: 10px;
+    }
+    
+    button:hover {
+      background-color: #476a9e;
+    }
+    
+    .audio-wrapper {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f5f9ff;
+      border-radius: 4px;
+      border-left: 3px solid #5782BB;
+    }
+    
+    audio {
+      width: 100%;
+      margin-top: 10px;
+    }
+    
+    .history {
+      margin-top: 30px;
+    }
+    
+    .history-item {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .korean-text {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    
+    .history-controls {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .note {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #666;
+      background-color: #fff9c4;
+      padding: 10px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Korean Audio Player</h1>
+    
+    <p>Use this tool to hear how Korean words and phrases are pronounced.</p>
+    
+    <div class="input-group">
+      <label for="korean-text">Enter Korean text:</label>
+      <input type="text" id="korean-text" placeholder="안녕하세요" value="안녕하세요">
+    </div>
+    
+    <button id="play-button">Play Audio</button>
+    <button id="add-button">Add to History</button>
+    
+    <div class="audio-wrapper">
+      <div class="korean-text" id="current-text">안녕하세요</div>
+      <audio controls id="audio-player" src="">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+    
+    <div class="note">
+      <strong>Note:</strong> This page uses Google Translate's text-to-speech API directly. If you're having audio issues in the main app, you can use this page as an alternative.
+    </div>
+    
+    <div class="history">
+      <h2>Recent Words</h2>
+      <div id="history-list">
+        <!-- History items will appear here -->
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Function to get audio URL for Korean text
+    function getAudioUrl(text) {
+      return `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
+    }
+    
+    // Function to play audio
+    function playAudio(text) {
+      const audioPlayer = document.getElementById('audio-player');
+      const currentText = document.getElementById('current-text');
+      
+      currentText.textContent = text;
+      audioPlayer.src = getAudioUrl(text);
+      audioPlayer.load();
+      
+      // Play after a short delay to ensure loading
+      setTimeout(() => {
+        audioPlayer.play()
+          .catch(error => {
+            console.error('Error playing audio:', error);
+            alert('Error playing audio. Please try clicking the play button on the audio player directly.');
+          });
+      }, 300);
+    }
+    
+    // Function to add a word to history
+    function addToHistory(text) {
+      if (!text.trim()) return;
+      
+      const historyList = document.getElementById('history-list');
+      
+      // Create history item
+      const item = document.createElement('div');
+      item.className = 'history-item';
+      
+      const textEl = document.createElement('div');
+      textEl.className = 'korean-text';
+      textEl.textContent = text;
+      
+      const controls = document.createElement('div');
+      controls.className = 'history-controls';
+      
+      const playBtn = document.createElement('button');
+      playBtn.textContent = 'Play';
+      playBtn.addEventListener('click', () => playAudio(text));
+      
+      controls.appendChild(playBtn);
+      item.appendChild(textEl);
+      item.appendChild(controls);
+      
+      // Add to top of history
+      historyList.insertBefore(item, historyList.firstChild);
+      
+      // Save to localStorage
+      saveHistory();
+    }
+    
+    // Save history to localStorage
+    function saveHistory() {
+      const historyItems = document.querySelectorAll('.history-item .korean-text');
+      const history = Array.from(historyItems).map(item => item.textContent);
+      localStorage.setItem('koreanAudioHistory', JSON.stringify(history.slice(0, 10)));
+    }
+    
+    // Load history from localStorage
+    function loadHistory() {
+      const historyData = localStorage.getItem('koreanAudioHistory');
+      if (historyData) {
+        const history = JSON.parse(historyData);
+        history.forEach(text => addToHistory(text));
+      }
+    }
+    
+    // Set up event listeners
+    document.getElementById('play-button').addEventListener('click', () => {
+      const text = document.getElementById('korean-text').value;
+      playAudio(text);
+    });
+    
+    document.getElementById('add-button').addEventListener('click', () => {
+      const text = document.getElementById('korean-text').value;
+      addToHistory(text);
+    });
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load history from localStorage
+      loadHistory();
+      
+      // Set up initial audio
+      const audioPlayer = document.getElementById('audio-player');
+      audioPlayer.src = getAudioUrl('안녕하세요');
+      
+      // Add common phrases if history is empty
+      const historyList = document.getElementById('history-list');
+      if (!historyList.firstChild) {
+        ['안녕하세요', '감사합니다', '네', '아니요', '주세요'].forEach(phrase => {
+          addToHistory(phrase);
+        });
+      }
+    });
+  </script>
+</body>
+</html> 
