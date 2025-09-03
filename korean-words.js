@@ -1,1798 +1,4 @@
-// Comprehensive Korean dictionary for everyday use
 const koreanDictionary = [
-  // Greetings and Basic Expressions
-  {
-    korean: "안녕하세요",
-    pronunciation: "annyeonghaseyo",
-    translation: "Hello (formal)",
-    example: "안녕하세요, 만나서 반갑습니다. (Hello, nice to meet you.)",
-    categories: ["Greetings", "Common"]
-  },
-  {
-    korean: "안녕",
-    pronunciation: "annyeong",
-    translation: "Hi/Hello (casual)",
-    example: "안녕, 잘 지냈어? (Hi, how have you been?)",
-    categories: ["Greetings", "Common"]
-  },
-  {
-    korean: "감사합니다",
-    pronunciation: "gamsahamnida",
-    translation: "Thank you (formal)",
-    example: "도와주셔서 감사합니다. (Thank you for helping me.)",
-    categories: ["Greetings", "Common"]
-  },
-  {
-    korean: "고마워요",
-    pronunciation: "gomawoyo",
-    translation: "Thank you (casual)",
-    example: "선물 고마워요. (Thank you for the gift.)",
-    categories: ["Greetings", "Common"]
-  },
-  {
-    korean: "미안합니다",
-    pronunciation: "mianhamnida",
-    translation: "I'm sorry (formal)",
-    example: "늦어서 미안합니다. (I'm sorry for being late.)",
-    categories: ["Greetings", "Common"]
-  },
-  {
-    korean: "미안해요",
-    pronunciation: "mianhaeyo",
-    translation: "I'm sorry (casual)",
-    example: "실수해서 미안해요. (I'm sorry for the mistake.)",
-    categories: ["Greetings", "Common"]
-  },
-  {
-    korean: "괜찮아요",
-    pronunciation: "gwaenchanayo",
-    translation: "It's okay",
-    example: "걱정하지 마세요, 괜찮아요. (Don't worry, it's okay.)",
-    categories: ["Common", "Responses"]
-  },
-  {
-    korean: "안녕히 가세요",
-    pronunciation: "annyeonghi gaseyo",
-    translation: "Goodbye (to someone leaving)",
-    example: "내일 봐요. 안녕히 가세요. (See you tomorrow. Goodbye.)",
-    categories: ["Greetings", "Common"]
-  },
-  {
-    korean: "안녕히 계세요",
-    pronunciation: "annyeonghi gyeseyo",
-    translation: "Goodbye (to someone staying)",
-    example: "먼저 갈게요. 안녕히 계세요. (I'll go first. Goodbye.)",
-    categories: ["Greetings", "Common"]
-  },
-  {
-    korean: "만나서 반갑습니다",
-    pronunciation: "mannaseo bangapseumnida",
-    translation: "Nice to meet you (formal)",
-    example: "처음 뵙겠습니다. 만나서 반갑습니다. (It's the first time meeting you. Nice to meet you.)",
-    categories: ["Greetings", "Common"]
-  },
-  
-  // Basic Responses
-  {
-    korean: "네",
-    pronunciation: "ne",
-    translation: "Yes",
-    example: "네, 알겠습니다. (Yes, I understand.)",
-    categories: ["Common", "Responses"]
-  },
-  {
-    korean: "아니요",
-    pronunciation: "aniyo",
-    translation: "No",
-    example: "아니요, 괜찮아요. (No, it's okay.)",
-    categories: ["Common", "Responses"]
-  },
-  {
-    korean: "잘 모르겠어요",
-    pronunciation: "jal moreugesseoyo",
-    translation: "I don't know",
-    example: "죄송하지만 잘 모르겠어요. (I'm sorry, but I don't know.)",
-    categories: ["Common", "Responses"]
-  },
-  {
-    korean: "이해해요",
-    pronunciation: "ihaehaeyo",
-    translation: "I understand",
-    example: "설명해 주셔서 이해해요. (I understand thanks to your explanation.)",
-    categories: ["Common", "Responses"]
-  },
-  
-  // Questions and Phrases
-  {
-    korean: "어디예요?",
-    pronunciation: "eodiyeyo?",
-    translation: "Where is it?",
-    example: "화장실이 어디예요? (Where is the bathroom?)",
-    categories: ["Questions", "Common"]
-  },
-  {
-    korean: "얼마예요?",
-    pronunciation: "eolmayeyo?",
-    translation: "How much is it?",
-    example: "이것은 얼마예요? (How much is this?)",
-    categories: ["Shopping", "Questions"]
-  },
-  {
-    korean: "이름이 뭐예요?",
-    pronunciation: "ireumi mwoyeyo?",
-    translation: "What is your name?",
-    example: "당신의 이름이 뭐예요? (What is your name?)",
-    categories: ["Questions", "Personal"]
-  },
-  {
-    korean: "몇 시예요?",
-    pronunciation: "myeot siyeyo?",
-    translation: "What time is it?",
-    example: "지금 몇 시예요? (What time is it now?)",
-    categories: ["Questions", "Time"]
-  },
-  
-  // Personal Information
-  {
-    korean: "이름",
-    pronunciation: "ireum",
-    translation: "Name",
-    example: "제 이름은 민수입니다. (My name is Minsu.)",
-    categories: ["Personal", "Common"]
-  },
-  {
-    korean: "나이",
-    pronunciation: "nai",
-    translation: "Age",
-    example: "제 나이는 25살입니다. (I am 25 years old.)",
-    categories: ["Personal"]
-  },
-  {
-    korean: "직업",
-    pronunciation: "jigeop",
-    translation: "Job/Occupation",
-    example: "제 직업은 선생님입니다. (My job is teacher.)",
-    categories: ["Personal"]
-  },
-  {
-    korean: "취미",
-    pronunciation: "chwimi",
-    translation: "Hobby",
-    example: "제 취미는 요리예요. (My hobby is cooking.)",
-    categories: ["Personal", "Free time"]
-  },
-  
-  // Places
-  {
-    korean: "집",
-    pronunciation: "jip",
-    translation: "House/Home",
-    example: "집에 가고 싶어요. (I want to go home.)",
-    categories: ["Places", "Common"]
-  },
-  {
-    korean: "학교",
-    pronunciation: "hakgyo",
-    translation: "School",
-    example: "학교에 가요. (I'm going to school.)",
-    categories: ["Places", "Education"]
-  },
-  {
-    korean: "회사",
-    pronunciation: "hoesa",
-    translation: "Company/Office",
-    example: "회사에서 일해요. (I work at a company.)",
-    categories: ["Places", "Work"]
-  },
-  {
-    korean: "식당",
-    pronunciation: "sikdang",
-    translation: "Restaurant",
-    example: "식당에서 점심을 먹어요. (I eat lunch at a restaurant.)",
-    categories: ["Places", "Food"]
-  },
-  {
-    korean: "카페",
-    pronunciation: "kape",
-    translation: "Café",
-    example: "카페에서 커피를 마셔요. (I drink coffee at a café.)",
-    categories: ["Places", "Food"]
-  },
-  {
-    korean: "공원",
-    pronunciation: "gongwon",
-    translation: "Park",
-    example: "주말에 공원에 가요. (I go to the park on weekends.)",
-    categories: ["Places", "Free time"]
-  },
-  {
-    korean: "화장실",
-    pronunciation: "hwajangsil",
-    translation: "Bathroom/Toilet",
-    example: "화장실이 어디예요? (Where is the bathroom?)",
-    categories: ["Places", "Common"]
-  },
-  {
-    korean: "병원",
-    pronunciation: "byeongwon",
-    translation: "Hospital",
-    example: "병원에 가야 해요. (I need to go to the hospital.)",
-    categories: ["Places", "Health"]
-  },
-  {
-    korean: "은행",
-    pronunciation: "eunhaeng",
-    translation: "Bank",
-    example: "은행에서 돈을 찾았어요. (I withdrew money from the bank.)",
-    categories: ["Places", "Finances"]
-  },
-  {
-    korean: "공항",
-    pronunciation: "gonghang",
-    translation: "Airport",
-    example: "공항에 갔어요. (I went to the airport.)",
-    categories: ["Places", "Travel"]
-  },
-  
-  // Food and Drink
-  {
-    korean: "물",
-    pronunciation: "mul",
-    translation: "Water",
-    example: "물 한 잔 주세요. (Please give me a glass of water.)",
-    categories: ["Food", "Common"]
-  },
-  {
-    korean: "밥",
-    pronunciation: "bap",
-    translation: "Rice/Meal",
-    example: "밥 먹었어요? (Have you eaten?)",
-    categories: ["Food", "Common"]
-  },
-  {
-    korean: "음식",
-    pronunciation: "eumsik",
-    translation: "Food",
-    example: "한국 음식을 좋아해요. (I like Korean food.)",
-    categories: ["Food"]
-  },
-  {
-    korean: "커피",
-    pronunciation: "keopi",
-    translation: "Coffee",
-    example: "아침에 커피를 마셔요. (I drink coffee in the morning.)",
-    categories: ["Food", "Drinks"]
-  },
-  {
-    korean: "맥주",
-    pronunciation: "maekju",
-    translation: "Beer",
-    example: "맥주 한 병 주세요. (Please give me one bottle of beer.)",
-    categories: ["Food", "Drinks"]
-  },
-  {
-    korean: "맛있어요",
-    pronunciation: "masisseoyo",
-    translation: "It's delicious",
-    example: "이 음식은 정말 맛있어요. (This food is really delicious.)",
-    categories: ["Food", "Expressions"]
-  },
-  {
-    korean: "매워요",
-    pronunciation: "maewoyo",
-    translation: "It's spicy",
-    example: "이 김치는 매워요. (This kimchi is spicy.)",
-    categories: ["Food", "Descriptions"]
-  },
-  
-  // Family
-  {
-    korean: "가족",
-    pronunciation: "gajok",
-    translation: "Family",
-    example: "제 가족은 4명이에요. (My family has 4 people.)",
-    categories: ["Family"]
-  },
-  {
-    korean: "어머니",
-    pronunciation: "eomeoni",
-    translation: "Mother",
-    example: "어머니는 요리를 잘해요. (My mother cooks well.)",
-    categories: ["Family"]
-  },
-  {
-    korean: "아버지",
-    pronunciation: "abeoji",
-    translation: "Father",
-    example: "아버지는 회사에서 일해요. (My father works at a company.)",
-    categories: ["Family"]
-  },
-  {
-    korean: "남동생",
-    pronunciation: "namdongsaeng",
-    translation: "Younger brother",
-    example: "남동생은 학생이에요. (My younger brother is a student.)",
-    categories: ["Family"]
-  },
-  {
-    korean: "여동생",
-    pronunciation: "yeodongsaeng",
-    translation: "Younger sister",
-    example: "여동생은 의사예요. (My younger sister is a doctor.)",
-    categories: ["Family"]
-  },
-  
-  // Time Expressions
-  {
-    korean: "오늘",
-    pronunciation: "oneul",
-    translation: "Today",
-    example: "오늘 날씨가 좋아요. (Today's weather is good.)",
-    categories: ["Time", "Common"]
-  },
-  {
-    korean: "내일",
-    pronunciation: "naeil",
-    translation: "Tomorrow",
-    example: "내일 만나요. (Let's meet tomorrow.)",
-    categories: ["Time", "Common"]
-  },
-  {
-    korean: "어제",
-    pronunciation: "eoje",
-    translation: "Yesterday",
-    example: "어제 비가 왔어요. (It rained yesterday.)",
-    categories: ["Time", "Common"]
-  },
-  {
-    korean: "지금",
-    pronunciation: "jigeum",
-    translation: "Now",
-    example: "지금 몇 시예요? (What time is it now?)",
-    categories: ["Time", "Common"]
-  },
-  {
-    korean: "아침",
-    pronunciation: "achim",
-    translation: "Morning",
-    example: "아침에 운동해요. (I exercise in the morning.)",
-    categories: ["Time"]
-  },
-  {
-    korean: "점심",
-    pronunciation: "jeomsim",
-    translation: "Lunch/Noon",
-    example: "점심을 먹었어요? (Did you eat lunch?)",
-    categories: ["Time", "Food"]
-  },
-  {
-    korean: "저녁",
-    pronunciation: "jeonyeok",
-    translation: "Evening/Dinner",
-    example: "저녁에 뭐 먹을까요? (What should we eat for dinner?)",
-    categories: ["Time", "Food"]
-  },
-  
-  // Weather
-  {
-    korean: "날씨",
-    pronunciation: "nalssi",
-    translation: "Weather",
-    example: "오늘 날씨가 어때요? (How is the weather today?)",
-    categories: ["Weather", "Common"]
-  },
-  {
-    korean: "비",
-    pronunciation: "bi",
-    translation: "Rain",
-    example: "비가 와요. (It's raining.)",
-    categories: ["Weather"]
-  },
-  {
-    korean: "눈",
-    pronunciation: "nun",
-    translation: "Snow",
-    example: "눈이 와요. (It's snowing.)",
-    categories: ["Weather"]
-  },
-  {
-    korean: "더워요",
-    pronunciation: "deowoyo",
-    translation: "It's hot",
-    example: "오늘 정말 더워요. (It's really hot today.)",
-    categories: ["Weather", "Descriptions"]
-  },
-  {
-    korean: "추워요",
-    pronunciation: "chuwoyo",
-    translation: "It's cold",
-    example: "밖에 추워요. (It's cold outside.)",
-    categories: ["Weather", "Descriptions"]
-  },
-  
-  // Common Verbs
-  {
-    korean: "하다",
-    pronunciation: "hada",
-    translation: "To do",
-    example: "운동을 하다. (To exercise.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "가다",
-    pronunciation: "gada",
-    translation: "To go",
-    example: "학교에 가다. (To go to school.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "오다",
-    pronunciation: "oda",
-    translation: "To come",
-    example: "집에 오다. (To come home.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "먹다",
-    pronunciation: "meokda",
-    translation: "To eat",
-    example: "점심을 먹다. (To eat lunch.)",
-    categories: ["Verbs", "Common", "Food"]
-  },
-  {
-    korean: "마시다",
-    pronunciation: "masida",
-    translation: "To drink",
-    example: "물을 마시다. (To drink water.)",
-    categories: ["Verbs", "Common", "Food"]
-  },
-  {
-    korean: "자다",
-    pronunciation: "jada",
-    translation: "To sleep",
-    example: "밤에 자다. (To sleep at night.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "보다",
-    pronunciation: "boda",
-    translation: "To see/watch",
-    example: "영화를 보다. (To watch a movie.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "듣다",
-    pronunciation: "deutda",
-    translation: "To listen/hear",
-    example: "음악을 듣다. (To listen to music.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "읽다",
-    pronunciation: "ikda",
-    translation: "To read",
-    example: "책을 읽다. (To read a book.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "쓰다",
-    pronunciation: "sseuda",
-    translation: "To write",
-    example: "편지를 쓰다. (To write a letter.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "말하다",
-    pronunciation: "malhada",
-    translation: "To speak/say",
-    example: "한국어로 말하다. (To speak in Korean.)",
-    categories: ["Verbs", "Common"]
-  },
-  
-  // Common Adjectives
-  {
-    korean: "좋다",
-    pronunciation: "jota",
-    translation: "To be good",
-    example: "날씨가 좋다. (The weather is good.)",
-    categories: ["Adjectives", "Common"]
-  },
-  {
-    korean: "나쁘다",
-    pronunciation: "nappeuda",
-    translation: "To be bad",
-    example: "기분이 나쁘다. (To feel bad.)",
-    categories: ["Adjectives", "Common"]
-  },
-  {
-    korean: "크다",
-    pronunciation: "keuda",
-    translation: "To be big",
-    example: "집이 크다. (The house is big.)",
-    categories: ["Adjectives", "Common"]
-  },
-  {
-    korean: "작다",
-    pronunciation: "jakda",
-    translation: "To be small",
-    example: "가방이 작다. (The bag is small.)",
-    categories: ["Adjectives", "Common"]
-  },
-  {
-    korean: "많다",
-    pronunciation: "manta",
-    translation: "To be many/much",
-    example: "사람이 많다. (There are many people.)",
-    categories: ["Adjectives", "Common"]
-  },
-  {
-    korean: "적다",
-    pronunciation: "jeokda",
-    translation: "To be few/little",
-    example: "시간이 적다. (There is little time.)",
-    categories: ["Adjectives", "Common"]
-  },
-  {
-    korean: "예쁘다",
-    pronunciation: "yeppeuda",
-    translation: "To be pretty",
-    example: "꽃이 예쁘다. (The flower is pretty.)",
-    categories: ["Adjectives", "Descriptions"]
-  },
-  {
-    korean: "맛있다",
-    pronunciation: "masitda",
-    translation: "To be delicious",
-    example: "음식이 맛있다. (The food is delicious.)",
-    categories: ["Adjectives", "Food"]
-  },
-  {
-    korean: "맛없다",
-    pronunciation: "maseomneunda",
-    translation: "To be not tasty",
-    example: "이 음식은 맛없다. (This food is not tasty.)",
-    categories: ["Adjectives", "Food"]
-  },
-  {
-    korean: "재미있다",
-    pronunciation: "jaemiitda",
-    translation: "To be interesting/fun",
-    example: "영화가 재미있다. (The movie is interesting.)",
-    categories: ["Adjectives", "Common"]
-  },
-  {
-    korean: "재미없다",
-    pronunciation: "jaemieopda",
-    translation: "To be boring",
-    example: "이 책은 재미없다. (This book is boring.)",
-    categories: ["Adjectives", "Common"]
-  },
-  
-  // Numbers and Counters
-  {
-    korean: "하나",
-    pronunciation: "hana",
-    translation: "One",
-    example: "사과 하나 주세요. (Please give me one apple.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "둘",
-    pronunciation: "dul",
-    translation: "Two",
-    example: "책 둘 샀어요. (I bought two books.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "셋",
-    pronunciation: "set",
-    translation: "Three",
-    example: "친구 셋이 왔어요. (Three friends came.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "넷",
-    pronunciation: "net",
-    translation: "Four",
-    example: "사과 넷 주세요. (Please give me four apples.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "다섯",
-    pronunciation: "daseot",
-    translation: "Five",
-    example: "다섯 시에 만나요. (Let's meet at five o'clock.)",
-    categories: ["Numbers"]
-  },
-  
-  // Add more numbers
-  {
-    korean: "여섯",
-    pronunciation: "yeoseot",
-    translation: "Six",
-    example: "여섯 번 했어요. (I did it six times.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "일곱",
-    pronunciation: "ilgop",
-    translation: "Seven",
-    example: "일곱 시에 일어났어요. (I woke up at seven o'clock.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "여덟",
-    pronunciation: "yeodeol",
-    translation: "Eight",
-    example: "여덟 개의 의자가 있어요. (There are eight chairs.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "아홉",
-    pronunciation: "ahop",
-    translation: "Nine",
-    example: "아홉 명이 왔어요. (Nine people came.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "열",
-    pronunciation: "yeol",
-    translation: "Ten",
-    example: "열 시간 동안 공부했어요. (I studied for ten hours.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "스물",
-    pronunciation: "seumul",
-    translation: "Twenty",
-    example: "스물 살이에요. (I'm twenty years old.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "서른",
-    pronunciation: "seoreun",
-    translation: "Thirty",
-    example: "서른 명이 참석했어요. (Thirty people attended.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "마흔",
-    pronunciation: "maheun",
-    translation: "Forty",
-    example: "마흔 살이에요. (I'm forty years old.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "쉰",
-    pronunciation: "swin",
-    translation: "Fifty",
-    example: "쉰 개월 있어요. (There are fifty items.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "예순",
-    pronunciation: "yesun",
-    translation: "Sixty",
-    example: "할머니는 예순 살이에요. (My grandmother is sixty years old.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "일흔",
-    pronunciation: "ilheun",
-    translation: "Seventy",
-    example: "할아버지는 일흔 살이세요. (My grandfather is seventy years old.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "여든",
-    pronunciation: "yeodeun",
-    translation: "Eighty",
-    example: "그분은 여든 살이에요. (That person is eighty years old.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "아흔",
-    pronunciation: "aheun",
-    translation: "Ninety",
-    example: "아흔 살까지 살고 싶어요. (I want to live until ninety years old.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "백",
-    pronunciation: "baek",
-    translation: "One hundred",
-    example: "백 명이 넘었어요. (It exceeded one hundred people.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "천",
-    pronunciation: "cheon",
-    translation: "One thousand",
-    example: "천 원이에요. (It's one thousand won.)",
-    categories: ["Numbers", "Shopping"]
-  },
-  {
-    korean: "만",
-    pronunciation: "man",
-    translation: "Ten thousand",
-    example: "만 원 주세요. (Please give me 10,000 won.)",
-    categories: ["Numbers", "Shopping"]
-  },
-  {
-    korean: "일",
-    pronunciation: "il",
-    translation: "One (Sino-Korean)",
-    example: "일 번 출구로 가세요. (Go to exit number one.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "이",
-    pronunciation: "i",
-    translation: "Two (Sino-Korean)",
-    example: "이 층에 있어요. (It's on the second floor.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "삼",
-    pronunciation: "sam",
-    translation: "Three (Sino-Korean)",
-    example: "삼 인분 주세요. (Please give me three portions.)",
-    categories: ["Numbers", "Food"]
-  },
-  {
-    korean: "사",
-    pronunciation: "sa",
-    translation: "Four (Sino-Korean)",
-    example: "사월에 봐요. (See you in April/fourth month.)",
-    categories: ["Numbers", "Time"]
-  },
-  {
-    korean: "오",
-    pronunciation: "o",
-    translation: "Five (Sino-Korean)",
-    example: "오 분 후에 만나요. (Let's meet in five minutes.)",
-    categories: ["Numbers", "Time"]
-  },
-  {
-    korean: "육",
-    pronunciation: "yuk",
-    translation: "Six (Sino-Korean)",
-    example: "육 개월 동안 한국어를 배웠어요. (I learned Korean for six months.)",
-    categories: ["Numbers", "Time"]
-  },
-  {
-    korean: "칠",
-    pronunciation: "chil",
-    translation: "Seven (Sino-Korean)",
-    example: "칠 월은 여름이에요. (July/the seventh month is summer.)",
-    categories: ["Numbers", "Time"]
-  },
-  {
-    korean: "팔",
-    pronunciation: "pal",
-    translation: "Eight (Sino-Korean)",
-    example: "팔 시에 도착했어요. (I arrived at eight o'clock.)",
-    categories: ["Numbers", "Time"]
-  },
-  {
-    korean: "구",
-    pronunciation: "gu",
-    translation: "Nine (Sino-Korean)",
-    example: "구 층에 살아요. (I live on the ninth floor.)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "십",
-    pronunciation: "ship",
-    translation: "Ten (Sino-Korean)",
-    example: "십 년 전에 한국에 왔어요. (I came to Korea ten years ago.)",
-    categories: ["Numbers", "Time"]
-  },
-  {
-    korean: "영",
-    pronunciation: "yeong",
-    translation: "Zero",
-    example: "영 점 오 킬로그램 (0.5 kilograms)",
-    categories: ["Numbers"]
-  },
-  {
-    korean: "번",
-    pronunciation: "beon",
-    translation: "Number (counter)",
-    example: "삼 번 읽었어요. (I read it three times.)",
-    categories: ["Numbers", "Counters"]
-  },
-  {
-    korean: "개",
-    pronunciation: "gae",
-    translation: "Item (counter for objects)",
-    example: "사과 두 개 주세요. (Please give me two apples.)",
-    categories: ["Numbers", "Counters"]
-  },
-  {
-    korean: "명",
-    pronunciation: "myeong",
-    translation: "Person (counter for people)",
-    example: "학생 세 명이 왔어요. (Three students came.)",
-    categories: ["Numbers", "Counters"]
-  },
-  {
-    korean: "잔",
-    pronunciation: "jan",
-    translation: "Cup (counter for drinks)",
-    example: "커피 한 잔 주세요. (Please give me one cup of coffee.)",
-    categories: ["Numbers", "Counters", "Food"]
-  },
-  {
-    korean: "병",
-    pronunciation: "byeong",
-    translation: "Bottle (counter)",
-    example: "맥주 두 병 샀어요. (I bought two bottles of beer.)",
-    categories: ["Numbers", "Counters", "Food"]
-  },
-  {
-    korean: "그릇",
-    pronunciation: "geureut",
-    translation: "Bowl (counter)",
-    example: "라면 한 그릇 먹었어요. (I ate one bowl of ramen.)",
-    categories: ["Numbers", "Counters", "Food"]
-  },
-  {
-    korean: "장",
-    pronunciation: "jang",
-    translation: "Sheet (counter for flat things)",
-    example: "종이 다섯 장 주세요. (Please give me five sheets of paper.)",
-    categories: ["Numbers", "Counters"]
-  },
-  {
-    korean: "권",
-    pronunciation: "gwon",
-    translation: "Book (counter)",
-    example: "책 세 권을 빌렸어요. (I borrowed three books.)",
-    categories: ["Numbers", "Counters", "Education"]
-  },
-  {
-    korean: "대",
-    pronunciation: "dae",
-    translation: "Machine/Vehicle (counter)",
-    example: "자동차 한 대가 있어요. (I have one car.)",
-    categories: ["Numbers", "Counters", "Transportation"]
-  },
-  {
-    korean: "마리",
-    pronunciation: "mari",
-    translation: "Animal (counter)",
-    example: "고양이 두 마리가 있어요. (I have two cats.)",
-    categories: ["Numbers", "Counters"]
-  },
-  {
-    korean: "시",
-    pronunciation: "si",
-    translation: "O'clock",
-    example: "지금 세 시예요. (It's three o'clock now.)",
-    categories: ["Numbers", "Time"]
-  },
-  {
-    korean: "분",
-    pronunciation: "bun",
-    translation: "Minute",
-    example: "오 분 기다렸어요. (I waited for five minutes.)",
-    categories: ["Numbers", "Time"]
-  },
-  {
-    korean: "초",
-    pronunciation: "cho",
-    translation: "Second",
-    example: "십 초 후에 시작해요. (Let's start after ten seconds.)",
-    categories: ["Numbers", "Time"]
-  },
-  
-  // Useful Objects
-  {
-    korean: "책",
-    pronunciation: "chaek",
-    translation: "Book",
-    example: "이 책은 재미있어요. (This book is interesting.)",
-    categories: ["Objects", "Education"]
-  },
-  {
-    korean: "전화",
-    pronunciation: "jeonhwa",
-    translation: "Phone/telephone",
-    example: "전화 좀 빌려 주세요. (Please lend me your phone.)",
-    categories: ["Objects", "Communication"]
-  },
-  {
-    korean: "휴대폰",
-    pronunciation: "hyudaepon",
-    translation: "Mobile phone",
-    example: "휴대폰이 없어요. (I don't have my mobile phone.)",
-    categories: ["Objects", "Communication"]
-  },
-  {
-    korean: "가방",
-    pronunciation: "gabang",
-    translation: "Bag",
-    example: "가방이 무거워요. (The bag is heavy.)",
-    categories: ["Objects"]
-  },
-  {
-    korean: "신발",
-    pronunciation: "sinbal",
-    translation: "Shoes",
-    example: "새 신발을 샀어요. (I bought new shoes.)",
-    categories: ["Objects", "Clothing"]
-  },
-  {
-    korean: "옷",
-    pronunciation: "ot",
-    translation: "Clothes",
-    example: "새 옷을 샀어요. (I bought new clothes.)",
-    categories: ["Objects", "Clothing"]
-  },
-  {
-    korean: "문",
-    pronunciation: "mun",
-    translation: "Door",
-    example: "문을 닫아 주세요. (Please close the door.)",
-    categories: ["Objects", "House"]
-  },
-  {
-    korean: "창문",
-    pronunciation: "changmun",
-    translation: "Window",
-    example: "창문을 열었어요. (I opened the window.)",
-    categories: ["Objects", "House"]
-  },
-  
-  // Transportation
-  {
-    korean: "버스",
-    pronunciation: "beoseu",
-    translation: "Bus",
-    example: "버스를 타요. (I take the bus.)",
-    categories: ["Transportation"]
-  },
-  {
-    korean: "택시",
-    pronunciation: "taeksi",
-    translation: "Taxi",
-    example: "택시를 잡았어요. (I caught a taxi.)",
-    categories: ["Transportation"]
-  },
-  {
-    korean: "지하철",
-    pronunciation: "jihacheol",
-    translation: "Subway",
-    example: "지하철로 갈 거예요. (I'll go by subway.)",
-    categories: ["Transportation"]
-  },
-  {
-    korean: "기차",
-    pronunciation: "gicha",
-    translation: "Train",
-    example: "기차를 탔어요. (I took the train.)",
-    categories: ["Transportation"]
-  },
-  {
-    korean: "비행기",
-    pronunciation: "bihaenggi",
-    translation: "Airplane",
-    example: "비행기를 놓쳤어요. (I missed the plane.)",
-    categories: ["Transportation", "Travel"]
-  },
-  
-  // Emotions and States
-  {
-    korean: "행복하다",
-    pronunciation: "haengbokhada",
-    translation: "To be happy",
-    example: "오늘 정말 행복해요. (I'm really happy today.)",
-    categories: ["Emotions"]
-  },
-  {
-    korean: "슬프다",
-    pronunciation: "seulpeuda",
-    translation: "To be sad",
-    example: "영화가 슬펐어요. (The movie was sad.)",
-    categories: ["Emotions"]
-  },
-  {
-    korean: "화나다",
-    pronunciation: "hwanada",
-    translation: "To be angry",
-    example: "화가 났어요. (I got angry.)",
-    categories: ["Emotions"]
-  },
-  {
-    korean: "피곤하다",
-    pronunciation: "pigonhada",
-    translation: "To be tired",
-    example: "오늘 피곤해요. (I'm tired today.)",
-    categories: ["States", "Common"]
-  },
-  {
-    korean: "바쁘다",
-    pronunciation: "bappeuda",
-    translation: "To be busy",
-    example: "이번 주에 바빠요. (I'm busy this week.)",
-    categories: ["States", "Common"]
-  },
-  {
-    korean: "배고프다",
-    pronunciation: "baegopeuda",
-    translation: "To be hungry",
-    example: "배고파요. (I'm hungry.)",
-    categories: ["States", "Common", "Food"]
-  },
-  {
-    korean: "목마르다",
-    pronunciation: "mokamareuda",
-    translation: "To be thirsty",
-    example: "물 좀 주세요. 목말라요. (Please give me some water. I'm thirsty.)",
-    categories: ["States", "Common", "Food"]
-  },
-  
-  // Useful Phrases
-  {
-    korean: "주세요",
-    pronunciation: "juseyo",
-    translation: "Please give me",
-    example: "물 주세요. (Please give me water.)",
-    categories: ["Common", "Phrases"]
-  },
-  {
-    korean: "도와주세요",
-    pronunciation: "dowajuseyo",
-    translation: "Please help me",
-    example: "길을 잃었어요. 도와주세요. (I'm lost. Please help me.)",
-    categories: ["Common", "Phrases"]
-  },
-  {
-    korean: "천천히 말해 주세요",
-    pronunciation: "cheoncheonhi malhae juseyo",
-    translation: "Please speak slowly",
-    example: "천천히 말해 주세요. 한국어를 배우고 있어요. (Please speak slowly. I'm learning Korean.)",
-    categories: ["Common", "Phrases", "Communication"]
-  },
-  {
-    korean: "다시 말해 주세요",
-    pronunciation: "dasi malhae juseyo",
-    translation: "Please say it again",
-    example: "죄송합니다, 다시 말해 주세요. (I'm sorry, please say it again.)",
-    categories: ["Common", "Phrases", "Communication"]
-  },
-  {
-    korean: "얼마나 걸려요?",
-    pronunciation: "eolmana geollyeoyo?",
-    translation: "How long does it take?",
-    example: "서울에서 부산까지 얼마나 걸려요? (How long does it take from Seoul to Busan?)",
-    categories: ["Common", "Phrases", "Travel"]
-  },
-  {
-    korean: "어떻게 가요?",
-    pronunciation: "eotteoke gayo?",
-    translation: "How do I get there?",
-    example: "역까지 어떻게 가요? (How do I get to the station?)",
-    categories: ["Common", "Phrases", "Travel"]
-  },
-  {
-    korean: "몇 살이에요?",
-    pronunciation: "myeot sarieyo?",
-    translation: "How old are you?",
-    example: "실례지만, 몇 살이에요? (Excuse me, how old are you?)",
-    categories: ["Common", "Phrases", "Personal"]
-  },
-  {
-    korean: "어디에서 왔어요?",
-    pronunciation: "eodieso wasseoyo?",
-    translation: "Where are you from?",
-    example: "어디에서 왔어요? (Where are you from?)",
-    categories: ["Common", "Phrases", "Personal"]
-  },
-  
-  // MZ Generation Slang (Modern Korean Slang)
-  {
-    korean: "꿀잼",
-    pronunciation: "kkuljaem",
-    translation: "Very fun/entertaining",
-    example: "이 영화 진짜 꿀잼이야! (This movie is so entertaining!)",
-    categories: ["Slang", "MZ"]
-  },
-  {
-    korean: "꿀팁",
-    pronunciation: "kkultip",
-    translation: "Useful tip/lifehack",
-    example: "여행 꿀팁 좀 알려줘. (Please tell me some travel lifehacks.)",
-    categories: ["Slang", "MZ"]
-  },
-  {
-    korean: "인싸",
-    pronunciation: "inssha",
-    translation: "Popular person/insider",
-    example: "그는 우리 학교의 인싸야. (He's a popular person at our school.)",
-    categories: ["Slang", "MZ"]
-  },
-  {
-    korean: "완내스",
-    pronunciation: "wannaeseu",
-    translation: "Exactly what I wanted",
-    example: "이 옷 완내스! (This outfit is exactly what I wanted!)",
-    categories: ["Slang", "MZ"]
-  },
-  {
-    korean: "별다줄",
-    pronunciation: "byeoldajul",
-    translation: "Nothing special",
-    example: "그 영화는 별다줄. (That movie is nothing special.)",
-    categories: ["Slang", "MZ"]
-  },
-  {
-    korean: "좋댓구알",
-    pronunciation: "jotdaetguhal",
-    translation: "Like, comment, share and subscribe",
-    example: "제 영상이 마음에 들면 좋댓구알 부탁드려요! (If you like my video, please like, comment, share and subscribe!)",
-    categories: ["Slang", "MZ", "Social Media"]
-  },
-  {
-    korean: "갑분싸",
-    pronunciation: "gapbunssha",
-    translation: "Sudden awkward silence",
-    example: "갑분싸가 됐어요. (It suddenly became awkward.)",
-    categories: ["Slang", "MZ"]
-  },
-  {
-    korean: "스불재",
-    pronunciation: "seubuljaei",
-    translation: "Something/someone impossible to hate",
-    example: "그 아이돌은 스불재예요. (That idol is impossible to hate.)",
-    categories: ["Slang", "MZ"]
-  },
-  {
-    korean: "오저치고",
-    pronunciation: "ojeochiigo",
-    translation: "Without thinking twice",
-    example: "오저치고 구매했어요. (I bought it without thinking twice.)",
-    categories: ["Slang", "MZ"]
-  },
-  {
-    korean: "TMI",
-    pronunciation: "ti-em-ai",
-    translation: "Too much information",
-    example: "그건 좀 TMI인데. (That's a bit too much information.)",
-    categories: ["Slang", "MZ"]
-  },
-  
-  // Korean Idioms
-  {
-    korean: "고생 끝에 낙이 온다",
-    pronunciation: "gosaeng kkeute nagi onda",
-    translation: "Happiness comes after hardship",
-    example: "시험 준비하느라 힘들지만 고생 끝에 낙이 온다. (Preparing for the exam is tough, but happiness comes after hardship.)",
-    categories: ["Idioms", "Proverbs"]
-  },
-  {
-    korean: "백문이 불여일견",
-    pronunciation: "baengmuni bulyeoilgyeon",
-    translation: "Seeing once is better than hearing a hundred times",
-    example: "직접 가보는 게 좋아. 백문이 불여일견이잖아. (It's better to go see for yourself. Seeing once is better than hearing a hundred times.)",
-    categories: ["Idioms", "Proverbs"]
-  },
-  {
-    korean: "소문난 잔치에 먹을 것 없다",
-    pronunciation: "somunnan janchie meogeul geot eopda",
-    translation: "The feast with a great reputation has nothing to eat",
-    example: "기대를 너무 많이 했는데, 소문난 잔치에 먹을 것 없다더니. (I had too many expectations, but they say the feast with a great reputation has nothing to eat.)",
-    categories: ["Idioms", "Proverbs"]
-  },
-  {
-    korean: "티끌 모아 태산",
-    pronunciation: "tikkkeul moa taesan",
-    translation: "Gather dust to create a mountain (little by little)",
-    example: "매일 조금씩 저축하세요. 티끌 모아 태산입니다. (Save a little every day. Little by little, it will become a lot.)",
-    categories: ["Idioms", "Proverbs"]
-  },
-  {
-    korean: "하늘의 별 따기",
-    pronunciation: "haneul-ui byeol ttagi",
-    translation: "Like picking stars from the sky (extremely difficult)",
-    example: "요즘 취업하기는 하늘의 별 따기처럼 어렵다. (Finding a job these days is as difficult as picking stars from the sky.)",
-    categories: ["Idioms", "Proverbs"]
-  },
-  {
-    korean: "눈에 넣어도 안 아플 아이",
-    pronunciation: "nun-e neoh-eodo an apeul ai",
-    translation: "A child so precious you could put in your eye without pain",
-    example: "그녀는 아들을 너무 사랑해서 눈에 넣어도 안 아플 아이라고 해요. (She loves her son so much that she says he's a child so precious she could put in her eye without pain.)",
-    categories: ["Idioms", "Expressions"]
-  },
-  {
-    korean: "발 없는 말이 천리 간다",
-    pronunciation: "bal eomneun mari cheolli ganda",
-    translation: "Words without feet travel a thousand miles (rumors spread quickly)",
-    example: "조심해서 말해. 발 없는 말이 천리 간다고. (Be careful what you say. Rumors spread quickly.)",
-    categories: ["Idioms", "Proverbs"]
-  },
-  {
-    korean: "원숭이도 나무에서 떨어진다",
-    pronunciation: "wonseungido namueseo tteoreojinda",
-    translation: "Even monkeys fall from trees (everyone makes mistakes)",
-    example: "실수를 했다고 너무 자책하지 마. 원숭이도 나무에서 떨어진다잖아. (Don't blame yourself too much for making a mistake. Even experts make mistakes.)",
-    categories: ["Idioms", "Proverbs"]
-  },
-  {
-    korean: "천 리 길도 한 걸음부터",
-    pronunciation: "cheon ri gildo han georeumbuteo",
-    translation: "Even a thousand-mile journey begins with a single step",
-    example: "너무 부담스럽게 생각하지 마. 천 리 길도 한 걸음부터야. (Don't think of it as overwhelming. Even a thousand-mile journey begins with a single step.)",
-    categories: ["Idioms", "Proverbs"]
-  },
-  {
-    korean: "뱁새가 황새 따라가면 다리가 찢어진다",
-    pronunciation: "baepsaega hwangsae ttaragamyeon dariga jjijeojinda",
-    translation: "If a sparrow tries to follow a stork, its legs will tear (don't try to imitate those beyond your capabilities)",
-    example: "무리하게 경쟁하지 마. 뱁새가 황새 따라가면 다리가 찢어진다고. (Don't compete beyond your limits. If you try to imitate those beyond your capabilities, you'll get hurt.)",
-    categories: ["Idioms", "Proverbs"]
-  },
-  
-  // More everyday vocabulary - Food
-  {
-    korean: "김치",
-    pronunciation: "gimchi",
-    translation: "Kimchi",
-    example: "한국인들은 매일 김치를 먹어요. (Koreans eat kimchi everyday.)",
-    categories: ["Food", "Korean Culture"]
-  },
-  {
-    korean: "불고기",
-    pronunciation: "bulgogi",
-    translation: "Bulgogi (marinated beef)",
-    example: "불고기는 한국의 전통 요리입니다. (Bulgogi is a traditional Korean dish.)",
-    categories: ["Food", "Korean Culture"]
-  },
-  {
-    korean: "비빔밥",
-    pronunciation: "bibimbap",
-    translation: "Bibimbap (mixed rice)",
-    example: "비빔밥은 맛있고 건강에 좋아요. (Bibimbap is delicious and healthy.)",
-    categories: ["Food", "Korean Culture"]
-  },
-  {
-    korean: "떡볶이",
-    pronunciation: "tteokbokki",
-    translation: "Spicy rice cakes",
-    example: "떡볶이는 한국의 인기 있는 길거리 음식이에요. (Tteokbokki is a popular Korean street food.)",
-    categories: ["Food", "Korean Culture"]
-  },
-  {
-    korean: "라면",
-    pronunciation: "ramyeon",
-    translation: "Ramen/instant noodles",
-    example: "피곤할 때 라면을 먹어요. (I eat ramyeon when I'm tired.)",
-    categories: ["Food", "Common"]
-  },
-  {
-    korean: "만두",
-    pronunciation: "mandu",
-    translation: "Dumplings",
-    example: "만두는 여러 가지 속으로 만들 수 있어요. (Dumplings can be made with various fillings.)",
-    categories: ["Food", "Korean Culture"]
-  },
-  {
-    korean: "삼겹살",
-    pronunciation: "samgyeopsal",
-    translation: "Pork belly",
-    example: "친구들과 함께 삼겹살을 구워 먹었어요. (I grilled and ate samgyeopsal with friends.)",
-    categories: ["Food", "Korean Culture"]
-  },
-  {
-    korean: "치킨",
-    pronunciation: "chikin",
-    translation: "Fried chicken",
-    example: "한국 치킨은 세계적으로 유명해요. (Korean fried chicken is famous worldwide.)",
-    categories: ["Food", "Common"]
-  },
-  {
-    korean: "소주",
-    pronunciation: "soju",
-    translation: "Soju (Korean liquor)",
-    example: "한국에서는 소주를 자주 마셔요. (In Korea, people often drink soju.)",
-    categories: ["Food", "Drinks", "Korean Culture"]
-  },
-  {
-    korean: "막걸리",
-    pronunciation: "makgeolli",
-    translation: "Korean rice wine",
-    example: "막걸리는 전통 한국 술이에요. (Makgeolli is a traditional Korean alcohol.)",
-    categories: ["Food", "Drinks", "Korean Culture"]
-  },
-  
-  // Technology and Modern Life
-  {
-    korean: "스마트폰",
-    pronunciation: "seumateupol",
-    translation: "Smartphone",
-    example: "스마트폰으로 인터넷을 해요. (I use the internet on my smartphone.)",
-    categories: ["Technology", "Modern Life"]
-  },
-  {
-    korean: "인터넷",
-    pronunciation: "inteonet",
-    translation: "Internet",
-    example: "인터넷으로 쇼핑을 해요. (I shop on the internet.)",
-    categories: ["Technology", "Modern Life"]
-  },
-  {
-    korean: "컴퓨터",
-    pronunciation: "keompyuteo",
-    translation: "Computer",
-    example: "컴퓨터로 일해요. (I work on the computer.)",
-    categories: ["Technology", "Modern Life"]
-  },
-  {
-    korean: "와이파이",
-    pronunciation: "waipai",
-    translation: "Wi-Fi",
-    example: "여기 와이파이 비밀번호가 뭐예요? (What's the Wi-Fi password here?)",
-    categories: ["Technology", "Modern Life"]
-  },
-  {
-    korean: "충전기",
-    pronunciation: "chungjeongi",
-    translation: "Charger",
-    example: "충전기를 빌려주세요. (Please lend me a charger.)",
-    categories: ["Technology", "Modern Life"]
-  },
-  {
-    korean: "어플",
-    pronunciation: "eopeul",
-    translation: "App/Application",
-    example: "이 어플을 다운로드해 보세요. (Try downloading this app.)",
-    categories: ["Technology", "Modern Life"]
-  },
-  {
-    korean: "SNS",
-    pronunciation: "eseueneuseu",
-    translation: "Social media",
-    example: "요즘 젊은이들은 SNS를 많이 해요. (Young people these days use social media a lot.)",
-    categories: ["Technology", "Modern Life", "Social Media"]
-  },
-  {
-    korean: "인스타그램",
-    pronunciation: "inseutageuraem",
-    translation: "Instagram",
-    example: "인스타그램에 사진을 올렸어요. (I uploaded photos to Instagram.)",
-    categories: ["Technology", "Modern Life", "Social Media"]
-  },
-  {
-    korean: "유튜브",
-    pronunciation: "yutyubeu",
-    translation: "YouTube",
-    example: "유튜브에서 한국어 공부해요. (I study Korean on YouTube.)",
-    categories: ["Technology", "Modern Life", "Social Media"]
-  },
-  {
-    korean: "문자",
-    pronunciation: "munja",
-    translation: "Text message",
-    example: "문자 보냈어요. (I sent a text message.)",
-    categories: ["Technology", "Modern Life", "Communication"]
-  },
-  
-  // Feelings and Emotions
-  {
-    korean: "기쁘다",
-    pronunciation: "gippuda",
-    translation: "To be happy/glad",
-    example: "좋은 소식을 들어서 기뻐요. (I'm happy because I heard good news.)",
-    categories: ["Emotions", "Adjectives"]
-  },
-  {
-    korean: "실망하다",
-    pronunciation: "silmanghada",
-    translation: "To be disappointed",
-    example: "결과가 안 좋아서 실망했어요. (I was disappointed because the result wasn't good.)",
-    categories: ["Emotions", "Verbs"]
-  },
-  {
-    korean: "당황하다",
-    pronunciation: "danghwanghada",
-    translation: "To be flustered/embarrassed",
-    example: "갑작스러운 질문에 당황했어요. (I was flustered by the sudden question.)",
-    categories: ["Emotions", "Verbs"]
-  },
-  {
-    korean: "짜증나다",
-    pronunciation: "jjajeungnada",
-    translation: "To be annoyed/irritated",
-    example: "기다리는 것이 짜증나요. (Waiting is annoying.)",
-    categories: ["Emotions", "Verbs"]
-  },
-  {
-    korean: "불안하다",
-    pronunciation: "buranhada",
-    translation: "To be anxious/uneasy",
-    example: "시험 전에 불안해요. (I feel anxious before exams.)",
-    categories: ["Emotions", "Adjectives"]
-  },
-  {
-    korean: "감동하다",
-    pronunciation: "gamdongada",
-    translation: "To be touched/moved",
-    example: "그 영화를 보고 감동했어요. (I was moved by that movie.)",
-    categories: ["Emotions", "Verbs"]
-  },
-  {
-    korean: "부럽다",
-    pronunciation: "bureobda",
-    translation: "To be envious",
-    example: "그의 여행 사진이 부러워요. (I envy his travel photos.)",
-    categories: ["Emotions", "Adjectives"]
-  },
-  {
-    korean: "놀라다",
-    pronunciation: "nollada",
-    translation: "To be surprised/shocked",
-    example: "갑자기 나타나서 놀랐어요. (I was surprised because you appeared suddenly.)",
-    categories: ["Emotions", "Verbs"]
-  },
-  {
-    korean: "편안하다",
-    pronunciation: "pyeonanhada",
-    translation: "To be comfortable/at ease",
-    example: "이 카페는 편안해요. (This café is comfortable.)",
-    categories: ["Emotions", "States", "Adjectives"]
-  },
-  {
-    korean: "긴장하다",
-    pronunciation: "ginjangada",
-    translation: "To be nervous/tense",
-    example: "발표 전에 긴장해요. (I get nervous before presentations.)",
-    categories: ["Emotions", "Verbs"]
-  },
-  
-  // Useful Verbs for Daily Life
-  {
-    korean: "사다",
-    pronunciation: "sada",
-    translation: "To buy",
-    example: "새 옷을 샀어요. (I bought new clothes.)",
-    categories: ["Verbs", "Shopping"]
-  },
-  {
-    korean: "팔다",
-    pronunciation: "palda",
-    translation: "To sell",
-    example: "안 입는 옷을 팔았어요. (I sold clothes I don't wear.)",
-    categories: ["Verbs", "Shopping"]
-  },
-  {
-    korean: "만들다",
-    pronunciation: "mandeulda",
-    translation: "To make/create",
-    example: "직접 케이크를 만들었어요. (I made a cake by myself.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "찾다",
-    pronunciation: "chatda",
-    translation: "To find/look for",
-    example: "열쇠를 찾고 있어요. (I'm looking for my keys.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "배우다",
-    pronunciation: "baeuda",
-    translation: "To learn",
-    example: "한국어를 배우고 있어요. (I'm learning Korean.)",
-    categories: ["Verbs", "Education"]
-  },
-  {
-    korean: "가르치다",
-    pronunciation: "gareuchida",
-    translation: "To teach",
-    example: "영어를 가르쳐요. (I teach English.)",
-    categories: ["Verbs", "Education"]
-  },
-  {
-    korean: "도착하다",
-    pronunciation: "dochakada",
-    translation: "To arrive",
-    example: "집에 도착했어요. (I arrived home.)",
-    categories: ["Verbs", "Travel"]
-  },
-  {
-    korean: "출발하다",
-    pronunciation: "chulbalhada",
-    translation: "To depart",
-    example: "내일 아침에 출발해요. (I depart tomorrow morning.)",
-    categories: ["Verbs", "Travel"]
-  },
-  {
-    korean: "시작하다",
-    pronunciation: "sijakada",
-    translation: "To start/begin",
-    example: "수업이 9시에 시작해요. (Class starts at 9 o'clock.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "끝나다",
-    pronunciation: "kkeutnada",
-    translation: "To end/finish",
-    example: "영화가 10시에 끝나요. (The movie ends at 10 o'clock.)",
-    categories: ["Verbs", "Common"]
-  },
-  
-  // More Adjectives
-  {
-    korean: "귀엽다",
-    pronunciation: "gwiyeopda",
-    translation: "To be cute",
-    example: "그 강아지는 정말 귀여워요. (That puppy is really cute.)",
-    categories: ["Adjectives", "Descriptions"]
-  },
-  {
-    korean: "무섭다",
-    pronunciation: "museobda",
-    translation: "To be scary",
-    example: "그 영화는 무서워요. (That movie is scary.)",
-    categories: ["Adjectives", "Descriptions"]
-  },
-  {
-    korean: "쉽다",
-    pronunciation: "swipda",
-    translation: "To be easy",
-    example: "이 문제는 쉬워요. (This problem is easy.)",
-    categories: ["Adjectives", "Descriptions"]
-  },
-  {
-    korean: "어렵다",
-    pronunciation: "eoryeopda",
-    translation: "To be difficult",
-    example: "한국어 발음이 어려워요. (Korean pronunciation is difficult.)",
-    categories: ["Adjectives", "Descriptions"]
-  },
-  {
-    korean: "비싸다",
-    pronunciation: "bissada",
-    translation: "To be expensive",
-    example: "이 레스토랑은 비싸요. (This restaurant is expensive.)",
-    categories: ["Adjectives", "Shopping"]
-  },
-  {
-    korean: "싸다",
-    pronunciation: "ssada",
-    translation: "To be cheap",
-    example: "이 옷은 싸요. (This clothes is cheap.)",
-    categories: ["Adjectives", "Shopping"]
-  },
-  {
-    korean: "빠르다",
-    pronunciation: "ppareuda",
-    translation: "To be fast",
-    example: "그 자동차는 빨라요. (That car is fast.)",
-    categories: ["Adjectives", "Descriptions"]
-  },
-  {
-    korean: "느리다",
-    pronunciation: "neurida",
-    translation: "To be slow",
-    example: "인터넷이 느려요. (The internet is slow.)",
-    categories: ["Adjectives", "Descriptions"]
-  },
-  {
-    korean: "똑똑하다",
-    pronunciation: "ttokttokada",
-    translation: "To be smart/intelligent",
-    example: "그 학생은 정말 똑똑해요. (That student is really smart.)",
-    categories: ["Adjectives", "Descriptions"]
-  },
-  {
-    korean: "멋있다",
-    pronunciation: "meositda",
-    translation: "To be cool/handsome",
-    example: "그 배우는 멋있어요. (That actor is handsome.)",
-    categories: ["Adjectives", "Descriptions"]
-  },
-  {
-    korean: "것",
-    pronunciation: "geot",
-    translation: "A thing or an object",
-    example: "이것은 좋은 것이에요. (This is a good thing.)",
-    categories: ["Common", "Grammar"]
-  },
-  {
-    korean: "있다",
-    pronunciation: "itda",
-    translation: "To be, to exist",
-    example: "책이 있어요. (There is a book.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "수",
-    pronunciation: "su",
-    translation: "Way, method",
-    example: "다른 수가 없어요. (There is no other way.)",
-    categories: ["Common", "Grammar"]
-  },
-  {
-    korean: "나",
-    pronunciation: "na",
-    translation: "Me, I",
-    example: "나는 학생이에요. (I am a student.)",
-    categories: ["Personal", "Common"]
-  },
-  {
-    korean: "없다",
-    pronunciation: "eopda",
-    translation: "To not exist, to be absent",
-    example: "시간이 없어요. (I don't have time.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "않다",
-    pronunciation: "anhda",
-    translation: "To not be, to not do",
-    example: "그렇게 하지 않아요. (I don't do it that way.)",
-    categories: ["Verbs", "Grammar"]
-  },
-  {
-    korean: "우리",
-    pronunciation: "uri",
-    translation: "We, our",
-    example: "우리 가족. (Our family.)",
-    categories: ["Personal", "Common"]
-  },
-  {
-    korean: "아니다",
-    pronunciation: "anida",
-    translation: "To not be",
-    example: "그것은 책이 아니에요. (That is not a book.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "보다",
-    pronunciation: "boda",
-    translation: "To see, to watch",
-    example: "영화를 보다. (To watch a movie.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "같다",
-    pronunciation: "gatda",
-    translation: "To be similar, to be like",
-    example: "날씨가 봄 같아요. (The weather is like spring.)",
-    categories: ["Adjectives", "Common"]
-  },
-  {
-    korean: "주다",
-    pronunciation: "juda",
-    translation: "To give",
-    example: "선물을 주다. (To give a present.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "대하다",
-    pronunciation: "daehada",
-    translation: "To face, to confront",
-    example: "문제에 대하다. (To face a problem.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "년",
-    pronunciation: "nyeon",
-    translation: "Year",
-    example: "새해 첫 년. (First year of the new year.)",
-    categories: ["Time", "Common"]
-  },
-  {
-    korean: "말",
-    pronunciation: "mal",
-    translation: "Words, speaking",
-    example: "말씀해 주세요. (Please speak.)",
-    categories: ["Common", "Communication"]
-  },
-  {
-    korean: "일",
-    pronunciation: "il",
-    translation: "Work, job",
-    example: "일이 많아요. (There is a lot of work.)",
-    categories: ["Common", "Work"]
-  },
-  {
-    korean: "말하다",
-    pronunciation: "malhada",
-    translation: "To speak",
-    example: "천천히 말해 주세요. (Please speak slowly.)",
-    categories: ["Verbs", "Communication"]
-  },
-  {
-    korean: "위하다",
-    pronunciation: "wihada",
-    translation: "To do for the sake of",
-    example: "가족을 위하다. (To do something for family.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "그러나",
-    pronunciation: "geureona",
-    translation: "However, but still",
-    example: "비가 왔다. 그러나 우산이 있었다. (It rained. However, I had an umbrella.)",
-    categories: ["Grammar", "Common"]
-  },
-  {
-    korean: "오다",
-    pronunciation: "oda",
-    translation: "To come",
-    example: "친구가 집에 와요. (A friend comes to my house.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "알다",
-    pronunciation: "alda",
-    translation: "To know",
-    example: "답을 알아요. (I know the answer.)",
-    categories: ["Verbs", "Common"]
-  },
-  {
-    korean: "씨",
-    pronunciation: "ssi",
-    translation: "Mr./Ms. (honorific)",
-    example: "김 씨를 만났어요. (I met Mr./Ms. Kim.)",
-    categories: ["Common", "Honorifics"]
-  },
-  {
-    korean: "그렇다",
-    pronunciation: "geureotda",
-    translation: "That is right, yes",
-    example: "네, 그렇습니다. (Yes, that's right.)",
-    categories: ["Common", "Responses"]
-  },
-  {
-    korean: "크다",
-    pronunciation: "keuda",
-    translation: "To be big, large",
-    example: "이 건물이 커요. (This building is big.)",
-    categories: ["Adjectives", "Common"]
-  },
-  {
-    korean: "사회",
-    pronunciation: "sahoe",
-    translation: "Society",
-    example: "우리 사회가 변하고 있어요. (Our society is changing.)",
-    categories: ["Common", "Society"]
-  },
-  {
-    korean: "많다",
-    pronunciation: "manta",
-    translation: "Many, much",
-    example: "사람이 많아요. (There are many people.)",
-    categories: ["Adjectives", "Common"]
-  },
-  {
-    korean: "좋다",
-    pronunciation: "jota",
-    translation: "To be good",
-    example: "날씨가 좋아요. (The weather is good.)",
-    categories: ["Adjectives", "Common"]
-  },
-  {
-    korean: "더",
-    pronunciation: "deo",
-    translation: "More",
-    example: "더 주세요. (Please give me more.)",
-    categories: ["Common", "Grammar"]
-  },
-  {
-    korean: "받다",
-    pronunciation: "batda",
-    translation: "To receive",
-    example: "선물을 받았어요. (I received a gift.)",
-    categories: ["Verbs", "Common"]
-  }
-,
-
-  // Additional words from 6000kor.txt
   {
   "korean": "것",
   "pronunciation": "것",
@@ -1826,16 +32,6 @@ const koreanDictionary = [
   "korean": "수",
   "pronunciation": "수",
   "translation": "way, method",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "하다",
-  "pronunciation": "하다",
-  "translation": "To do",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -1924,16 +120,6 @@ const koreanDictionary = [
   "korean": "거",
   "pronunciation": "거",
   "translation": "That thing",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "보다",
-  "pronunciation": "보다",
-  "translation": "To see",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -2105,16 +291,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Adjectives"
-  ]
-},
-  {
-  "korean": "일",
-  "pronunciation": "일",
-  "translation": "One day",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Time"
   ]
 },
   {
@@ -2459,15 +635,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "그러다",
-  "pronunciation": "그러다",
-  "translation": "and so, and then, well",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "소리",
   "pronunciation": "소리",
   "translation": "A sound, noise",
@@ -2785,16 +952,6 @@ const koreanDictionary = [
   "korean": "여러",
   "pronunciation": "여러",
   "translation": "many, various",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "안",
-  "pronunciation": "안",
-  "translation": "Inside",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -3245,16 +1402,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "보이다",
-  "pronunciation": "보이다",
-  "translation": "show, let see",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "쓰다",
   "pronunciation": "쓰다",
   "translation": "To write",
@@ -3315,16 +1462,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "쓰다",
-  "pronunciation": "쓰다",
-  "translation": "Take (medicine)",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "뿐",
   "pronunciation": "뿐",
   "translation": "only, alone, merely",
@@ -3358,15 +1495,6 @@ const koreanDictionary = [
   "korean": "새롭다",
   "pronunciation": "새롭다",
   "translation": "To be new, novel",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "내다",
-  "pronunciation": "내다",
-  "translation": "to see through, to make it through sth",
   "example": "",
   "categories": [
     "Vocabulary"
@@ -3929,16 +2057,6 @@ const koreanDictionary = [
   "korean": "이름",
   "pronunciation": "이름",
   "translation": "Name",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "하나",
-  "pronunciation": "하나",
-  "translation": "One",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -4583,16 +2701,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "나다",
-  "pronunciation": "나다",
-  "translation": "To come out, grow, spring up",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Verbs"
-  ]
-},
-  {
   "korean": "방",
   "pronunciation": "방",
   "translation": "A room",
@@ -4760,16 +2868,6 @@ const koreanDictionary = [
   "korean": "입",
   "pronunciation": "입",
   "translation": "Mouth",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "뭐",
-  "pronunciation": "뭐",
-  "translation": "Huh? (2) something",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -5021,16 +3119,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "나가다",
-  "pronunciation": "나가다",
-  "translation": "To advance, proceed, go forward",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Verbs"
   ]
 },
   {
@@ -5625,15 +3713,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "시",
-  "pronunciation": "시",
-  "translation": "Poetry, lines of verse",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "역할",
   "pronunciation": "역할",
   "translation": "A part, a role",
@@ -5785,15 +3864,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "저",
-  "pronunciation": "저",
-  "translation": "Uh, well,  ...",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -6153,16 +4223,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "분",
-  "pronunciation": "분",
-  "translation": "One part",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "알려지다",
   "pronunciation": "알려지다",
   "translation": "To become known",
@@ -6280,15 +4340,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "가지다",
-  "pronunciation": "가지다",
-  "translation": "Entertain or  hold or  have",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -6594,16 +4645,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "시간",
-  "pronunciation": "시간",
-  "translation": "a Length of time (한 시간 동안)",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Time"
   ]
 },
   {
@@ -7045,16 +5086,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "예",
-  "pronunciation": "예",
-  "translation": "Yes, certainly, right",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -7655,16 +5686,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "사실",
-  "pronunciation": "사실",
-  "translation": "Actually, really",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "자주",
   "pronunciation": "자주",
   "translation": "Always, constantly",
@@ -7962,16 +5983,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "버리다",
-  "pronunciation": "버리다",
-  "translation": "Throw away",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "붙이다",
   "pronunciation": "붙이다",
   "translation": "affix, put on",
@@ -8002,16 +6013,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "모두",
-  "pronunciation": "모두",
-  "translation": "everything",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "전국",
   "pronunciation": "전국",
   "translation": "The whole country",
@@ -8025,16 +6026,6 @@ const koreanDictionary = [
   "korean": "마치다",
   "pronunciation": "마치다",
   "translation": "Finish, complete",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "전",
-  "pronunciation": "전",
-  "translation": "all, every",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -8653,16 +6644,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "말",
-  "pronunciation": "말",
-  "translation": "End",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "반드시",
   "pronunciation": "반드시",
   "translation": "Most certainly",
@@ -8817,16 +6798,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "맞다",
-  "pronunciation": "맞다",
-  "translation": "receive, welcome (note, usually this is 맞히다)",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Verbs"
-  ]
-},
-  {
   "korean": "별로",
   "pronunciation": "별로",
   "translation": "Especially, particularly",
@@ -8976,16 +6947,6 @@ const koreanDictionary = [
   "korean": "빛",
   "pronunciation": "빛",
   "translation": "Light",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "아니",
-  "pronunciation": "아니",
-  "translation": "Not",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -9277,16 +7238,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "배",
-  "pronunciation": "배",
-  "translation": "Abdomen",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "아파트",
   "pronunciation": "아파트",
   "translation": "Apartment",
@@ -9310,16 +7261,6 @@ const koreanDictionary = [
   "korean": "구성",
   "pronunciation": "구성",
   "translation": "Organization or",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "술",
-  "pronunciation": "술",
-  "translation": "Spoonful",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -9373,16 +7314,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "보다",
-  "pronunciation": "보다",
-  "translation": "More than, greater than ....",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Food"
   ]
 },
   {
@@ -9581,16 +7512,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "있다",
-  "pronunciation": "있다",
-  "translation": "To be",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "시인",
   "pronunciation": "시인",
   "translation": "A poet",
@@ -9748,15 +7669,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "수",
-  "pronunciation": "수",
-  "translation": "The number of sth",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "웃음",
   "pronunciation": "웃음",
   "translation": "Laughter, a smile",
@@ -9773,16 +7685,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "모양",
-  "pronunciation": "모양",
-  "translation": "signs, indications",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -9832,16 +7734,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "배",
-  "pronunciation": "배",
-  "translation": "Times, x-fold",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Time"
   ]
 },
   {
@@ -9954,16 +7846,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "반",
-  "pronunciation": "반",
-  "translation": "Group, company, party",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "불과하다",
   "pronunciation": "불과하다",
   "translation": "Nothing more than",
@@ -10014,16 +7896,6 @@ const koreanDictionary = [
   "korean": "파악하다",
   "pronunciation": "파악하다",
   "translation": "Grasp, seize, understand",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "편",
-  "pronunciation": "편",
-  "translation": "Compilation, editing",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -10189,16 +8061,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "차",
-  "pronunciation": "차",
-  "translation": "order, sequence, degree",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "상품",
   "pronunciation": "상품",
   "translation": "Product",
@@ -10245,16 +8107,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "세",
-  "pronunciation": "세",
-  "translation": "Age in years",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Time"
   ]
 },
   {
@@ -10895,16 +8747,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "한",
-  "pronunciation": "한",
-  "translation": "A limit",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "무섭다",
   "pronunciation": "무섭다",
   "translation": "fearful, dreadful",
@@ -11016,16 +8858,6 @@ const koreanDictionary = [
   "korean": "여기다",
   "pronunciation": "여기다",
   "translation": "Think, consider as",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "이",
-  "pronunciation": "이",
-  "translation": "this, this thing",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -11235,16 +9067,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "새",
-  "pronunciation": "새",
-  "translation": "A bird",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -11477,16 +9299,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Food"
-  ]
-},
-  {
-  "korean": "달",
-  "pronunciation": "달",
-  "translation": "The moon",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -11867,16 +9679,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "그",
-  "pronunciation": "그",
-  "translation": "That",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "자르다",
   "pronunciation": "자르다",
   "translation": "cut, chop",
@@ -12231,16 +10033,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "줄",
-  "pronunciation": "줄",
-  "translation": "Line, row, chord",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "쳐다보다",
   "pronunciation": "쳐다보다",
   "translation": "To look up at",
@@ -12357,15 +10149,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "빠지다",
-  "pronunciation": "빠지다",
-  "translation": "To indulge in, be addicted to",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "소금",
   "pronunciation": "소금",
   "translation": "Salt",
@@ -12434,15 +10217,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "그래",
-  "pronunciation": "그래",
-  "translation": "Yes or  that’s right",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "목",
   "pronunciation": "목",
   "translation": "The neck",
@@ -12466,16 +10240,6 @@ const koreanDictionary = [
   "korean": "범죄",
   "pronunciation": "범죄",
   "translation": "A crime",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "위",
-  "pronunciation": "위",
-  "translation": "Position, grade, rank",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -12597,15 +10361,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "법",
-  "pronunciation": "법",
-  "translation": "A way, a method",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "오랜",
   "pronunciation": "오랜",
   "translation": "For a long time",
@@ -12633,15 +10388,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "거리",
-  "pronunciation": "거리",
-  "translation": "A road or  street",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -12782,16 +10528,6 @@ const koreanDictionary = [
   "korean": "수단",
   "pronunciation": "수단",
   "translation": "means, way",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "자",
-  "pronunciation": "자",
-  "translation": "Well!!",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -13016,16 +10752,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "네",
-  "pronunciation": "네",
-  "translation": "You",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -13284,16 +11010,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "적다",
-  "pronunciation": "적다",
-  "translation": "Write down",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "코",
   "pronunciation": "코",
   "translation": "The nose",
@@ -13340,15 +11056,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Places"
-  ]
-},
-  {
-  "korean": "스스로",
-  "pronunciation": "스스로",
-  "translation": "By oneself, do it alone",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -14121,15 +11828,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "계시다",
-  "pronunciation": "계시다",
-  "translation": "(honorific) to stay or  reside",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "공기",
   "pronunciation": "공기",
   "translation": "Air",
@@ -14607,16 +12305,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "인사",
-  "pronunciation": "인사",
-  "translation": "People, men of society",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "People"
-  ]
-},
-  {
   "korean": "주어지다",
   "pronunciation": "주어지다",
   "translation": "To offer, proffer (conditions)",
@@ -14693,16 +12381,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "바르다",
-  "pronunciation": "바르다",
-  "translation": "Spread, apply",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "벌어지다",
   "pronunciation": "벌어지다",
   "translation": "To get serious, enlarge",
@@ -14765,16 +12443,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "눈",
-  "pronunciation": "눈",
-  "translation": "Snow",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -15130,16 +12798,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "맞다",
-  "pronunciation": "맞다",
-  "translation": "Be struck, beaten",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Food"
-  ]
-},
-  {
   "korean": "부문",
   "pronunciation": "부문",
   "translation": "A section, department",
@@ -15332,16 +12990,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "개",
-  "pronunciation": "개",
-  "translation": "A dog",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "부동산",
   "pronunciation": "부동산",
   "translation": "Real estate",
@@ -15359,25 +13007,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "양",
-  "pronunciation": "양",
-  "translation": "Miss ~",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "점",
-  "pronunciation": "점",
-  "translation": "a spot, a blemish",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -16092,15 +13721,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "바람",
-  "pronunciation": "바람",
-  "translation": "As a result, by the influence of",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "상상",
   "pronunciation": "상상",
   "translation": "Imagination",
@@ -16142,16 +13762,6 @@ const koreanDictionary = [
   "korean": "인식하다",
   "pronunciation": "인식하다",
   "translation": "recognition, cognizance",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "자",
-  "pronunciation": "자",
-  "translation": "A Chinese character",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -16890,16 +14500,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "군",
-  "pronunciation": "군",
-  "translation": "Mr.",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "대표적",
   "pronunciation": "대표적",
   "translation": "Representative",
@@ -17142,16 +14742,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "달리다",
-  "pronunciation": "달리다",
-  "translation": "Hang, be suspended",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "더하다",
   "pronunciation": "더하다",
   "translation": "Get worse",
@@ -17169,25 +14759,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "보통",
-  "pronunciation": "보통",
-  "translation": "Usually",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "쓰다",
-  "pronunciation": "쓰다",
-  "translation": "To wear (a hat)",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -17215,16 +14786,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "참",
-  "pronunciation": "참",
-  "translation": "In reality",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -17338,16 +14899,6 @@ const koreanDictionary = [
   "korean": "관객",
   "pronunciation": "관객",
   "translation": "Spectator",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "막",
-  "pronunciation": "막",
-  "translation": "Just now",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -17715,15 +15266,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "부족",
-  "pronunciation": "부족",
-  "translation": "lack, want (scarcity, insufficiency)",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -18096,16 +15638,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "미치다",
-  "pronunciation": "미치다",
-  "translation": "Be crazy",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "밟다",
   "pronunciation": "밟다",
   "translation": "Step on",
@@ -18317,16 +15849,6 @@ const koreanDictionary = [
   "korean": "붉다",
   "pronunciation": "붉다",
   "translation": "Be red, pink",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "사고",
-  "pronunciation": "사고",
-  "translation": "thought, contemplation",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -18569,16 +16091,6 @@ const koreanDictionary = [
   "korean": "변화하다",
   "pronunciation": "변화하다",
   "translation": "To change, vary",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "병",
-  "pronunciation": "병",
-  "translation": "A bottle",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -18950,16 +16462,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "약",
-  "pronunciation": "약",
-  "translation": "Medicine",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "어느새",
   "pronunciation": "어느새",
   "translation": "In no time, quickly",
@@ -19002,16 +16504,6 @@ const koreanDictionary = [
   "korean": "창문",
   "pronunciation": "창문",
   "translation": "A window",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "초",
-  "pronunciation": "초",
-  "translation": "A second",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -19370,15 +16862,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "단지",
-  "pronunciation": "단지",
-  "translation": "A public apt complex",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "물속",
   "pronunciation": "물속",
   "translation": "Inside the water",
@@ -19663,16 +17146,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "이상",
-  "pronunciation": "이상",
-  "translation": "Indisposition, abnormal",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "일종",
   "pronunciation": "일종",
   "translation": "A kind, a sort, a species",
@@ -19702,16 +17175,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "타다",
-  "pronunciation": "타다",
-  "translation": "Burn, blaze (firewood)",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "틀다",
   "pronunciation": "틀다",
   "translation": "To twist, wind",
@@ -19728,16 +17191,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "가지",
-  "pronunciation": "가지",
-  "translation": "Eggplant",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -19895,25 +17348,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "자신",
-  "pronunciation": "자신",
-  "translation": "Self-confidence",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "잠시",
-  "pronunciation": "잠시",
-  "translation": "For a little while",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -20589,29 +18023,9 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "차다",
-  "pronunciation": "차다",
-  "translation": "to kick",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "추진",
   "pronunciation": "추진",
   "translation": "Propulsion, drive",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "취하다",
-  "pronunciation": "취하다",
-  "translation": "To be drunk",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -20694,16 +18108,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "살",
-  "pronunciation": "살",
-  "translation": "flesh, muscle",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "선장",
   "pronunciation": "선장",
   "translation": "A captain",
@@ -20751,25 +18155,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Time"
-  ]
-},
-  {
-  "korean": "싸다",
-  "pronunciation": "싸다",
-  "translation": "Be inexpensive",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "의사",
-  "pronunciation": "의사",
-  "translation": "An intention, a purpose",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -21117,16 +18502,6 @@ const koreanDictionary = [
   "korean": "문자",
   "pronunciation": "문자",
   "translation": "letters, character",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "묻다",
-  "pronunciation": "묻다",
-  "translation": "to Stain",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -21617,16 +18992,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "신",
-  "pronunciation": "신",
-  "translation": "joy, delight",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "실내",
   "pronunciation": "실내",
   "translation": "In the room",
@@ -21793,26 +19158,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "약간",
-  "pronunciation": "약간",
-  "translation": "Some, a little",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "연기",
-  "pronunciation": "연기",
-  "translation": "Smoke, fume",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "이동",
   "pronunciation": "이동",
   "translation": "movement, migration, drift",
@@ -21842,16 +19187,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "지도",
-  "pronunciation": "지도",
-  "translation": "Instruction, guidance",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "지식인",
   "pronunciation": "지식인",
   "translation": "An intellectual",
@@ -21865,15 +19200,6 @@ const koreanDictionary = [
   "korean": "진지하다",
   "pronunciation": "진지하다",
   "translation": "To be serious, earnest",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "치다",
-  "pronunciation": "치다",
-  "translation": "to count, reckon, calculate",
   "example": "",
   "categories": [
     "Vocabulary"
@@ -21984,16 +19310,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "쉬다",
-  "pronunciation": "쉬다",
-  "translation": "to breathe",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Food"
   ]
 },
   {
@@ -22528,16 +19844,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "인상",
-  "pronunciation": "인상",
-  "translation": "Impression, imprint",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "인터넷",
   "pronunciation": "인터넷",
   "translation": "Internet",
@@ -22660,16 +19966,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "다리",
-  "pronunciation": "다리",
-  "translation": "Bridge",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -23163,16 +20459,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "수입",
-  "pronunciation": "수입",
-  "translation": "Income",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Verbs"
-  ]
-},
-  {
   "korean": "아이디어",
   "pronunciation": "아이디어",
   "translation": "Idea",
@@ -23281,15 +20567,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "경기",
-  "pronunciation": "경기",
-  "translation": "The business market’s state",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "계곡",
   "pronunciation": "계곡",
   "translation": "A valley or  gorge",
@@ -23384,16 +20661,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "이르다",
-  "pronunciation": "이르다",
-  "translation": "Be early, premature",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "일치하다",
   "pronunciation": "일치하다",
   "translation": "Agree with, to be in accord with",
@@ -23467,16 +20734,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "높이",
-  "pronunciation": "높이",
-  "translation": "High, aloft (adverb)",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -23810,15 +21067,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "잠깐",
-  "pronunciation": "잠깐",
-  "translation": "For a little while",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "잠들다",
   "pronunciation": "잠들다",
   "translation": "Fall asleep",
@@ -23929,16 +21177,6 @@ const koreanDictionary = [
   "korean": "당황하다",
   "pronunciation": "당황하다",
   "translation": "Be confused",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "말",
-  "pronunciation": "말",
-  "translation": "Horse",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -24139,16 +21377,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "관리",
-  "pronunciation": "관리",
-  "translation": "A government official",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Verbs"
-  ]
-},
-  {
   "korean": "국제화",
   "pronunciation": "국제화",
   "translation": "Internationalization",
@@ -24218,16 +21446,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "시",
-  "pronunciation": "시",
-  "translation": "City",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "신선하다",
   "pronunciation": "신선하다",
   "translation": "Fresh",
@@ -24274,25 +21492,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "People"
-  ]
-},
-  {
-  "korean": "장",
-  "pronunciation": "장",
-  "translation": "A chapter in a book",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "적",
-  "pronunciation": "적",
-  "translation": "The enemy",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -24356,16 +21555,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "표",
-  "pronunciation": "표",
-  "translation": "A marker, indication",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "품목",
   "pronunciation": "품목",
   "translation": "The name of an article, a list of articles",
@@ -24418,16 +21607,6 @@ const koreanDictionary = [
   "korean": "바보",
   "pronunciation": "바보",
   "translation": "Ignorant",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "별",
-  "pronunciation": "별",
-  "translation": "Classified by",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -24510,26 +21689,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Food"
-  ]
-},
-  {
-  "korean": "이",
-  "pronunciation": "이",
-  "translation": "A tooth",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "이상",
-  "pronunciation": "이상",
-  "translation": "An ideal, a goal",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Verbs"
   ]
 },
   {
@@ -24805,16 +21964,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "크다",
-  "pronunciation": "크다",
-  "translation": "To be big, large",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Adjectives"
-  ]
-},
-  {
   "korean": "탤런트",
   "pronunciation": "탤런트",
   "translation": "Talent",
@@ -24901,15 +22050,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "그럼",
-  "pronunciation": "그럼",
-  "translation": "Interjection: “yeah or  that’s right”",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "뇌",
   "pronunciation": "뇌",
   "translation": "Brains",
@@ -24963,25 +22103,6 @@ const koreanDictionary = [
   "korean": "좌우",
   "pronunciation": "좌우",
   "translation": "Left and right",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "주",
-  "pronunciation": "주",
-  "translation": "one’s master, one’s employer",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "지다",
-  "pronunciation": "지다",
-  "translation": "Set (the sun)",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -25102,15 +22223,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "대",
-  "pronunciation": "대",
-  "translation": "1) Versus 2)a pair, counterpart",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -25263,16 +22375,6 @@ const koreanDictionary = [
   "korean": "평범하다",
   "pronunciation": "평범하다",
   "translation": "Plain, average",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "프로",
-  "pronunciation": "프로",
-  "translation": "Program",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -25467,16 +22569,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "지구",
-  "pronunciation": "지구",
-  "translation": "A district, region",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "지우다",
   "pronunciation": "지우다",
   "translation": "To erase",
@@ -25661,16 +22753,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Education"
-  ]
-},
-  {
-  "korean": "이르다",
-  "pronunciation": "이르다",
-  "translation": "Inform, report, tell",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -25961,16 +23043,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "전기",
-  "pronunciation": "전기",
-  "translation": "the former period/term",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "중반",
   "pronunciation": "중반",
   "translation": "At the middle stage (of a game or contest, or otherwise)",
@@ -26221,15 +23293,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "가리다",
-  "pronunciation": "가리다",
-  "translation": "Choose or  select",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -26752,16 +23815,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "터",
-  "pronunciation": "터",
-  "translation": "A site, place",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "피시",
   "pronunciation": "피시",
   "translation": "PC, personal computer",
@@ -26832,15 +23885,6 @@ const koreanDictionary = [
   "korean": "기여하다",
   "pronunciation": "기여하다",
   "translation": "Contribute or  add much to",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "꼭",
-  "pronunciation": "꼭",
-  "translation": "Tightly or  fast",
   "example": "",
   "categories": [
     "Vocabulary"
@@ -27084,16 +24128,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "검사",
-  "pronunciation": "검사",
-  "translation": "A public prosecutor",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "그쪽",
   "pronunciation": "그쪽",
   "translation": "Those people",
@@ -27239,31 +24273,12 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "조각",
-  "pronunciation": "조각",
-  "translation": "A piece, scrap, fragment",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "중부",
   "pronunciation": "중부",
   "translation": "The center, middle part",
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "차",
-  "pronunciation": "차",
-  "translation": "Tea",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -27605,16 +24620,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "해석",
-  "pronunciation": "해석",
-  "translation": "Analysis, analytical research",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "확인되다",
   "pronunciation": "확인되다",
   "translation": "To be confirmed",
@@ -27654,32 +24659,12 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "거",
-  "pronunciation": "거",
-  "translation": "That thing",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "고민하다",
   "pronunciation": "고민하다",
   "translation": "Be in anguish or  worried",
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "과",
-  "pronunciation": "과",
-  "translation": "1) A course or  branch of study  2) a department or  a faculty",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Education"
   ]
 },
   {
@@ -27725,16 +24710,6 @@ const koreanDictionary = [
   "korean": "상",
   "pronunciation": "상",
   "translation": "Upper",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "새",
-  "pronunciation": "새",
-  "translation": "An interval",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -27805,16 +24780,6 @@ const koreanDictionary = [
   "korean": "지출",
   "pronunciation": "지출",
   "translation": "Expenses, expenditure",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "차",
-  "pronunciation": "차",
-  "translation": "difference, margin",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -28161,15 +25126,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "기구",
-  "pronunciation": "기구",
-  "translation": "A utensil or  tool",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "깔다",
   "pronunciation": "깔다",
   "translation": "to pave (a road), lay down a floor, spread a blanket etc.",
@@ -28367,15 +25323,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "지다",
-  "pronunciation": "지다",
-  "translation": "To lose (at war, a game)",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "진단",
   "pronunciation": "진단",
   "translation": "Diagnosis",
@@ -28480,15 +25427,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "군사",
-  "pronunciation": "군사",
-  "translation": "A soldier or  a private",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "귀신",
   "pronunciation": "귀신",
   "translation": "A ghost",
@@ -28526,16 +25464,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "깊이",
-  "pronunciation": "깊이",
-  "translation": "Depth",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "나뭇가지",
   "pronunciation": "나뭇가지",
   "translation": "A tree branch",
@@ -28543,15 +25471,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "낫다",
-  "pronunciation": "낫다",
-  "translation": "to get better (from an illness)",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -28968,16 +25887,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "묻다",
-  "pronunciation": "묻다",
-  "translation": "to Bury",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "변호사",
   "pronunciation": "변호사",
   "translation": "Lawyer",
@@ -28985,15 +25894,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "상",
-  "pronunciation": "상",
-  "translation": "A statue, a figure",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -29024,17 +25924,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "예",
-  "pronunciation": "예",
-  "translation": "Old days, days gone by",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Time",
-    "Verbs"
   ]
 },
   {
@@ -29335,16 +26224,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "절",
-  "pronunciation": "절",
-  "translation": "Bow in salutation",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "정비",
   "pronunciation": "정비",
   "translation": "maintaining equipment in good working order",
@@ -29592,16 +26471,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "씨",
-  "pronunciation": "씨",
-  "translation": "Seeds (sow)",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "안쪽",
   "pronunciation": "안쪽",
   "translation": "The inside, the inner part",
@@ -29812,15 +26681,6 @@ const koreanDictionary = [
   "korean": "그렇지",
   "pronunciation": "그렇지",
   "translation": "So it is or  that is right",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "깨다",
-  "pronunciation": "깨다",
-  "translation": "Break or  crack",
   "example": "",
   "categories": [
     "Vocabulary"
@@ -30147,16 +27007,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "채",
-  "pronunciation": "채",
-  "translation": "Still, not yet",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "책임지다",
   "pronunciation": "책임지다",
   "translation": "Take responsibility",
@@ -30265,16 +27115,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "가장",
-  "pronunciation": "가장",
-  "translation": "Head of a household",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Places"
-  ]
-},
-  {
   "korean": "곡",
   "pronunciation": "곡",
   "translation": "A tune or  an air",
@@ -30309,15 +27149,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "무리",
-  "pronunciation": "무리",
-  "translation": "A company, a band",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -30426,16 +27257,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "아이",
-  "pronunciation": "아이",
-  "translation": "Oh my god!",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Verbs"
   ]
 },
   {
@@ -30659,16 +27480,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "갖다",
-  "pronunciation": "갖다",
-  "translation": "Possess",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -30924,16 +27735,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "가까이",
-  "pronunciation": "가까이",
-  "translation": "Close",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "가득하다",
   "pronunciation": "가득하다",
   "translation": "To fill",
@@ -31095,16 +27896,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "뻔하다",
-  "pronunciation": "뻔하다",
-  "translation": "Be clear, evident",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "상자",
   "pronunciation": "상자",
   "translation": "A box, case",
@@ -31147,16 +27938,6 @@ const koreanDictionary = [
   "korean": "승진",
   "pronunciation": "승진",
   "translation": "promotion, advancement",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "양",
-  "pronunciation": "양",
-  "translation": "Both, two",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -31308,16 +28089,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "간",
-  "pronunciation": "간",
-  "translation": "Liver",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "갇히다",
   "pronunciation": "갇히다",
   "translation": "Be confined or  shut up",
@@ -31345,16 +28116,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "고장",
-  "pronunciation": "고장",
-  "translation": "Broken",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "근로",
   "pronunciation": "근로",
   "translation": "Labor or  exertion",
@@ -31367,16 +28128,6 @@ const koreanDictionary = [
   "korean": "눈동자",
   "pronunciation": "눈동자",
   "translation": "The pupil",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "늦다",
-  "pronunciation": "늦다",
-  "translation": "Be late, overdue",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -31951,16 +28702,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "차다",
-  "pronunciation": "차다",
-  "translation": "cold, chilly",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "치료하다",
   "pronunciation": "치료하다",
   "translation": "To cure, heal, treat a patient",
@@ -31974,16 +28715,6 @@ const koreanDictionary = [
   "korean": "칸",
   "pronunciation": "칸",
   "translation": "Blank space",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "한",
-  "pronunciation": "한",
-  "translation": "A grudge, rancor",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -32098,16 +28829,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "못",
-  "pronunciation": "못",
-  "translation": "A nail",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "묘사하다",
   "pronunciation": "묘사하다",
   "translation": "To describe",
@@ -32178,16 +28899,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "불리다",
-  "pronunciation": "불리다",
-  "translation": "soak, steep",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "불행",
   "pronunciation": "불행",
   "translation": "Unhappiness",
@@ -32215,16 +28926,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "시각",
-  "pronunciation": "시각",
-  "translation": "The time of day",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Time"
   ]
 },
   {
@@ -32373,15 +29074,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "각자",
-  "pronunciation": "각자",
-  "translation": "Each one or  every one",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "간혹",
   "pronunciation": "간혹",
   "translation": "Occasionally or at times",
@@ -32456,16 +29148,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "도",
-  "pronunciation": "도",
-  "translation": "Road",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -32591,16 +29273,6 @@ const koreanDictionary = [
   "korean": "선정하다",
   "pronunciation": "선정하다",
   "translation": "select, choose",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "세다",
-  "pronunciation": "세다",
-  "translation": "Count",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -32932,16 +29604,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "만",
-  "pronunciation": "만",
-  "translation": "10000",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "만만하다",
   "pronunciation": "만만하다",
   "translation": "Be soft, tender ; to be easy to handle, deal with",
@@ -32984,16 +29646,6 @@ const koreanDictionary = [
   "korean": "사촌",
   "pronunciation": "사촌",
   "translation": "a cousin",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "상",
-  "pronunciation": "상",
-  "translation": "A prize",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -33137,15 +29789,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "차다",
-  "pronunciation": "차다",
-  "translation": "Put on, fasten, wear",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "창작",
   "pronunciation": "창작",
   "translation": "Creation, origination",
@@ -33252,15 +29895,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "간",
-  "pronunciation": "간",
-  "translation": "A salty taste or  saltiness",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "간판",
   "pronunciation": "간판",
   "translation": "A signboard",
@@ -33337,16 +29971,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "말리다",
-  "pronunciation": "말리다",
-  "translation": "Make stop",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "맘",
   "pronunciation": "맘",
   "translation": "Heart",
@@ -33357,15 +29981,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "먹다",
-  "pronunciation": "먹다",
-  "translation": "VST + 먹다, adds no meaning",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "명절",
   "pronunciation": "명절",
   "translation": "Festival days",
@@ -33373,15 +29988,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Time"
-  ]
-},
-  {
-  "korean": "못하다",
-  "pronunciation": "못하다",
-  "translation": "Be inferior, worse than",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -34094,16 +30700,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "감다",
-  "pronunciation": "감다",
-  "translation": "Wind up",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "같이하다",
   "pronunciation": "같이하다",
   "translation": "To do together or  to share",
@@ -34220,15 +30816,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "면",
-  "pronunciation": "면",
-  "translation": "Subdivision of a county",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "모자",
   "pronunciation": "모자",
   "translation": "A hat",
@@ -34271,16 +30858,6 @@ const koreanDictionary = [
   "korean": "비비다",
   "pronunciation": "비비다",
   "translation": "rub, chafe",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "사과",
-  "pronunciation": "사과",
-  "translation": "An apology",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -34357,16 +30934,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "시기",
-  "pronunciation": "시기",
-  "translation": "The time, the season",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Time"
-  ]
-},
-  {
   "korean": "신념",
   "pronunciation": "신념",
   "translation": "belief, faith",
@@ -34405,25 +30972,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "여간",
-  "pronunciation": "여간",
-  "translation": "Some, a little (여간 ~지 않다 means very ~다)",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "역",
-  "pronunciation": "역",
-  "translation": "A railroad station/depot",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "연락하다",
   "pronunciation": "연락하다",
   "translation": "To contact, get in touch with",
@@ -34445,16 +30993,6 @@ const koreanDictionary = [
   "korean": "예의",
   "pronunciation": "예의",
   "translation": "Courtesy, politeness",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "이내",
-  "pronunciation": "이내",
-  "translation": "within, less than",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -34488,15 +31026,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Greetings"
-  ]
-},
-  {
-  "korean": "임금",
-  "pronunciation": "임금",
-  "translation": "A king, ruler, sovereign",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -34536,16 +31065,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Adjectives"
-  ]
-},
-  {
-  "korean": "판",
-  "pronunciation": "판",
-  "translation": "Board",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -34738,15 +31257,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "어리다",
-  "pronunciation": "어리다",
-  "translation": "one’s eyes dim with tears",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "여권",
   "pronunciation": "여권",
   "translation": "A passport",
@@ -34933,16 +31443,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "각각",
-  "pronunciation": "각각",
-  "translation": "Each and every",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "간격",
   "pronunciation": "간격",
   "translation": "A space or  interval",
@@ -35108,16 +31608,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "성",
-  "pronunciation": "성",
-  "translation": "castle, fortress",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "소형",
   "pronunciation": "소형",
   "translation": "Small size",
@@ -35224,16 +31714,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "절대",
-  "pronunciation": "절대",
-  "translation": "Absoluteness",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -35462,16 +31942,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "발전",
-  "pronunciation": "발전",
-  "translation": "Generate electricity",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "방해",
   "pronunciation": "방해",
   "translation": "An obstacle, hindrance",
@@ -35555,16 +32025,6 @@ const koreanDictionary = [
   "korean": "악수",
   "pronunciation": "악수",
   "translation": "Handshake",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "애",
-  "pronunciation": "애",
-  "translation": "Troubles, worries",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -35833,16 +32293,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "끼다",
-  "pronunciation": "끼다",
-  "translation": "To smoke",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "넘어지다",
   "pronunciation": "넘어지다",
   "translation": "Fall down, collapse",
@@ -36011,16 +32461,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "얘",
-  "pronunciation": "얘",
-  "translation": "Yes.",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "엔",
   "pronunciation": "엔",
   "translation": "Yen (Japanese)",
@@ -36146,41 +32586,12 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "첫째",
-  "pronunciation": "첫째",
-  "translation": "The first",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "타고나다",
   "pronunciation": "타고나다",
   "translation": "Be born, gifted/endowed with",
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "태우다",
-  "pronunciation": "태우다",
-  "translation": "To take in a car, give a ride to",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "행사",
-  "pronunciation": "행사",
-  "translation": "Use, exercise",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -36206,16 +32617,6 @@ const koreanDictionary = [
   "korean": "가입",
   "pronunciation": "가입",
   "translation": "Entrance",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "가정",
-  "pronunciation": "가정",
-  "translation": "Supposition",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -36330,15 +32731,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "도로",
-  "pronunciation": "도로",
-  "translation": "Back, same as ever, same as it was before",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "막걸리",
   "pronunciation": "막걸리",
   "translation": "A slightly bitter soju drink",
@@ -36346,16 +32738,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Food"
-  ]
-},
-  {
-  "korean": "맡다",
-  "pronunciation": "맡다",
-  "translation": "Smell",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -36385,16 +32767,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "방문",
-  "pronunciation": "방문",
-  "translation": "A door of a room",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Places"
   ]
 },
   {
@@ -36494,32 +32866,12 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "올",
-  "pronunciation": "올",
-  "translation": "Coming (year, week)",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Time"
-  ]
-},
-  {
   "korean": "유의하다",
   "pronunciation": "유의하다",
   "translation": "To bear in mind, be heedful of",
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "유학",
-  "pronunciation": "유학",
-  "translation": "Confucianism",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -36889,16 +33241,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "부",
-  "pronunciation": "부",
-  "translation": "wealth, riches",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "성숙하다",
   "pronunciation": "성숙하다",
   "translation": "to ripen, to mature",
@@ -36965,15 +33307,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "시집",
-  "pronunciation": "시집",
-  "translation": "A collection of poems",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -37461,15 +33794,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "세",
-  "pronunciation": "세",
-  "translation": "A generation, age, epoch",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -38139,16 +34463,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "기사",
-  "pronunciation": "기사",
-  "translation": "Technician",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "기숙사",
   "pronunciation": "기숙사",
   "translation": "A hostel or  residence hall",
@@ -38208,16 +34522,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "마당",
-  "pronunciation": "마당",
-  "translation": "An instance, case",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "마음껏",
   "pronunciation": "마음껏",
   "translation": "As much as you want",
@@ -38240,16 +34544,6 @@ const koreanDictionary = [
   "korean": "미팅",
   "pronunciation": "미팅",
   "translation": "Meeting",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "바",
-  "pronunciation": "바",
-  "translation": "Bar",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -38280,16 +34574,6 @@ const koreanDictionary = [
   "korean": "뱉다",
   "pronunciation": "뱉다",
   "translation": "Spit",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "벌어지다",
-  "pronunciation": "벌어지다",
-  "translation": "Widen, get wider",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -38372,16 +34656,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "안기다",
-  "pronunciation": "안기다",
-  "translation": "(1) To fix on a person, lay the blame on a person",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "People"
   ]
 },
   {
@@ -38603,15 +34877,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "통화",
-  "pronunciation": "통화",
-  "translation": "Currency, the unit of circulation",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "틀림없이",
   "pronunciation": "틀림없이",
   "translation": "No mistaking it",
@@ -38746,16 +35011,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "달다",
-  "pronunciation": "달다",
-  "translation": "to be sweet",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "달려들다",
   "pronunciation": "달려들다",
   "translation": "Run, rush, jump at",
@@ -38825,16 +35080,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "벌",
-  "pronunciation": "벌",
-  "translation": "Set (of clothes)",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "뵈다",
   "pronunciation": "뵈다",
   "translation": "Contraction of 보이다",
@@ -38848,15 +35093,6 @@ const koreanDictionary = [
   "korean": "상류",
   "pronunciation": "상류",
   "translation": "The upper classes, upstream",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "석",
-  "pronunciation": "석",
-  "translation": "Three (in 3 months)",
   "example": "",
   "categories": [
     "Vocabulary"
@@ -39045,16 +35281,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "정상",
-  "pronunciation": "정상",
-  "translation": "normalcy, normality",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "정상적",
   "pronunciation": "정상적",
   "translation": "normal, like usual",
@@ -39068,25 +35294,6 @@ const koreanDictionary = [
   "korean": "질적",
   "pronunciation": "질적",
   "translation": "Qualitative",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "척",
-  "pronunciation": "척",
-  "translation": "To appear or look as",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "철",
-  "pronunciation": "철",
-  "translation": "Season (the 4)",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -39200,15 +35407,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Greetings"
-  ]
-},
-  {
-  "korean": "강도",
-  "pronunciation": "강도",
-  "translation": "A robber or  burglar",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -39433,15 +35631,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "묻히다",
-  "pronunciation": "묻히다",
-  "translation": "Have smeared, be covered with",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -39691,35 +35880,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "짜다",
-  "pronunciation": "짜다",
-  "translation": "Squeeze, press out",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "참",
-  "pronunciation": "참",
-  "translation": "At the point of, when",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "채",
-  "pronunciation": "채",
-  "translation": "House counter",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Places"
-  ]
-},
-  {
   "korean": "최후",
   "pronunciation": "최후",
   "translation": "The last, the end, the conclusion",
@@ -39818,15 +35978,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "군",
-  "pronunciation": "군",
-  "translation": "A county or district",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "기다",
   "pronunciation": "기다",
   "translation": "Crawl or creep",
@@ -39850,16 +36001,6 @@ const koreanDictionary = [
   "korean": "달력",
   "pronunciation": "달력",
   "translation": "A calendar",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "대",
-  "pronunciation": "대",
-  "translation": "One piece",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -40163,16 +36304,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "지다",
-  "pronunciation": "지다",
-  "translation": "To fade away, come off",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Verbs"
-  ]
-},
-  {
   "korean": "찌꺼기",
   "pronunciation": "찌꺼기",
   "translation": "drugs, sediments, remnants (tea grounds)",
@@ -40280,15 +36411,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "고르다",
-  "pronunciation": "고르다",
-  "translation": "Flat or  even",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "고속도로",
   "pronunciation": "고속도로",
   "translation": "Freeway or  highway with no street lights",
@@ -40363,15 +36485,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "내외",
-  "pronunciation": "내외",
-  "translation": "The interior and exterior",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "대략",
   "pronunciation": "대략",
   "translation": "an outline, summary (2) generally, on the whole",
@@ -40421,16 +36534,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "바람",
-  "pronunciation": "바람",
-  "translation": "A wish, hope",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "발목",
   "pronunciation": "발목",
   "translation": "Ankle",
@@ -40453,26 +36556,6 @@ const koreanDictionary = [
   "korean": "방울",
   "pronunciation": "방울",
   "translation": "A drop",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "배",
-  "pronunciation": "배",
-  "translation": "Pear",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "벌",
-  "pronunciation": "벌",
-  "translation": "A bee",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -40618,15 +36701,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "신기하다",
-  "pronunciation": "신기하다",
-  "translation": "To be novel, original",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "신비",
   "pronunciation": "신비",
   "translation": "Mystery",
@@ -40737,15 +36811,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "용기",
-  "pronunciation": "용기",
-  "translation": "A container, a vessel",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "웨이터",
   "pronunciation": "웨이터",
   "translation": "Waiter",
@@ -40833,16 +36898,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "종",
-  "pronunciation": "종",
-  "translation": "A bell",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "종소리",
   "pronunciation": "종소리",
   "translation": "The sound of a bell",
@@ -40915,16 +36970,6 @@ const koreanDictionary = [
   "korean": "초대하다",
   "pronunciation": "초대하다",
   "translation": "To invite",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "총",
-  "pronunciation": "총",
-  "translation": "A gun",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -41011,16 +37056,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "회의",
-  "pronunciation": "회의",
-  "translation": "Doubt, skepticism",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "가로등",
   "pronunciation": "가로등",
   "translation": "A street light",
@@ -41051,15 +37086,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "걷다",
-  "pronunciation": "걷다",
-  "translation": "1) Roll back /up one’s sleeves  2)fold or  furl up  3) finish work",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "고집",
   "pronunciation": "고집",
   "translation": "Persistence or  stubbornness",
@@ -41082,15 +37108,6 @@ const koreanDictionary = [
   "korean": "급격히",
   "pronunciation": "급격히",
   "translation": "Be rapid or  sudden",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "기능",
-  "pronunciation": "기능",
-  "translation": "Ability or  capacity or  skill",
   "example": "",
   "categories": [
     "Vocabulary"
@@ -41175,16 +37192,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "말다",
-  "pronunciation": "말다",
-  "translation": "Roll up, convolve",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "맞은편",
   "pronunciation": "맞은편",
   "translation": "The other side of  THIS",
@@ -41197,16 +37204,6 @@ const koreanDictionary = [
   "korean": "멋",
   "pronunciation": "멋",
   "translation": "Smartness",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "면",
-  "pronunciation": "면",
-  "translation": "Cotton",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -41545,16 +37542,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "절",
-  "pronunciation": "절",
-  "translation": "clause, paragraph",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "젖",
   "pronunciation": "젖",
   "translation": "The breasts",
@@ -41697,29 +37684,9 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "평",
-  "pronunciation": "평",
-  "translation": "A criticism",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "평화롭다",
   "pronunciation": "평화롭다",
   "translation": "To be peaceful",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "표시",
-  "pronunciation": "표시",
-  "translation": "A sign, signal",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -41935,16 +37902,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "대사",
-  "pronunciation": "대사",
-  "translation": "an ambassador",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "두세",
   "pronunciation": "두세",
   "translation": "Two or three (months)",
@@ -42047,16 +38004,6 @@ const koreanDictionary = [
   "korean": "발음",
   "pronunciation": "발음",
   "translation": "Pronunciation",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "방울",
-  "pronunciation": "방울",
-  "translation": "A bell",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -42193,16 +38140,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "시장",
-  "pronunciation": "시장",
-  "translation": "Mayor",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "시청률",
   "pronunciation": "시청률",
   "translation": "Popularity rating",
@@ -42276,16 +38213,6 @@ const koreanDictionary = [
   "korean": "옥수수",
   "pronunciation": "옥수수",
   "translation": "Corn",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "원",
-  "pronunciation": "원",
-  "translation": "A circle",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -42432,16 +38359,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "지점",
-  "pronunciation": "지점",
-  "translation": "Branch store",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "진단하다",
   "pronunciation": "진단하다",
   "translation": "To diagnose",
@@ -42459,15 +38376,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "타다",
-  "pronunciation": "타다",
-  "translation": "Get, receive, take your share of the money",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -42669,16 +38577,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "People"
-  ]
-},
-  {
-  "korean": "바퀴",
-  "pronunciation": "바퀴",
-  "translation": "Cockroach",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -43408,16 +39306,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "빨다",
-  "pronunciation": "빨다",
-  "translation": "Wash the laundry",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "사무",
   "pronunciation": "사무",
   "translation": "Office work",
@@ -43438,16 +39326,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "상",
-  "pronunciation": "상",
-  "translation": "A table, small desk",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Adjectives"
-  ]
-},
-  {
   "korean": "상쾌하다",
   "pronunciation": "상쾌하다",
   "translation": "Be refreshing, exhilarating",
@@ -43455,16 +39333,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "성",
-  "pronunciation": "성",
-  "translation": "A family name, surname",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "People"
   ]
 },
   {
@@ -43574,15 +39442,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "울리다",
-  "pronunciation": "울리다",
-  "translation": "To make (a baby) cry",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -43877,15 +39736,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "고개",
-  "pronunciation": "고개",
-  "translation": "the peak or crest (of a hill)",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "고프다",
   "pronunciation": "고프다",
   "translation": "Hungry or  famished",
@@ -43977,15 +39827,6 @@ const koreanDictionary = [
   "korean": "납득하다",
   "pronunciation": "납득하다",
   "translation": "To convince, persuade oneself",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "단",
-  "pronunciation": "단",
-  "translation": "A grade or class",
   "example": "",
   "categories": [
     "Vocabulary"
@@ -44098,26 +39939,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "뵈다",
-  "pronunciation": "뵈다",
-  "translation": "See (polite)",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "부",
-  "pronunciation": "부",
-  "translation": "assistant, deputy",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -44343,16 +40164,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "익히다",
-  "pronunciation": "익히다",
-  "translation": "cook, boil",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "일대",
   "pronunciation": "일대",
   "translation": "One great/large",
@@ -44500,15 +40311,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "팬",
-  "pronunciation": "팬",
-  "translation": "A fan, an enthusiast",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "해롭다",
   "pronunciation": "해롭다",
   "translation": "To be harmful, injurious",
@@ -44601,15 +40403,6 @@ const koreanDictionary = [
   "korean": "공연히",
   "pronunciation": "공연히",
   "translation": "Futile or  vain or  useless",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "과정",
-  "pronunciation": "과정",
-  "translation": "A course or  curriculum",
   "example": "",
   "categories": [
     "Vocabulary"
@@ -44830,16 +40623,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "밤",
-  "pronunciation": "밤",
-  "translation": "Chestnut",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "배치",
   "pronunciation": "배치",
   "translation": "Arrangement",
@@ -44873,16 +40656,6 @@ const koreanDictionary = [
   "korean": "본사",
   "pronunciation": "본사",
   "translation": "Main office",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "부르다",
-  "pronunciation": "부르다",
-  "translation": "To be full",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -45163,16 +40936,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "이해",
-  "pronunciation": "이해",
-  "translation": "interests, gains",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "일손",
   "pronunciation": "일손",
   "translation": "Work in hand",
@@ -45263,16 +41026,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "지적",
-  "pronunciation": "지적",
-  "translation": "Intellectual, brainy",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "진로",
   "pronunciation": "진로",
   "translation": "A course, direction, path",
@@ -45288,16 +41041,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "쪽",
-  "pronunciation": "쪽",
-  "translation": "A side, direction",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -45381,15 +41124,6 @@ const koreanDictionary = [
   "korean": "푸다",
   "pronunciation": "푸다",
   "translation": "Dip out, bail out",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "풀",
-  "pronunciation": "풀",
-  "translation": "Glue (spread the ~)",
   "example": "",
   "categories": [
     "Vocabulary"
@@ -45511,16 +41245,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "구하다",
-  "pronunciation": "구하다",
-  "translation": "Rescue a person",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "People"
-  ]
-},
-  {
   "korean": "내달",
   "pronunciation": "내달",
   "translation": "Next month",
@@ -45577,15 +41301,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "만",
-  "pronunciation": "만",
-  "translation": "To be of sufficient quantity",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -45863,29 +41578,9 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "조",
-  "pronunciation": "조",
-  "translation": "A company, group",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "졸업생",
   "pronunciation": "졸업생",
   "translation": "A graduate",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "죽다",
-  "pronunciation": "죽다",
-  "translation": "Lose your spirit",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -45937,16 +41632,6 @@ const koreanDictionary = [
   "korean": "토론하다",
   "pronunciation": "토론하다",
   "translation": "To debate, discuss",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "하나하나",
-  "pronunciation": "하나하나",
-  "translation": "Each individual piece",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -46032,16 +41717,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "기타",
-  "pronunciation": "기타",
-  "translation": "Guitar",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "길어지다",
   "pronunciation": "길어지다",
   "translation": "To become long",
@@ -46069,16 +41744,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Verbs"
-  ]
-},
-  {
-  "korean": "남",
-  "pronunciation": "남",
-  "translation": "A man",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -46219,16 +41884,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "연기",
-  "pronunciation": "연기",
-  "translation": "postponement, deferment",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "위로",
   "pronunciation": "위로",
   "translation": "consolation, solace",
@@ -46294,15 +41949,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "타다",
-  "pronunciation": "타다",
-  "translation": "Put in, mix, dissolve",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -46491,16 +42137,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "보수",
-  "pronunciation": "보수",
-  "translation": "mending, repair",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "볼일",
   "pronunciation": "볼일",
   "translation": "business, errand, engagement",
@@ -46531,16 +42167,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "비행",
-  "pronunciation": "비행",
-  "translation": "An irregularity",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "빗줄기",
   "pronunciation": "빗줄기",
   "translation": "Great streaks of rain",
@@ -46554,16 +42180,6 @@ const koreanDictionary = [
   "korean": "사회학",
   "pronunciation": "사회학",
   "translation": "Social science",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "성적",
-  "pronunciation": "성적",
-  "translation": "Sexual",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -46667,15 +42283,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "자리",
-  "pronunciation": "자리",
-  "translation": "A spot at a table",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -46818,15 +42425,6 @@ const koreanDictionary = [
   "korean": "간접적",
   "pronunciation": "간접적",
   "translation": "Indirect or  mediate",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "갈다",
-  "pronunciation": "갈다",
-  "translation": "Renew or substitute; same",
   "example": "",
   "categories": [
     "Vocabulary"
@@ -47056,17 +42654,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "원",
-  "pronunciation": "원",
-  "translation": "Goodness! Gracious!",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Verbs",
-    "Adjectives"
   ]
 },
   {
@@ -47305,15 +42892,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "흐리다",
-  "pronunciation": "흐리다",
-  "translation": "Be muddy, cloudy ;  with a tint of",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "가능",
   "pronunciation": "가능",
   "translation": "Possibility",
@@ -47369,15 +42947,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "김",
-  "pronunciation": "김",
-  "translation": "1) Steam 2) scent, aroma",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -47489,16 +43058,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "수",
-  "pronunciation": "수",
-  "translation": "way, method",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "수고하다",
   "pronunciation": "수고하다",
   "translation": "To work hard",
@@ -47506,25 +43065,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "수학",
-  "pronunciation": "수학",
-  "translation": "Pursuit of knowledge",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "신부",
-  "pronunciation": "신부",
-  "translation": "A holy father, priest",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -47724,15 +43264,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "치다",
-  "pronunciation": "치다",
-  "translation": "(a storm, strong wind, rain, lightning) to strike, hit",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "캠퍼스",
   "pronunciation": "캠퍼스",
   "translation": "Campus",
@@ -47746,16 +43277,6 @@ const koreanDictionary = [
   "korean": "터널",
   "pronunciation": "터널",
   "translation": "Tunnel",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "통",
-  "pronunciation": "통",
-  "translation": "Counters for letters",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -47880,16 +43401,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "만",
-  "pronunciation": "만",
-  "translation": "Just, full",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "메모",
   "pronunciation": "메모",
   "translation": "Memo",
@@ -47970,16 +43481,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "부인",
-  "pronunciation": "부인",
-  "translation": "Wife",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "분주하다",
   "pronunciation": "분주하다",
   "translation": "Be busy, crowded",
@@ -48013,16 +43514,6 @@ const koreanDictionary = [
   "korean": "뺏다",
   "pronunciation": "뺏다",
   "translation": "Straight",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "사전",
-  "pronunciation": "사전",
-  "translation": "Dictionary",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -48107,15 +43598,6 @@ const koreanDictionary = [
     "Verbs",
     "Adjectives",
     "Greetings"
-  ]
-},
-  {
-  "korean": "안되다",
-  "pronunciation": "안되다",
-  "translation": "To refuse to accept",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -48227,16 +43709,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "저기",
-  "pronunciation": "저기",
-  "translation": "“hey,look here, now”",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "전문직",
   "pronunciation": "전문직",
   "translation": "Specialty job",
@@ -48284,15 +43756,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "쪽",
-  "pronunciation": "쪽",
-  "translation": "A portion, a side",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -48407,16 +43870,6 @@ const koreanDictionary = [
   "korean": "효도",
   "pronunciation": "효도",
   "translation": "Filial piety",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "가구",
-  "pronunciation": "가구",
-  "translation": "Furniture",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -48673,16 +44126,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "쓰이다",
-  "pronunciation": "쓰이다",
-  "translation": "Be written",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "엽서",
   "pronunciation": "엽서",
   "translation": "A postcard",
@@ -48752,25 +44195,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "익다",
-  "pronunciation": "익다",
-  "translation": "Get familiar with, experienced with",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "일",
-  "pronunciation": "일",
-  "translation": "One",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "장마",
   "pronunciation": "장마",
   "translation": "The rainy spell in the summer",
@@ -48787,16 +44211,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Education"
-  ]
-},
-  {
-  "korean": "전기",
-  "pronunciation": "전기",
-  "translation": "a biography",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -48876,15 +44290,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Verbs"
-  ]
-},
-  {
-  "korean": "찌다",
-  "pronunciation": "찌다",
-  "translation": "To put on weight",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -49082,26 +44487,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "무",
-  "pronunciation": "무",
-  "translation": "nothing, nil",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "묵다",
-  "pronunciation": "묵다",
-  "translation": "Stay overnight sw",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "바나나",
   "pronunciation": "바나나",
   "translation": "Banana",
@@ -49154,16 +44539,6 @@ const koreanDictionary = [
   "korean": "부채",
   "pronunciation": "부채",
   "translation": "A debt, liabilities",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "불법",
-  "pronunciation": "불법",
-  "translation": "Buddhism",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -49301,16 +44676,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "양",
-  "pronunciation": "양",
-  "translation": "A sheep, ram",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "여전하다",
   "pronunciation": "여전하다",
   "translation": "Be unchanged, the same as before",
@@ -49356,26 +44721,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "위",
-  "pronunciation": "위",
-  "translation": "The stomach",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "일기",
-  "pronunciation": "일기",
-  "translation": "The weather",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Food"
   ]
 },
   {
@@ -49477,16 +44822,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "지방",
-  "pronunciation": "지방",
-  "translation": "Fat, grease, lard",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "차차",
   "pronunciation": "차차",
   "translation": "Gradually",
@@ -49520,16 +44855,6 @@ const koreanDictionary = [
   "korean": "코피",
   "pronunciation": "코피",
   "translation": "A nose bleed",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "턱",
-  "pronunciation": "턱",
-  "translation": "Reason, grounds",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -49598,15 +44923,6 @@ const koreanDictionary = [
   "korean": "건너",
   "pronunciation": "건너",
   "translation": "The other or  opposite side",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "걷다",
-  "pronunciation": "걷다",
-  "translation": "Walk on or  tread on",
   "example": "",
   "categories": [
     "Vocabulary"
@@ -49920,15 +45236,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "안",
-  "pronunciation": "안",
-  "translation": "A plan, proposal, suggestion",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "안부",
   "pronunciation": "안부",
   "translation": "safety, welfare",
@@ -50058,15 +45365,6 @@ const koreanDictionary = [
     "Vocabulary",
     "Verbs",
     "Adjectives"
-  ]
-},
-  {
-  "korean": "죽",
-  "pronunciation": "죽",
-  "translation": "In a very straight line, in a row",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -50265,16 +45563,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "감",
-  "pronunciation": "감",
-  "translation": "Persimmon",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "개다",
   "pronunciation": "개다",
   "translation": "To clear up or  become clear (weather)",
@@ -50318,16 +45606,6 @@ const koreanDictionary = [
   "korean": "깨어지다",
   "pronunciation": "깨어지다",
   "translation": "To waken",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "남",
-  "pronunciation": "남",
-  "translation": "The south",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -50396,16 +45674,6 @@ const koreanDictionary = [
   "korean": "마사지",
   "pronunciation": "마사지",
   "translation": "Massage",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "만",
-  "pronunciation": "만",
-  "translation": "10000",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -50503,26 +45771,6 @@ const koreanDictionary = [
   "korean": "복사하다",
   "pronunciation": "복사하다",
   "translation": "reproduce, copy",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "붓다",
-  "pronunciation": "붓다",
-  "translation": "to be swollen",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "비",
-  "pronunciation": "비",
-  "translation": "A monument",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -50737,29 +45985,9 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "인상",
-  "pronunciation": "인상",
-  "translation": "Look, personal appearance",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "People"
-  ]
-},
-  {
   "korean": "입사",
   "pronunciation": "입사",
   "translation": "enter/join a company",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "자",
-  "pronunciation": "자",
-  "translation": "A ruler",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -50837,15 +46065,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "초대",
-  "pronunciation": "초대",
-  "translation": "The first generation, the founder",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "추천하다",
   "pronunciation": "추천하다",
   "translation": "To recommend, say a good word for",
@@ -50880,16 +46099,6 @@ const koreanDictionary = [
   "korean": "판매되다",
   "pronunciation": "판매되다",
   "translation": "To be sold",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "편",
-  "pronunciation": "편",
-  "translation": "Facilities, services",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -51044,16 +46253,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "과거",
-  "pronunciation": "과거",
-  "translation": "The state examination",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "국가적",
   "pronunciation": "국가적",
   "translation": "National or  state",
@@ -51135,16 +46334,6 @@ const koreanDictionary = [
   "korean": "마중",
   "pronunciation": "마중",
   "translation": "Meeting, reception",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "밝다",
-  "pronunciation": "밝다",
-  "translation": "To be bright",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -51605,15 +46794,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "표시하다",
-  "pronunciation": "표시하다",
-  "translation": "To make a sign, display",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "피로하다",
   "pronunciation": "피로하다",
   "translation": "To be fatigued, weary",
@@ -51721,28 +46901,9 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "공기",
-  "pronunciation": "공기",
-  "translation": "Public institution",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "굉장하다",
   "pronunciation": "굉장하다",
   "translation": "Be grand or  magnificent or  splendor",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
-  "korean": "그래서",
-  "pronunciation": "그래서",
-  "translation": "So or  therefore",
   "example": "",
   "categories": [
     "Vocabulary"
@@ -51832,16 +46993,6 @@ const koreanDictionary = [
   "korean": "담요",
   "pronunciation": "담요",
   "translation": "A blanket",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "대",
-  "pronunciation": "대",
-  "translation": "A stem, stalk",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -52044,15 +47195,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "수업",
-  "pronunciation": "수업",
-  "translation": "Completing an education course",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "스케줄",
   "pronunciation": "스케줄",
   "translation": "Schedule",
@@ -52118,15 +47260,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "약",
-  "pronunciation": "약",
-  "translation": "Get angry, take offense",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -52244,16 +47377,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "열",
-  "pronunciation": "열",
-  "translation": "Ten",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -52385,16 +47508,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "짜다",
-  "pronunciation": "짜다",
-  "translation": "To be salty",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "짜증스럽다",
   "pronunciation": "짜증스럽다",
   "translation": "To be annoying",
@@ -52487,16 +47600,6 @@ const koreanDictionary = [
   "korean": "학비",
   "pronunciation": "학비",
   "translation": "Tuition",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "해",
-  "pronunciation": "해",
-  "translation": "Damage, injury",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -52616,15 +47719,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "꾸다",
-  "pronunciation": "꾸다",
-  "translation": "Dream or  have a dream",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -53085,16 +48179,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "이",
-  "pronunciation": "이",
-  "translation": "Two",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "이래서",
   "pronunciation": "이래서",
   "translation": "This way, this direction, here",
@@ -53231,16 +48315,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "지우다",
-  "pronunciation": "지우다",
-  "translation": "Put a thing on a person’s back",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "People"
   ]
 },
   {
@@ -53413,16 +48487,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "형",
-  "pronunciation": "형",
-  "translation": "Shape, form",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "혼나다",
   "pronunciation": "혼나다",
   "translation": "Get frightened, scared",
@@ -53458,16 +48522,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "거리",
-  "pronunciation": "거리",
-  "translation": "Materials",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -53527,16 +48581,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Verbs"
-  ]
-},
-  {
-  "korean": "금",
-  "pronunciation": "금",
-  "translation": "A line (draw)",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -53619,16 +48663,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "달다",
-  "pronunciation": "달다",
-  "translation": "To hang",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "매번",
   "pronunciation": "매번",
   "translation": "Every time",
@@ -53636,16 +48670,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Time"
-  ]
-},
-  {
-  "korean": "먹다",
-  "pronunciation": "먹다",
-  "translation": "Go deaf",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Verbs"
   ]
 },
   {
@@ -53836,16 +48860,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "씻기다",
-  "pronunciation": "씻기다",
-  "translation": "wash, be washed",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "얼리다",
   "pronunciation": "얼리다",
   "translation": "Freeze, make ice",
@@ -53859,16 +48873,6 @@ const koreanDictionary = [
   "korean": "여직원",
   "pronunciation": "여직원",
   "translation": "Female employee",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "열리다",
-  "pronunciation": "열리다",
-  "translation": "To bear fruit",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -53936,16 +48940,6 @@ const koreanDictionary = [
   "korean": "이민",
   "pronunciation": "이민",
   "translation": "Emigration",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "이성",
-  "pronunciation": "이성",
-  "translation": "The opposite sex",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -54031,15 +49025,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "주문",
-  "pronunciation": "주문",
-  "translation": "An incantation, a spell",
-  "example": "",
-  "categories": [
-    "Vocabulary"
-  ]
-},
-  {
   "korean": "지능",
   "pronunciation": "지능",
   "translation": "intelligence, intellect, raw intelligence",
@@ -54055,16 +49040,6 @@ const koreanDictionary = [
   "example": "",
   "categories": [
     "Vocabulary"
-  ]
-},
-  {
-  "korean": "철",
-  "pronunciation": "철",
-  "translation": "Discretion, prudence (Become sensible, wise)",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Verbs"
   ]
 },
   {
@@ -54095,15 +49070,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Common"
-  ]
-},
-  {
-  "korean": "치우다",
-  "pronunciation": "치우다",
-  "translation": "VST + Do away with, get rid of",
-  "example": "",
-  "categories": [
-    "Vocabulary"
   ]
 },
   {
@@ -54320,16 +49286,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "넷째",
-  "pronunciation": "넷째",
-  "translation": "Fourth",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "목걸이",
   "pronunciation": "목걸이",
   "translation": "Necklace",
@@ -54417,16 +49373,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Time"
-  ]
-},
-  {
-  "korean": "쓰다",
-  "pronunciation": "쓰다",
-  "translation": "Bitter (vegetables)",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -55286,16 +50232,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "백",
-  "pronunciation": "백",
-  "translation": "One hundred",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "사십",
   "pronunciation": "사십",
   "translation": "40",
@@ -55407,16 +50343,6 @@ const koreanDictionary = [
   "korean": "큰딸",
   "pronunciation": "큰딸",
   "translation": "Oldest daughter",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "팔",
-  "pronunciation": "팔",
-  "translation": "Eight",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -55730,16 +50656,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "잠자리",
-  "pronunciation": "잠자리",
-  "translation": "Dragonfly",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Verbs"
-  ]
-},
-  {
   "korean": "주차하다",
   "pronunciation": "주차하다",
   "translation": "To park",
@@ -55938,16 +50854,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "오",
-  "pronunciation": "오",
-  "translation": "Five",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "작은어머니",
   "pronunciation": "작은어머니",
   "translation": "An aunt younger than your mother",
@@ -56083,16 +50989,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "천",
-  "pronunciation": "천",
-  "translation": "Thousand",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "결석하다",
   "pronunciation": "결석하다",
   "translation": "To be absent",
@@ -56179,16 +51075,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "Time"
-  ]
-},
-  {
-  "korean": "영상",
-  "pronunciation": "영상",
-  "translation": "Above zero",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -56287,16 +51173,6 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary",
     "People"
-  ]
-},
-  {
-  "korean": "양식",
-  "pronunciation": "양식",
-  "translation": "raising, farming, culture",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
   ]
 },
   {
@@ -56616,16 +51492,6 @@ const koreanDictionary = [
   "korean": "유럽",
   "pronunciation": "유럽",
   "translation": "Europe",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
-  "korean": "의식",
-  "pronunciation": "의식",
-  "translation": "Consciousness, awareness",
   "example": "",
   "categories": [
     "Vocabulary",
@@ -56969,16 +51835,6 @@ const koreanDictionary = [
   ]
 },
   {
-  "korean": "파리",
-  "pronunciation": "파리",
-  "translation": "Paris",
-  "example": "",
-  "categories": [
-    "Vocabulary",
-    "Common"
-  ]
-},
-  {
   "korean": "지리산",
   "pronunciation": "지리산",
   "translation": "Chili mountain, very beautiful",
@@ -57100,32 +51956,5 @@ const koreanDictionary = [
   "categories": [
     "Vocabulary"
   ]
-}];
-
-// Add the 6000 additional Korean words
-const additionalWords = [
-  // Words from 6000kor.txt
-  {
-    korean: "것",
-    pronunciation: "geot",
-    translation: "A thing or an object",
-    example: "",
-    categories: ["Vocabulary", "Common"]
-  },
-  {
-    korean: "하다",
-    pronunciation: "hada",
-    translation: "To do",
-    example: "",
-    categories: ["Vocabulary", "Verbs", "Common"]
-  },
-  // ... continue with more words ...
-];
-
-// Combine the dictionaries
-koreanDictionary.push(...additionalWords);
-
-// Export if needed
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { koreanDictionary };
 }
+];

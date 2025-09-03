@@ -2,8 +2,8 @@ const fs = require('fs');
 const path = require('path');
 
 try {
-    // Read the 6000kor.txt file
-    const rawData = fs.readFileSync(path.join(__dirname, '6000kor.txt'), 'utf8');
+    // Read the 5324kor.txt file
+    const rawData = fs.readFileSync(path.join(__dirname, '5324kor.txt'), 'utf8');
     
     // Split lines handling both \r\n and \n
     const lines = rawData.split(/\r?\n/).slice(1); // Skip header line
@@ -72,7 +72,8 @@ try {
         return categories;
     }
 
-    const transformedWords = lines
+    // First transform all words
+    const allWords = lines
         .filter(line => line.trim()) // Remove empty lines
         .map(line => {
             try {
@@ -98,27 +99,29 @@ try {
         })
         .filter(word => word !== null); // Remove any failed transformations
 
+    // Remove duplicates by korean word
+    const seen = new Set();
+    const transformedWords = allWords.filter(word => {
+        if (seen.has(word.korean)) {
+            console.log('Skipping duplicate word:', word.korean);
+            return false;
+        }
+        seen.add(word.korean);
+        return true;
+    });
+
     console.log(`Transformed ${transformedWords.length} words`);
 
-    // Read the current korean-words.js file
-    const koreanWordsPath = path.join(__dirname, 'korean-words.js');
-    const currentContent = fs.readFileSync(koreanWordsPath, 'utf8');
-
-    // Find the end of the dictionary array
-    const arrayEndIndex = currentContent.indexOf('];');
-    if (arrayEndIndex === -1) {
-        throw new Error('Could not find end of dictionary array');
-    }
-
-    // Create the new content
-    const newContent = currentContent.slice(0, arrayEndIndex) +
-        ',\n\n  // Additional words from 6000kor.txt\n' +
+    // Create the dictionary content
+    const dictionaryContent = 
+        'const koreanDictionary = [\n' +
         transformedWords.map(word => '  ' + JSON.stringify(word, null, 2)).join(',\n') +
-        currentContent.slice(arrayEndIndex);
+        '\n];\n';
 
-    // Write the updated content back to korean-words.js
-    fs.writeFileSync(koreanWordsPath, newContent);
-    console.log('Successfully updated korean-words.js with additional words');
+    // Write to korean-words.js
+    const koreanWordsPath = path.join(__dirname, 'korean-words.js');
+    fs.writeFileSync(koreanWordsPath, dictionaryContent);
+    console.log('Successfully created korean-words.js with', transformedWords.length, 'words');
 
 } catch (err) {
     console.error('Error:', err);
