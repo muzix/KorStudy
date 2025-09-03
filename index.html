@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Korean Learning App</title>
+  <title>English Learning App</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -989,7 +989,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <div class="app-logo">
-        <span>Blebleble</span>
+        <span>English Learning</span>
       </div>
       
       <div class="nav-item active" data-section="dictionary">Dictionary</div>
@@ -1002,11 +1002,11 @@
       <!-- Dictionary Section -->
       <div id="dictionary-section" class="content-section active">
         <div class="section-header">
-          <h2>Korean Dictionary</h2>
+          <h2>English Dictionary</h2>
         </div>
         
         <div class="search-bar">
-          <input type="text" class="search-input" placeholder="Search for Korean words, English meanings, or pronunciation...">
+          <input type="text" class="search-input" placeholder="Search for English words or Vietnamese meanings...">
         </div>
         
         <div class="filters-wrapper" style="position: relative; margin-bottom: 15px;">
@@ -1050,7 +1050,7 @@
       <!-- Study Section -->
       <div id="study-section" class="content-section">
         <div class="section-header">
-          <h2>Study Korean</h2>
+          <h2>Study English</h2>
         </div>
         
         <div class="study-options">
@@ -1381,13 +1381,14 @@
   </div>
   
   <!-- Include the Korean words dictionary -->
-  <script src="korean-words.js"></script>
+  <script src="english-words.js"></script>
+<script src="sentence-quiz.js"></script>
   
   <script>
     // Initialize dictionary
     document.addEventListener('DOMContentLoaded', () => {
       // Display total word count
-      const totalWords = koreanDictionary.length;
+      const totalWords = englishDictionary.length;
       document.getElementById('total-words').textContent = totalWords;
       console.log(`Loaded ${totalWords} words`);
       
@@ -1430,48 +1431,48 @@
       indicator.classList.add('playing');
       button.textContent = 'Playing...';
       button.disabled = true;
-      
-      // Create audio element
-      const audio = new Audio();
-      
-      // Use Google Translate TTS API for direct playback
-      audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
-      
+
+      // Cancel any ongoing speech
+      window.speechSynthesis.cancel();
+
+      // Create speech synthesis utterance
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.9; // Slightly slower for better clarity
+      utterance.pitch = 1;
+
+      // Handle completion
+      utterance.onend = () => {
+        indicator.classList.remove('playing');
+        button.innerHTML = '<span class="audio-indicator"></span>Listen';
+        button.disabled = false;
+      };
+
+      // Handle errors
+      utterance.onerror = () => {
+        console.error('Error playing audio');
+        indicator.classList.remove('playing');
+        button.innerHTML = '<span class="audio-indicator"></span>Listen';
+        button.disabled = false;
+      };
+
       // Play the audio
-      audio.play()
-        .then(() => {
-          // Reset button after audio completes
-          audio.onended = () => {
-            indicator.classList.remove('playing');
-            button.innerHTML = '<span class="audio-indicator"></span>Listen';
-            button.disabled = false;
-          };
-        })
-        .catch(error => {
-          console.error('Error playing audio:', error);
-          
-          // Show error state
-          indicator.classList.remove('playing');
-          button.textContent = 'Error';
-          
-          // Reset after 2 seconds
-          setTimeout(() => {
-            indicator.classList.remove('playing');
-            button.innerHTML = '<span class="audio-indicator"></span>Listen';
-            button.disabled = false;
-          }, 2000);
-        });
+      window.speechSynthesis.speak(utterance);
     }
     
     // Separate function for playing audio without button UI updates
     function playPlainAudio(text) {
-      const audio = new Audio();
-      audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
-      
-      return audio.play()
-        .catch(error => {
-          console.error('Error playing audio:', error);
-        });
+      // Cancel any ongoing speech
+      window.speechSynthesis.cancel();
+
+      // Create speech synthesis utterance
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.9; // Slightly slower for better clarity
+      utterance.pitch = 1;
+
+      // Play the audio
+      window.speechSynthesis.speak(utterance);
     }
     
     // Helper: detect if a word is a verb (ends with '다')
@@ -1529,15 +1530,10 @@
       const card = document.createElement('div');
       card.className = 'word-card';
       
-      // Korean word
-      const korean = document.createElement('div');
-      korean.className = 'korean';
-      korean.textContent = word.korean;
-      
-      // Pronunciation
-      const pronunciation = document.createElement('div');
-      pronunciation.className = 'pronunciation';
-      pronunciation.textContent = word.pronunciation;
+      // English word
+      const english = document.createElement('div');
+      english.className = 'english';
+      english.textContent = word.word;
       
       // Translation
       const translation = document.createElement('div');
@@ -1600,14 +1596,13 @@
       listenBtn.className = 'listen-btn';
       listenBtn.innerHTML = '<span class="audio-indicator"></span>Listen';
       listenBtn.addEventListener('click', () => {
-        playAudio(word.korean, listenBtn);
+        playAudio(word.word, listenBtn);
       });
       
       controls.appendChild(listenBtn);
       
       // Assemble the card
-      card.appendChild(korean);
-      card.appendChild(pronunciation);
+      card.appendChild(english);
       card.appendChild(translation);
       card.appendChild(tags);
       if (conjugationDiv) card.appendChild(conjugationDiv);
@@ -1632,12 +1627,11 @@
       const selectedCategory = activeFilter.getAttribute('data-category');
       
       // Filter words
-      const filteredWords = koreanDictionary.filter(word => {
+      const filteredWords = englishDictionary.filter(word => {
         // Check if matches search term
         const matchesSearch = 
           !searchTerm || 
-          word.korean.toLowerCase().includes(searchTerm) ||
-          word.pronunciation.toLowerCase().includes(searchTerm) ||
+          word.word.toLowerCase().includes(searchTerm) ||
           word.translation.toLowerCase().includes(searchTerm);
         
         // Check if matches category
@@ -1752,7 +1746,7 @@
       loadProgress();
       
       // Get all words from dictionary
-      studyWords = [...koreanDictionary];
+      studyWords = [...englishDictionary];
       
       // Sort by progress (unlearned first, then by last review date)
       studyWords.sort((a, b) => {
@@ -1773,7 +1767,7 @@
     }
     
     function updateProgressCounter() {
-      const totalWords = koreanDictionary.length;
+      const totalWords = englishDictionary.length;
       const studiedWords = Object.keys(studyProgress).length;
       document.getElementById('progress-counter').textContent = `${studiedWords}/${totalWords} words studied`;
     }
@@ -1859,7 +1853,7 @@
     
     function playCardAudio(text) {
       const audio = new Audio();
-      audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
+      audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=en-US&client=tw-ob`;
       
       audio.play()
         .catch(error => {
@@ -1869,8 +1863,17 @@
     
     // Initialize the app
     document.addEventListener('DOMContentLoaded', () => {
+        // Initialize speech synthesis
+      if ('speechSynthesis' in window) {
+        // Load voices
+        window.speechSynthesis.onvoiceschanged = () => {
+          const voices = window.speechSynthesis.getVoices();
+          console.log('Voices loaded:', voices.length);
+        };
+      }
+
       // Display total word count
-      document.getElementById('total-words').textContent = koreanDictionary.length;
+      document.getElementById('total-words').textContent = englishDictionary.length;
       
       // Set up dictionary search and filters
       const searchInput = document.querySelector('.search-input');
@@ -1901,7 +1904,7 @@
       filterDictionary();
       
       // Display word count in dictionary section
-      document.getElementById('word-count').textContent = koreanDictionary.length;
+      document.getElementById('word-count').textContent = englishDictionary.length;
       
       // Add keyboard shortcut for search
       document.addEventListener('keydown', function(e) {
@@ -2014,12 +2017,10 @@
     
     // Quiz types
     const quizTypes = [
-      { type: 'translate-korean', question: 'What does this Korean word mean?', answerField: 'translation' },
-      { type: 'translate-english', question: 'What is the Korean word for:', answerField: 'korean' },
-      { type: 'pronunciation', question: 'How do you pronounce this Korean word?', answerField: 'pronunciation' },
-      { type: 'listening', question: 'Listen and select the correct Korean word:', answerField: 'korean' },
-      { type: 'sentence-meaning', question: 'What does this Korean sentence mean?', answerField: 'translation' },
-      { type: 'word-in-context', question: 'Choose the best word to complete this sentence:', answerField: 'korean' }
+      { type: 'translate-english', question: 'What is the Vietnamese meaning of:', answerField: 'translation' },
+      { type: 'translate-vietnamese', question: 'What is the English word for:', answerField: 'word' },
+      { type: 'pronunciation', question: 'Listen and select the correct word:', answerField: 'word' },
+      { type: 'sentence-meaning', question: 'What does this English sentence mean?', answerField: 'translation' }
     ];
     
     // Add sentences for sentence-based quizzes
@@ -2157,7 +2158,7 @@
     
     function getRandomWords(count) {
       // Create a copy of the dictionary and shuffle it
-      const shuffled = [...koreanDictionary];
+      const shuffled = [...englishDictionary];
       for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -2312,7 +2313,7 @@
         }, 500);
         
         // Get incorrect options (other words that could fit grammatically)
-        const incorrectOptions = koreanDictionary
+        const incorrectOptions = englishDictionary
           .filter(w => w.korean !== blankWord.korean)
           .filter(w => w.categories.some(cat => blankWord.korean.length < 2 || cat === "Common"))
           .map(w => w.korean);
@@ -2946,7 +2947,7 @@
       const usedValues = new Set([correctWord[field]]);
       
       // Try to get words from the same category if possible
-      const sameCategory = koreanDictionary.filter(word => 
+      const sameCategory = englishDictionary.filter(word => 
         word !== correctWord && 
         word.categories.some(cat => correctWord.categories.includes(cat))
       );
@@ -2969,8 +2970,8 @@
       } else {
         // Otherwise use random words from the dictionary
         while (incorrectOptions.length < 3) {
-          const randomIndex = Math.floor(Math.random() * koreanDictionary.length);
-          const optionValue = koreanDictionary[randomIndex][field];
+          const randomIndex = Math.floor(Math.random() * englishDictionary.length);
+          const optionValue = englishDictionary[randomIndex][field];
           
           if (!usedValues.has(optionValue)) {
             incorrectOptions.push(optionValue);
@@ -3239,7 +3240,7 @@
     }
     
     function updateProgressStats(data) {
-      const totalWords = koreanDictionary.length;
+      const totalWords = englishDictionary.length;
       const studiedWords = Object.keys(studyProgress).length;
       const completionPercentage = Math.round((studiedWords / totalWords) * 100);
       
@@ -3395,10 +3396,10 @@
       document.getElementById('new-words-quiz-feedback').className = 'quiz-feedback';
       
       // Get all words that haven't been studied yet
-      const newWords = koreanDictionary.filter(word => !studyProgress[word.korean]);
+      const newWords = englishDictionary.filter(word => !studyProgress[word.korean]);
       
       // If all words have been studied, include all words
-      newWordsQuizWords = newWords.length > 0 ? newWords : [...koreanDictionary];
+      newWordsQuizWords = newWords.length > 0 ? newWords : [...englishDictionary];
       
       // Shuffle the words
       newWordsQuizWords = shuffleArray(newWordsQuizWords);
@@ -3592,7 +3593,7 @@
     // Add grammar and sentence practice functionality
     const sentenceQuizBank = [
       // Present Tense
-      { level: 1, grammar: "Present Tense", prompt: "Make a sentence: 'I study Korean'", words: ["저는", "한국어를", "공부해요"], correct: "저는 한국어를 공부해요", translation: "I study Korean", wordExplanations: ["저는 = I", "한국어를 = Korean (object)", "공부해요 = study"] },
+      { level: 1, grammar: "Present Tense", prompt: "Make a sentence using: I, study, English", words: ["I", "study", "English"], correct: "I study English", translation: "Tôi học tiếng Anh", wordExplanations: ["I = Tôi", "study = học", "English = tiếng Anh"] },
       { level: 1, grammar: "Present Tense", prompt: "Make a sentence: 'You play soccer'", words: ["당신은", "축구를", "해요"], correct: "당신은 축구를 해요", translation: "You play soccer", wordExplanations: ["당신은 = You", "축구를 = soccer (object)", "해요 = play/do"] },
       { level: 1, grammar: "Present Tense", prompt: "Make a sentence: 'She drinks milk'", words: ["그녀는", "우유를", "마셔요"], correct: "그녀는 우유를 마셔요", translation: "She drinks milk", wordExplanations: ["그녀는 = She", "우유를 = milk (object)", "마셔요 = drinks"] },
       { level: 1, grammar: "Present Tense", prompt: "Make a sentence: 'We read books'", words: ["우리는", "책을", "읽어요"], correct: "우리는 책을 읽어요", translation: "We read books", wordExplanations: ["우리는 = We", "책을 = book (object)", "읽어요 = read"] },
