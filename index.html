@@ -1442,13 +1442,25 @@
         return;
       }
       
+      // Reset button state
+      const resetButton = () => {
+        indicator.classList.remove('playing');
+        button.innerHTML = '<span class="audio-indicator"></span>Listen';
+        button.disabled = false;
+      };
+
+      // Update button to playing state
       indicator.classList.add('playing');
       button.textContent = 'Playing...';
       button.disabled = true;
 
       // Cancel any ongoing speech
       console.log('Cancelling any ongoing speech...');
-      window.speechSynthesis.cancel();
+      try {
+        window.speechSynthesis.cancel();
+      } catch (error) {
+        console.error('Error cancelling speech:', error);
+      }
 
       // Create speech synthesis utterance
       console.log('Creating utterance...');
@@ -1460,44 +1472,39 @@
       // Handle completion
       utterance.onend = () => {
         console.log('Audio playback completed successfully');
-        indicator.classList.remove('playing');
-        button.innerHTML = '<span class="audio-indicator"></span>Listen';
-        button.disabled = false;
+        resetButton();
       };
 
       // Handle errors
       utterance.onerror = (event) => {
         console.error('Error playing audio:', event.error);
         console.error('Error details:', event);
-        indicator.classList.remove('playing');
-        button.innerHTML = '<span class="audio-indicator"></span>Listen';
-        button.disabled = false;
+        resetButton();
       };
 
-      // Log available voices
-      const voices = window.speechSynthesis.getVoices();
-      console.log('Available voices:', voices.map(v => ({
-        name: v.name,
-        lang: v.lang,
-        default: v.default
-      })));
-
-      // Try to find and use a Korean voice
-      const koreanVoices = voices.filter(voice => voice.lang.includes('ko-'));
-      if (koreanVoices.length > 0) {
-        console.log('Found Korean voices:', koreanVoices.map(v => v.name));
-        utterance.voice = koreanVoices[0];
-      } else {
-        console.log('No Korean voices found, using default voice');
-      }
-
-      // Play the audio
-      console.log('Starting audio playback...');
+      // Get voices and set up audio
       try {
+        // Get available voices
+        const voices = window.speechSynthesis.getVoices();
+        console.log('Available voices:', voices.length);
+
+        // Try to find a Korean voice
+        const koreanVoices = voices.filter(voice => voice.lang.includes('ko-'));
+        if (koreanVoices.length > 0) {
+          console.log('Found Korean voice:', koreanVoices[0].name);
+          utterance.voice = koreanVoices[0];
+        } else {
+          console.log('No Korean voice found, using default voice');
+        }
+
+        // Play the audio
+        console.log('Starting audio playback...');
         window.speechSynthesis.speak(utterance);
         console.log('Audio playback started');
+
       } catch (error) {
-        console.error('Error starting audio playback:', error);
+        console.error('Error setting up audio:', error);
+        resetButton();
       }
     }
     
@@ -3474,8 +3481,23 @@
     
     // Initialize progress tracking when app loads
     document.addEventListener('DOMContentLoaded', function() {
-      // ... existing initialization ...
-      initializeProgress();
+      // Initialize dictionary first
+      console.log('DOM Content Loaded');
+      
+      // Make sure dictionary is loaded
+      function checkDictionary() {
+        console.log('Checking dictionary...');
+        if (window.koreanDictionary && window.koreanDictionary.length > 0) {
+          console.log('Dictionary loaded with', window.koreanDictionary.length, 'words');
+          initializeProgress();
+        } else {
+          console.log('Dictionary not loaded yet, retrying...');
+          setTimeout(checkDictionary, 500);
+        }
+      }
+      
+      // Start checking for dictionary
+      checkDictionary();
     });
 
     // Add new words quiz functionality
