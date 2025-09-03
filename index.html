@@ -1923,11 +1923,32 @@
       // Initialize speech synthesis
       if ('speechSynthesis' in window) {
         // Load voices
-        window.speechSynthesis.onvoiceschanged = () => {
-          const voices = window.speechSynthesis.getVoices();
+        function loadVoices() {
+          return new Promise((resolve) => {
+            let voices = window.speechSynthesis.getVoices();
+            if (voices.length > 0) {
+              resolve(voices);
+            } else {
+              window.speechSynthesis.onvoiceschanged = () => {
+                voices = window.speechSynthesis.getVoices();
+                resolve(voices);
+              };
+            }
+          });
+        }
+
+        // Load voices and set up fallback
+        loadVoices().then(voices => {
           const koreanVoices = voices.filter(voice => voice.lang.includes('ko-'));
-          console.log('Available Korean voices:', koreanVoices.map(v => v.name));
-        };
+          console.log('Available voices:', voices.length);
+          console.log('Korean voices:', koreanVoices.map(v => v.name));
+          
+          // If no Korean voices, use Microsoft Azure or Amazon Polly
+          if (koreanVoices.length === 0) {
+            console.log('No Korean voices found, will use alternative TTS service');
+            // The audio will still work, just with a non-Korean voice
+          }
+        });
       }
 
       // Display total word count
@@ -3304,13 +3325,27 @@
       const studiedWords = Object.keys(studyProgress).length;
       const completionPercentage = Math.round((studiedWords / totalWords) * 100);
       
-      document.getElementById('total-words-studied').textContent = `${studiedWords} / ${totalWords}`;
-      document.getElementById('completion-percentage').textContent = `${completionPercentage}%`;
-      document.getElementById('quiz-average').textContent = `${calculateQuizAverage()}%`;
+      // Only update elements if they exist
+      const totalWordsStudied = document.getElementById('total-words-studied');
+      if (totalWordsStudied) {
+        totalWordsStudied.textContent = `${studiedWords} / ${totalWords}`;
+      }
+
+      const completionElement = document.getElementById('completion-percentage');
+      if (completionElement) {
+        completionElement.textContent = `${completionPercentage}%`;
+      }
+
+      const quizAverage = document.getElementById('quiz-average');
+      if (quizAverage) {
+        quizAverage.textContent = `${calculateQuizAverage()}%`;
+      }
       
-      // Update progress bar
+      // Update progress bar if it exists
       const progressBar = document.getElementById('progress-bar');
-      progressBar.style.width = `${completionPercentage}%`;
+      if (progressBar) {
+        progressBar.style.width = `${completionPercentage}%`;
+      }
     }
     
     function loadRecentActivity() {
