@@ -1381,27 +1381,26 @@
   </div>
   
   <!-- Include the Korean words dictionary -->
-  <script src="korean-words.js"></script>
   <script>
-    // Initialize dictionary after script is loaded
-    document.addEventListener('DOMContentLoaded', () => {
-      // Wait for dictionary to be available
-      const checkDictionary = () => {
-        if (window.koreanDictionary) {
-          console.log('Dictionary loaded successfully with', window.koreanDictionary.length, 'words');
-          // Initialize the app
-          initializeProgress();
-          // Display total word count
-          document.getElementById('total-words').textContent = window.koreanDictionary.length;
-          // Initial dictionary display
-          filterDictionary();
-        } else {
-          console.log('Waiting for dictionary...');
-          setTimeout(checkDictionary, 100);
-        }
-      };
-      checkDictionary();
-    });
+    // Load dictionary directly
+    window.koreanDictionary = [];
+    
+    fetch('korean-words.js')
+      .then(response => response.text())
+      .then(text => {
+        // Remove "const koreanDictionary = " and evaluate
+        const dictText = text.replace('const koreanDictionary = ', '');
+        window.koreanDictionary = JSON.parse(dictText);
+        console.log('Dictionary loaded successfully with', window.koreanDictionary.length, 'words');
+        
+        // Initialize the app
+        initializeProgress();
+        // Display total word count
+        document.getElementById('total-words').textContent = window.koreanDictionary.length;
+        // Initial dictionary display
+        filterDictionary();
+      })
+      .catch(error => console.error('Error loading dictionary:', error));
   </script>
   
   <script>
@@ -1468,22 +1467,41 @@
 
       // Handle errors
       audio.onerror = () => {
-        console.error('Error playing audio, trying fallback...');
-        // Try fallback with iframe
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.onload = () => {
-          setTimeout(() => {
-            document.body.removeChild(iframe);
+        console.error('Error playing audio, trying Web Speech API...');
+        
+        // Try Web Speech API
+        if ('speechSynthesis' in window) {
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'ko-KR';
+          utterance.rate = 0.9;
+          utterance.pitch = 1;
+          
+          utterance.onend = () => {
+            console.log('Speech synthesis completed');
             resetButton();
-          }, 1000);
-        };
-        iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
-        document.body.appendChild(iframe);
+          };
+          
+          utterance.onerror = () => {
+            console.error('Speech synthesis failed');
+            resetButton();
+          };
+          
+          window.speechSynthesis.speak(utterance);
+        } else {
+          console.error('No audio playback method available');
+          resetButton();
+        }
       };
 
       // Try direct audio first
-      audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
+      const url = new URL('https://translate.google.com/translate_tts');
+      url.searchParams.set('ie', 'UTF-8');
+      url.searchParams.set('q', text);
+      url.searchParams.set('tl', 'ko-KR');
+      url.searchParams.set('client', 'tw-ob');
+      
+      audio.crossOrigin = 'anonymous';
+      audio.src = url.toString();
       
       // Play the audio
       audio.play().catch(error => {
@@ -1496,31 +1514,37 @@
     function playPlainAudio(text) {
       console.log('Starting playPlainAudio for text:', text);
       
-      // Create audio element
+      // Try Web Speech API first
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ko-KR';
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        window.speechSynthesis.speak(utterance);
+        return;
+      }
+      
+      // Fallback to Audio element
       const audio = new Audio();
       
       // Handle errors
       audio.onerror = () => {
-        console.error('Error playing audio, trying fallback...');
-        // Try fallback with iframe
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.onload = () => {
-          setTimeout(() => {
-            document.body.removeChild(iframe);
-          }, 1000);
-        };
-        iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
-        document.body.appendChild(iframe);
+        console.error('Error playing audio');
       };
 
-      // Try direct audio first
-      audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
+      // Try direct audio
+      const url = new URL('https://translate.google.com/translate_tts');
+      url.searchParams.set('ie', 'UTF-8');
+      url.searchParams.set('q', text);
+      url.searchParams.set('tl', 'ko-KR');
+      url.searchParams.set('client', 'tw-ob');
+      
+      audio.crossOrigin = 'anonymous';
+      audio.src = url.toString();
       
       // Play the audio
       audio.play().catch(error => {
         console.error('Error playing audio:', error);
-        audio.onerror();
       });
     }
     
