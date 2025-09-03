@@ -1385,36 +1385,31 @@
   <script>
     // Initialize dictionary after DOM is loaded
     document.addEventListener('DOMContentLoaded', () => {
-      // Wait for dictionary to be available
-      function initDictionary() {
-        try {
-          // Check if dictionary is loaded
-          if (typeof koreanDictionary !== 'undefined') {
-            // Copy to window object
-            window.koreanDictionary = koreanDictionary;
-            console.log('Dictionary loaded successfully with', window.koreanDictionary.length, 'words');
-            
-            // Initialize the app
-            initializeProgress();
-            // Display total word count
-            const totalWordsElement = document.getElementById('total-words');
-            if (totalWordsElement) {
-              totalWordsElement.textContent = window.koreanDictionary.length;
-            }
-            // Initial dictionary display
-            filterDictionary();
-          } else {
-            console.log('Dictionary not loaded yet, retrying...');
-            setTimeout(initDictionary, 100);
-          }
-        } catch (error) {
-          console.error('Error initializing dictionary:', error);
-          setTimeout(initDictionary, 100);
+      // Initialize the dictionary
+      if (typeof koreanDictionary !== 'undefined') {
+        window.koreanDictionary = koreanDictionary;
+        console.log('Dictionary loaded successfully with', window.koreanDictionary.length, 'words');
+        
+        // Initialize UI elements
+        const totalWordsElement = document.getElementById('total-words');
+        if (totalWordsElement) {
+          totalWordsElement.textContent = window.koreanDictionary.length;
         }
+
+        // Initialize dictionary display
+        filterDictionary();
+        
+        // Initialize progress last (after all UI elements are ready)
+        setTimeout(() => {
+          try {
+            initializeProgress();
+          } catch (error) {
+            console.error('Error initializing progress:', error);
+          }
+        }, 100);
+      } else {
+        console.error('Dictionary failed to load');
       }
-      
-      // Start initialization
-      initDictionary();
     });
   </script>
   
