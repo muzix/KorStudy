@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blebleble</title>
+  <title>Korean Learning App</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -1381,40 +1381,30 @@
   </div>
   
   <!-- Include the Korean words dictionary -->
+  <script src="korean-words.js"></script>
   <script>
-    // Initialize dictionary
-    window.koreanDictionary = [];
-    
-    // Load dictionary
-    fetch('korean-words.js')
-      .then(response => response.text())
-      .then(text => {
-        // Remove "const koreanDictionary = " from the start and evaluate
-        const dictText = text.replace('const koreanDictionary = ', '');
-        window.koreanDictionary = JSON.parse(dictText);
-        console.log('Dictionary loaded successfully with', window.koreanDictionary.length, 'words');
-        
-        // Initialize the app after dictionary is loaded
-        if (document.readyState === 'complete') {
+    // Initialize dictionary after script is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      // Wait for dictionary to be available
+      const checkDictionary = () => {
+        if (window.koreanDictionary) {
+          console.log('Dictionary loaded successfully with', window.koreanDictionary.length, 'words');
+          // Initialize the app
           initializeProgress();
+          // Display total word count
+          document.getElementById('total-words').textContent = window.koreanDictionary.length;
+          // Initial dictionary display
+          filterDictionary();
+        } else {
+          console.log('Waiting for dictionary...');
+          setTimeout(checkDictionary, 100);
         }
-      })
-      .catch(error => console.error('Error loading dictionary:', error));
+      };
+      checkDictionary();
+    });
   </script>
   
   <script>
-    // Initialize dictionary
-    document.addEventListener('DOMContentLoaded', () => {
-      // Display total word count
-      const totalWords = koreanDictionary.length;
-      document.getElementById('total-words').textContent = totalWords;
-      console.log(`Loaded ${totalWords} words`);
-      
-      // Initial dictionary display
-      filterDictionary();
-      
-      // ... rest of the initialization code ...
-    });
     
     // Navigation
     const navItems = document.querySelectorAll('.nav-item');
@@ -1470,11 +1460,6 @@
       // Create audio element
       const audio = new Audio();
       
-      // Use Google Translate TTS API
-      const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
-      console.log('Audio URL:', url);
-      audio.src = url;
-      
       // Handle completion
       audio.onended = () => {
         console.log('Audio playback completed successfully');
@@ -1482,21 +1467,29 @@
       };
 
       // Handle errors
-      audio.onerror = (error) => {
-        console.error('Error playing audio:', error);
-        resetButton();
+      audio.onerror = () => {
+        console.error('Error playing audio, trying fallback...');
+        // Try fallback with iframe
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.onload = () => {
+          setTimeout(() => {
+            document.body.removeChild(iframe);
+            resetButton();
+          }, 1000);
+        };
+        iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
+        document.body.appendChild(iframe);
       };
 
+      // Try direct audio first
+      audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
+      
       // Play the audio
-      console.log('Starting audio playback...');
-      audio.play()
-        .then(() => {
-          console.log('Audio playback started');
-        })
-        .catch(error => {
-          console.error('Error starting audio:', error);
-          resetButton();
-        });
+      audio.play().catch(error => {
+        console.error('Error playing audio:', error);
+        audio.onerror();
+      });
     }
     
     // Separate function for playing audio without button UI updates
@@ -1506,16 +1499,29 @@
       // Create audio element
       const audio = new Audio();
       
-      // Use Google Translate TTS API
-      const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
-      console.log('Audio URL:', url);
-      audio.src = url;
+      // Handle errors
+      audio.onerror = () => {
+        console.error('Error playing audio, trying fallback...');
+        // Try fallback with iframe
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.onload = () => {
+          setTimeout(() => {
+            document.body.removeChild(iframe);
+          }, 1000);
+        };
+        iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
+        document.body.appendChild(iframe);
+      };
+
+      // Try direct audio first
+      audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
       
       // Play the audio
-      audio.play()
-        .catch(error => {
-          console.error('Error playing audio:', error);
-        });
+      audio.play().catch(error => {
+        console.error('Error playing audio:', error);
+        audio.onerror();
+      });
     }
     
     // Helper: detect if a word is a verb (ends with '다')
