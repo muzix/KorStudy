@@ -1383,8 +1383,44 @@
   <!-- Include the Korean words dictionary -->
   <script src="korean-words.js"></script>
   <script>
-    // Initialize dictionary after DOM is loaded
+    // Initialize all app functionality
     document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOM Content Loaded - Starting initialization');
+      
+      // Initialize speech synthesis first
+      if ('speechSynthesis' in window) {
+        console.log('Speech synthesis available, loading voices...');
+        // Load voices
+        function loadVoices() {
+          return new Promise((resolve) => {
+            let voices = window.speechSynthesis.getVoices();
+            if (voices.length > 0) {
+              console.log('Voices loaded immediately');
+              resolve(voices);
+            } else {
+              console.log('Waiting for voices to load...');
+              window.speechSynthesis.onvoiceschanged = () => {
+                voices = window.speechSynthesis.getVoices();
+                console.log('Voices loaded via event');
+                resolve(voices);
+              };
+            }
+          });
+        }
+        
+        loadVoices().then(voices => {
+          console.log('Available voices:', voices.length);
+          const koreanVoice = voices.find(voice => voice.lang.includes('ko'));
+          if (koreanVoice) {
+            console.log('Found Korean voice:', koreanVoice.name);
+          } else {
+            console.log('No Korean voice found, will use fallback');
+          }
+        });
+      } else {
+        console.log('Speech synthesis not available, will use fallback');
+      }
+      
       // Initialize the dictionary
       if (typeof koreanDictionary !== 'undefined') {
         window.koreanDictionary = koreanDictionary;
@@ -1399,14 +1435,119 @@
         // Initialize dictionary display
         filterDictionary();
         
+        // Initialize study mode UI
+        console.log('Initializing study mode UI...');
+        
+        // Initialize study mode UI
+        const flipBtn = document.getElementById('flip-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const playAudioBtn = document.getElementById('play-audio-btn');
+        const flashcard = document.querySelector('.flashcard');
+        
+        if (flipBtn) flipBtn.addEventListener('click', flipCard);
+        if (nextBtn) nextBtn.addEventListener('click', nextCard);
+        if (prevBtn) prevBtn.addEventListener('click', prevCard);
+        if (playAudioBtn) playAudioBtn.addEventListener('click', () => {
+          const currentWord = studyWords[currentCardIndex];
+          playCardAudio(currentWord.korean);
+        });
+        if (flashcard) flashcard.addEventListener('click', flipCard);
+        
+        // Set up quiz
+        const checkAnswerBtn = document.getElementById('check-answer-btn');
+        const nextQuestionBtn = document.getElementById('next-question-btn');
+        if (checkAnswerBtn) checkAnswerBtn.addEventListener('click', checkAnswer);
+        if (nextQuestionBtn) nextQuestionBtn.addEventListener('click', nextQuestion);
+        
+        // Set up writing practice
+        const checkWritingBtn = document.getElementById('check-writing-btn');
+        const nextWritingBtn = document.getElementById('next-writing-btn');
+        if (checkWritingBtn) checkWritingBtn.addEventListener('click', checkWritingAnswer);
+        if (nextWritingBtn) nextWritingBtn.addEventListener('click', nextWritingQuestion);
+        
+        // Set up numbers practice
+        const checkNumberBtn = document.getElementById('check-number-btn');
+        const nextNumberBtn = document.getElementById('next-number-btn');
+        if (checkNumberBtn) checkNumberBtn.addEventListener('click', checkNumberAnswer);
+        if (nextNumberBtn) nextNumberBtn.addEventListener('click', nextNumberQuestion);
+        
+        // Set up new words quiz
+        const newWordsQuizOption = document.getElementById('new-words-quiz-option');
+        if (newWordsQuizOption) {
+          newWordsQuizOption.addEventListener('click', () => {
+            document.querySelector('.study-options').style.display = 'none';
+            document.querySelector('.new-words-quiz-container').style.display = 'block';
+            document.querySelector('.flashcard-container').style.display = 'none';
+            document.querySelector('.quiz-container').style.display = 'none';
+            document.querySelector('.writing-container').style.display = 'none';
+            document.querySelector('.numbers-container').style.display = 'none';
+            startNewWordsQuiz();
+          });
+        }
+        
+        // Set up navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            showSection(targetId);
+          });
+        });
+        
+        // Set up keyboard shortcuts
+        document.addEventListener('keydown', handleKeyboardShortcuts);
+        
+        // Initialize the first section
+        showSection('dictionary');
+        
+        // Set up search functionality
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+          searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase();
+            filterDictionary();
+          });
+        }
+        
+        // Set up filter functionality
+        const filterSelect = document.getElementById('filter-select');
+        if (filterSelect) {
+          filterSelect.addEventListener('change', (e) => {
+            currentFilter = e.target.value;
+            filterDictionary();
+          });
+        }
+        
+        // Set up sort functionality
+        const sortSelect = document.getElementById('sort-select');
+        if (sortSelect) {
+          sortSelect.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            filterDictionary();
+          });
+        }
+        
+        // Set up settings
+        const saveSettingsBtn = document.getElementById('save-settings-btn');
+        if (saveSettingsBtn) {
+          saveSettingsBtn.addEventListener('click', saveSettings);
+        }
+        
+        // Load and apply saved settings
+        loadSettings();
+        
         // Initialize progress last (after all UI elements are ready)
         setTimeout(() => {
           try {
             initializeProgress();
+            console.log('Progress initialized successfully');
           } catch (error) {
             console.error('Error initializing progress:', error);
           }
         }, 100);
+        
+        console.log('All initialization completed successfully');
       } else {
         console.error('Dictionary failed to load');
       }
@@ -1934,13 +2075,8 @@
     }
     
     function playCardAudio(text) {
-      const audio = new Audio();
-      audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
-      
-      audio.play()
-        .catch(error => {
-          console.error('Error playing audio:', error);
-        });
+      // Use the same audio function for consistency
+      playPlainAudio(text);
     }
     
     // Initialize the app
