@@ -1381,26 +1381,41 @@
   </div>
   
   <!-- Include the Korean words dictionary -->
+  <script src="korean-words.js"></script>
   <script>
-    // Load dictionary directly
-    window.koreanDictionary = [];
-    
-    fetch('korean-words.js')
-      .then(response => response.text())
-      .then(text => {
-        // Remove "const koreanDictionary = " and evaluate
-        const dictText = text.replace('const koreanDictionary = ', '');
-        window.koreanDictionary = JSON.parse(dictText);
-        console.log('Dictionary loaded successfully with', window.koreanDictionary.length, 'words');
-        
-        // Initialize the app
-        initializeProgress();
-        // Display total word count
-        document.getElementById('total-words').textContent = window.koreanDictionary.length;
-        // Initial dictionary display
-        filterDictionary();
-      })
-      .catch(error => console.error('Error loading dictionary:', error));
+    // Initialize dictionary after DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+      // Wait for dictionary to be available
+      function initDictionary() {
+        try {
+          // Check if dictionary is loaded
+          if (typeof koreanDictionary !== 'undefined') {
+            // Copy to window object
+            window.koreanDictionary = koreanDictionary;
+            console.log('Dictionary loaded successfully with', window.koreanDictionary.length, 'words');
+            
+            // Initialize the app
+            initializeProgress();
+            // Display total word count
+            const totalWordsElement = document.getElementById('total-words');
+            if (totalWordsElement) {
+              totalWordsElement.textContent = window.koreanDictionary.length;
+            }
+            // Initial dictionary display
+            filterDictionary();
+          } else {
+            console.log('Dictionary not loaded yet, retrying...');
+            setTimeout(initDictionary, 100);
+          }
+        } catch (error) {
+          console.error('Error initializing dictionary:', error);
+          setTimeout(initDictionary, 100);
+        }
+      }
+      
+      // Start initialization
+      initDictionary();
+    });
   </script>
   
   <script>
