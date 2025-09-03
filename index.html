@@ -1583,52 +1583,81 @@
     
     // Dictionary Functionality
     // Audio system setup and management
-    let audioContext = null;
     let audioQueue = [];
     let isPlaying = false;
+    let audioPool = [];
+    const MAX_POOL_SIZE = 5;
 
-    // Initialize audio context with user interaction
-    function initAudioContext() {
-      if (!audioContext) {
-        try {
-          audioContext = new (window.AudioContext || window.webkitAudioContext)();
-          console.log('Audio context initialized');
-          
-          // Setup audio context resume on visibility change
-          document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'visible') {
-              resumeAudioContext();
-            }
-          });
-
-          // Setup audio context resume on user interaction
-          const resumeAudioContextOnInteraction = () => {
-            resumeAudioContext();
-            ['click', 'touchstart', 'keydown'].forEach(event => {
-              document.removeEventListener(event, resumeAudioContextOnInteraction);
-            });
-          };
-
-          ['click', 'touchstart', 'keydown'].forEach(event => {
-            document.addEventListener(event, resumeAudioContextOnInteraction);
-          });
-        } catch (error) {
-          console.error('Failed to initialize audio context:', error);
-        }
+    // Initialize audio system
+    function initAudioSystem() {
+      // Pre-create audio elements pool
+      while (audioPool.length < MAX_POOL_SIZE) {
+        const audio = new Audio();
+        audio.crossOrigin = 'anonymous';
+        audioPool.push({
+          element: audio,
+          inUse: false
+        });
       }
-      return audioContext;
+
+      // Setup audio resume on visibility change
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          resumeAudioSystem();
+        }
+      });
+
+      // Setup audio resume on user interaction
+      const resumeOnInteraction = () => {
+        resumeAudioSystem();
+        ['click', 'touchstart', 'keydown'].forEach(event => {
+          document.removeEventListener(event, resumeOnInteraction);
+        });
+      };
+
+      ['click', 'touchstart', 'keydown'].forEach(event => {
+        document.addEventListener(event, resumeOnInteraction);
+      });
+
+      console.log('Audio system initialized with pool size:', MAX_POOL_SIZE);
     }
 
-    // Ensure audio context is running
-    async function resumeAudioContext() {
-      if (audioContext && audioContext.state === 'suspended') {
-        try {
-          await audioContext.resume();
-          console.log('Audio context resumed');
-        } catch (error) {
-          console.error('Failed to resume audio context:', error);
+    // Resume audio system
+    function resumeAudioSystem() {
+      audioPool.forEach(({ element }) => {
+        if (element.paused && element.src) {
+          element.play().catch(error => {
+            console.log('Auto-resume failed, waiting for user interaction');
+          });
         }
+      });
+    }
+
+    // Get available audio element from pool
+    function getAudioElement() {
+      // Try to find an unused element
+      let audioEntry = audioPool.find(entry => !entry.inUse);
+      
+      if (!audioEntry) {
+        // If all are in use, create a new one
+        const audio = new Audio();
+        audio.crossOrigin = 'anonymous';
+        audioEntry = { element: audio, inUse: false };
+        audioPool.push(audioEntry);
+        console.log('Audio pool expanded to:', audioPool.length);
       }
+
+      audioEntry.inUse = true;
+      return audioEntry;
+    }
+
+    // Release audio element back to pool
+    function releaseAudioElement(audioEntry) {
+      audioEntry.inUse = false;
+      audioEntry.element.src = '';
+      audioEntry.element.onended = null;
+      audioEntry.element.onerror = null;
+      audioEntry.element.oncanplaythrough = null;
     }
 
     // Process audio queue
@@ -1658,42 +1687,39 @@
     async function playAudioItem(audioData) {
       const { text, button } = audioData;
       
-      // Initialize and resume audio context
       try {
-        await initAudioContext();
-        await resumeAudioContext();
-      } catch (error) {
-        console.error('Audio context initialization failed:', error);
-        return tryFallbackMethods(text, button);
-      }
-
-      try {
+        // Get audio element from pool
+        const audioEntry = getAudioElement();
+        const audio = audioEntry.element;
+        
+        // Setup audio URL
         const encodedText = encodeURIComponent(text);
         const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
         
-        const response = await fetch(audioUrl);
-        if (!response.ok) throw new Error('Network response was not ok');
-        
-        const blob = await response.blob();
-        const arrayBuffer = await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsArrayBuffer(blob);
-        });
-
-        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-        const source = audioContext.createBufferSource();
-        source.buffer = audioBuffer;
-        source.connect(audioContext.destination);
-        
         return new Promise((resolve, reject) => {
-          source.onended = resolve;
-          source.onerror = reject;
-          source.start(0);
+          audio.oncanplaythrough = () => {
+            audio.play().catch(error => {
+              console.error('Audio playback failed:', error);
+              reject(error);
+            });
+          };
+          
+          audio.onended = () => {
+            releaseAudioElement(audioEntry);
+            resolve();
+          };
+          
+          audio.onerror = (error) => {
+            console.error('Audio loading failed:', error);
+            releaseAudioElement(audioEntry);
+            reject(error);
+          };
+          
+          // Load the audio
+          audio.src = audioUrl;
         });
       } catch (error) {
-        console.error('WebAudio playback failed:', error);
+        console.error('Audio playback failed:', error);
         return tryFallbackMethods(text, button);
       }
     }
@@ -1832,45 +1858,14 @@
     async function tryFallbackMethods(text, button) {
       console.log('Trying fallback methods for audio playback');
       
-      // Try HTML5 Audio first
-      try {
-        await tryHtml5Audio(text);
-        return;
-      } catch (error) {
-        console.error('HTML5 Audio failed:', error);
-      }
-      
-      // Then try Web Speech API
+      // Try Web Speech API as fallback
       try {
         await tryWebSpeech(text);
       } catch (error) {
         console.error('Web Speech API failed:', error);
-        throw new Error('All audio playback methods failed');
+        console.log('All audio playback methods failed');
+        // Don't throw error, just log it
       }
-    }
-
-    // Try playing audio with HTML5 Audio element
-    function tryHtml5Audio(text) {
-      return new Promise((resolve, reject) => {
-        const audio = new Audio();
-        const encodedText = encodeURIComponent(text);
-        const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
-        
-        audio.src = audioUrl;
-        audio.crossOrigin = 'anonymous';
-        
-        audio.onplay = () => console.log('HTML5 Audio started playing');
-        audio.onended = () => {
-          console.log('HTML5 Audio completed');
-          resolve();
-        };
-        audio.onerror = (error) => {
-          console.error('HTML5 Audio failed:', error);
-          reject(error);
-        };
-        
-        audio.play().catch(reject);
-      });
     }
 
     // Try playing audio with Web Speech API
@@ -1881,13 +1876,17 @@
           return;
         }
 
-        console.log('Trying Web Speech API...');
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+
+        // Create utterance with optimal settings for Korean
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'ko-KR';
-        utterance.rate = 0.9;
+        utterance.rate = 0.9; // Slightly slower for clarity
         utterance.pitch = 1;
         utterance.volume = 1;
         
+        // Setup event handlers
         utterance.onend = () => {
           console.log('Speech synthesis completed');
           resolve();
@@ -1897,9 +1896,28 @@
           console.error('Speech synthesis failed:', error);
           reject(error);
         };
+
+        // Attempt to find a Korean voice
+        let voices = window.speechSynthesis.getVoices();
+        let koreanVoice = voices.find(voice => voice.lang.includes('ko'));
         
-        window.speechSynthesis.cancel(); // Cancel any ongoing speech
-        window.speechSynthesis.speak(utterance);
+        if (koreanVoice) {
+          utterance.voice = koreanVoice;
+        }
+
+        // If voices aren't loaded yet, wait for them
+        if (voices.length === 0) {
+          window.speechSynthesis.onvoiceschanged = () => {
+            voices = window.speechSynthesis.getVoices();
+            koreanVoice = voices.find(voice => voice.lang.includes('ko'));
+            if (koreanVoice) {
+              utterance.voice = koreanVoice;
+            }
+            window.speechSynthesis.speak(utterance);
+          };
+        } else {
+          window.speechSynthesis.speak(utterance);
+        }
       });
     }
 
