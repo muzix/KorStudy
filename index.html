@@ -1381,7 +1381,26 @@
   </div>
   
   <!-- Include the Korean words dictionary -->
-  <script src="korean-words.js"></script>
+  <script>
+    // Initialize dictionary
+    window.koreanDictionary = [];
+    
+    // Load dictionary
+    fetch('korean-words.js')
+      .then(response => response.text())
+      .then(text => {
+        // Remove "const koreanDictionary = " from the start and evaluate
+        const dictText = text.replace('const koreanDictionary = ', '');
+        window.koreanDictionary = JSON.parse(dictText);
+        console.log('Dictionary loaded successfully with', window.koreanDictionary.length, 'words');
+        
+        // Initialize the app after dictionary is loaded
+        if (document.readyState === 'complete') {
+          initializeProgress();
+        }
+      })
+      .catch(error => console.error('Error loading dictionary:', error));
+  </script>
   
   <script>
     // Initialize dictionary
@@ -1422,12 +1441,6 @@
     function playAudio(text, button) {
       console.log('Starting playAudio for text:', text);
       
-      // Check if speech synthesis is available
-      if (!window.speechSynthesis) {
-        console.error('Speech synthesis not supported in this browser');
-        return;
-      }
-
       // If no button is provided, use playPlainAudio instead
       if (!button) {
         console.log('No button provided, using playPlainAudio');
@@ -1454,82 +1467,55 @@
       button.textContent = 'Playing...';
       button.disabled = true;
 
-      // Cancel any ongoing speech
-      console.log('Cancelling any ongoing speech...');
-      try {
-        window.speechSynthesis.cancel();
-      } catch (error) {
-        console.error('Error cancelling speech:', error);
-      }
-
-      // Create speech synthesis utterance
-      console.log('Creating utterance...');
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'ko-KR';  // Set to Korean
-      utterance.rate = 0.9; // Slightly slower for better clarity
-      utterance.pitch = 1;
-
+      // Create audio element
+      const audio = new Audio();
+      
+      // Use Google Translate TTS API
+      const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
+      console.log('Audio URL:', url);
+      audio.src = url;
+      
       // Handle completion
-      utterance.onend = () => {
+      audio.onended = () => {
         console.log('Audio playback completed successfully');
         resetButton();
       };
 
       // Handle errors
-      utterance.onerror = (event) => {
-        console.error('Error playing audio:', event.error);
-        console.error('Error details:', event);
+      audio.onerror = (error) => {
+        console.error('Error playing audio:', error);
         resetButton();
       };
 
-      // Get voices and set up audio
-      try {
-        // Get available voices
-        const voices = window.speechSynthesis.getVoices();
-        console.log('Available voices:', voices.length);
-
-        // Try to find a Korean voice
-        const koreanVoices = voices.filter(voice => voice.lang.includes('ko-'));
-        if (koreanVoices.length > 0) {
-          console.log('Found Korean voice:', koreanVoices[0].name);
-          utterance.voice = koreanVoices[0];
-        } else {
-          console.log('No Korean voice found, using default voice');
-        }
-
-        // Play the audio
-        console.log('Starting audio playback...');
-        window.speechSynthesis.speak(utterance);
-        console.log('Audio playback started');
-
-      } catch (error) {
-        console.error('Error setting up audio:', error);
-        resetButton();
-      }
+      // Play the audio
+      console.log('Starting audio playback...');
+      audio.play()
+        .then(() => {
+          console.log('Audio playback started');
+        })
+        .catch(error => {
+          console.error('Error starting audio:', error);
+          resetButton();
+        });
     }
     
     // Separate function for playing audio without button UI updates
     function playPlainAudio(text) {
       console.log('Starting playPlainAudio for text:', text);
       
-      // Cancel any ongoing speech
-      window.speechSynthesis.cancel();
-
-      // Create speech synthesis utterance
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'ko-KR';  // Set to Korean
-      utterance.rate = 0.9; // Slightly slower for better clarity
-      utterance.pitch = 1;
-
-      // Try to find and use a Korean voice
-      const voices = window.speechSynthesis.getVoices();
-      const koreanVoices = voices.filter(voice => voice.lang.includes('ko-'));
-      if (koreanVoices.length > 0) {
-        utterance.voice = koreanVoices[0];
-      }
-
+      // Create audio element
+      const audio = new Audio();
+      
+      // Use Google Translate TTS API
+      const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(text)}&tl=ko-KR&client=tw-ob`;
+      console.log('Audio URL:', url);
+      audio.src = url;
+      
       // Play the audio
-      window.speechSynthesis.speak(utterance);
+      audio.play()
+        .catch(error => {
+          console.error('Error playing audio:', error);
+        });
     }
     
     // Helper: detect if a word is a verb (ends with '다')
