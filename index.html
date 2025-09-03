@@ -1463,8 +1463,12 @@
         // Set up writing practice
         const checkWritingBtn = document.getElementById('check-writing-btn');
         const nextWritingBtn = document.getElementById('next-writing-btn');
-        if (checkWritingBtn) checkWritingBtn.addEventListener('click', checkWritingAnswer);
-        if (nextWritingBtn) nextWritingBtn.addEventListener('click', nextWritingQuestion);
+        if (checkWritingBtn && typeof checkWritingAnswer !== 'undefined') {
+          checkWritingBtn.addEventListener('click', checkWritingAnswer);
+        }
+        if (nextWritingBtn && typeof nextWritingQuestion !== 'undefined') {
+          nextWritingBtn.addEventListener('click', nextWritingQuestion);
+        }
         
         // Set up numbers practice
         const checkNumberBtn = document.getElementById('check-number-btn');
@@ -1607,88 +1611,207 @@
       button.textContent = 'Playing...';
       button.disabled = true;
 
-      // Try Web Speech API first
-      if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'ko-KR';
-        utterance.rate = 0.9;
-        utterance.pitch = 1;
-        
-        utterance.onend = () => {
-          console.log('Speech synthesis completed');
-          resetButton();
-        };
-        
-        utterance.onerror = () => {
-          console.error('Speech synthesis failed, trying audio element...');
-          playWithAudio();
-        };
-        
-        window.speechSynthesis.speak(utterance);
-      } else {
-        playWithAudio();
-      }
-
-      // Fallback to audio element
-      function playWithAudio() {
-        const audio = new Audio();
-        const encodedText = encodeURIComponent(text);
-        audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob`;
-        
-        audio.onended = () => {
-          console.log('Audio playback completed');
-          resetButton();
-        };
-        
-        audio.onerror = () => {
-          console.error('Audio playback failed');
-          resetButton();
-        };
-        
-        // Play the audio
-        audio.play().catch(error => {
-          console.error('Error playing audio:', error);
-          resetButton();
+      // Create audio element first
+      const audio = new Audio();
+      const encodedText = encodeURIComponent(text);
+      const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
+      
+      // Try to preload the audio
+      fetch(audioUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.blob();
+        })
+        .then(blob => {
+          audio.src = URL.createObjectURL(blob);
+        })
+        .catch(error => {
+          console.log('Could not preload audio, falling back to direct URL:', error);
+          audio.src = audioUrl;
         });
+      
+      audio.crossOrigin = 'anonymous';
+      
+      // Set up audio event handlers
+      audio.onplay = () => {
+        console.log('Audio started playing');
+      };
+      
+      audio.onended = () => {
+        console.log('Audio playback completed');
+        resetButton();
+      };
+      
+      audio.onerror = (e) => {
+        console.error('Audio playback failed:', e);
+        // Create hidden iframe for audio
+        console.log('Trying iframe method...');
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.onload = () => {
+          console.log('Audio iframe loaded');
+          setTimeout(() => {
+            document.body.removeChild(iframe);
+            resetButton();
+          }, 2000); // Give enough time for audio to play
+        };
+        
+        iframe.onerror = () => {
+          console.error('Iframe failed, trying Web Speech API...');
+          document.body.removeChild(iframe);
+          tryWebSpeech();
+        };
+        
+        iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
+        document.body.appendChild(iframe);
+      };
+      
+      function tryWebSpeech() {
+        if ('speechSynthesis' in window) {
+          console.log('Trying Web Speech API...');
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'ko-KR';
+          utterance.rate = 0.9;
+          utterance.pitch = 1;
+          utterance.volume = 1;
+          
+          utterance.onend = () => {
+            console.log('Speech synthesis completed');
+            resetButton();
+          };
+          
+          utterance.onerror = (e) => {
+            console.error('Speech synthesis failed:', e);
+            resetButton();
+          };
+          
+          window.speechSynthesis.cancel(); // Cancel any ongoing speech
+          window.speechSynthesis.speak(utterance);
+        } else {
+          console.error('No audio playback method available');
+          resetButton();
+        }
       }
+      
+      // Try to play the audio
+      console.log('Attempting to play audio...');
+      audio.play().catch(error => {
+        console.error('Error playing audio:', error);
+        // Try iframe method
+        console.log('Audio failed, trying iframe...');
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.onload = () => {
+          console.log('Audio iframe loaded');
+          setTimeout(() => {
+            document.body.removeChild(iframe);
+            resetButton();
+          }, 2000); // Give enough time for audio to play
+        };
+        
+        iframe.onerror = () => {
+          console.error('Iframe failed, trying Web Speech API...');
+          document.body.removeChild(iframe);
+          tryWebSpeech();
+        };
+        
+        iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
+        document.body.appendChild(iframe);
+      });
     }
     
     // Separate function for playing audio without button UI updates
     function playPlainAudio(text) {
       console.log('Starting playPlainAudio for text:', text);
       
-      // Try Web Speech API first
-      if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'ko-KR';
-        utterance.rate = 0.9;
-        utterance.pitch = 1;
-        
-        utterance.onerror = () => {
-          console.error('Speech synthesis failed, trying audio element...');
-          playWithAudio();
+      // Create audio element first
+      const audio = new Audio();
+      const encodedText = encodeURIComponent(text);
+      audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
+      audio.crossOrigin = 'anonymous';
+      
+      // Set up audio event handlers
+      audio.onplay = () => {
+        console.log('Audio started playing');
+      };
+      
+      audio.onended = () => {
+        console.log('Audio playback completed');
+      };
+      
+      audio.onerror = (e) => {
+        console.error('Audio playback failed:', e);
+        // Create hidden iframe for audio
+        console.log('Trying iframe method...');
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.onload = () => {
+          console.log('Audio iframe loaded');
+          setTimeout(() => {
+            document.body.removeChild(iframe);
+          }, 2000); // Give enough time for audio to play
         };
         
-        window.speechSynthesis.speak(utterance);
-      } else {
-        playWithAudio();
-      }
-
-      // Fallback to audio element
-      function playWithAudio() {
-        const audio = new Audio();
-        const encodedText = encodeURIComponent(text);
-        audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob`;
-        
-        audio.onerror = () => {
-          console.error('Audio playback failed');
+        iframe.onerror = () => {
+          console.error('Iframe failed, trying Web Speech API...');
+          document.body.removeChild(iframe);
+          tryWebSpeech();
         };
         
-        // Play the audio
-        audio.play().catch(error => {
-          console.error('Error playing audio:', error);
-        });
+        iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
+        document.body.appendChild(iframe);
+      };
+      
+      function tryWebSpeech() {
+        if ('speechSynthesis' in window) {
+          console.log('Trying Web Speech API...');
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'ko-KR';
+          utterance.rate = 0.9;
+          utterance.pitch = 1;
+          utterance.volume = 1;
+          
+          utterance.onend = () => {
+            console.log('Speech synthesis completed');
+          };
+          
+          utterance.onerror = (e) => {
+            console.error('Speech synthesis failed:', e);
+          };
+          
+          window.speechSynthesis.cancel(); // Cancel any ongoing speech
+          window.speechSynthesis.speak(utterance);
+        } else {
+          console.error('No audio playback method available');
+        }
       }
+      
+      // Try to play the audio
+      console.log('Attempting to play audio...');
+      audio.play().catch(error => {
+        console.error('Error playing audio:', error);
+        // Try iframe method
+        console.log('Audio failed, trying iframe...');
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.onload = () => {
+          console.log('Audio iframe loaded');
+          setTimeout(() => {
+            document.body.removeChild(iframe);
+          }, 2000); // Give enough time for audio to play
+        };
+        
+        iframe.onerror = () => {
+          console.error('Iframe failed, trying Web Speech API...');
+          document.body.removeChild(iframe);
+          tryWebSpeech();
+        };
+        
+        iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
+        document.body.appendChild(iframe);
+      });
     }
     
     // Helper: detect if a word is a verb (ends with '다')
@@ -3468,16 +3591,48 @@
     
     // Add new functions for progress tracking
     function initializeProgress() {
-      // Load progress data
-      const progressData = JSON.parse(localStorage.getItem('koreanProgress') || '{}');
-      
-      // Update stats
-      updateProgressStats(progressData);
-      
-      // Load recent activity
-      loadRecentActivity();
-      
-      // Set up export/import handlers
+      try {
+        console.log('Initializing progress tracking...');
+        
+        // Create progress container if it doesn't exist
+        let progressContainer = document.querySelector('.progress-stats');
+        if (!progressContainer) {
+          console.log('Creating progress stats container...');
+          progressContainer = document.createElement('div');
+          progressContainer.className = 'progress-stats';
+          const mainContent = document.querySelector('.main-content');
+          if (mainContent) {
+            mainContent.appendChild(progressContainer);
+          } else {
+            console.error('Main content container not found');
+            return;
+          }
+        }
+        
+        // Create activity list container if it doesn't exist
+        if (!document.getElementById('activity-list')) {
+          console.log('Creating activity list container...');
+          const activityList = document.createElement('div');
+          activityList.id = 'activity-list';
+          activityList.className = 'activity-list';
+          progressContainer.appendChild(activityList);
+        }
+        
+        // Load progress data
+        const progressData = JSON.parse(localStorage.getItem('koreanProgress') || '{}');
+        console.log('Loaded progress data:', progressData);
+        
+        // Update stats
+        updateProgressStats(progressData);
+        
+        // Load recent activity
+        loadRecentActivity();
+        
+        // Set up export/import handlers
+        console.log('Progress tracking initialized successfully');
+      } catch (error) {
+        console.error('Error initializing progress:', error);
+      }
       setupDataHandlers();
     }
     
@@ -3510,19 +3665,44 @@
     }
     
     function loadRecentActivity() {
-      const activityList = document.getElementById('activity-list');
-      const recentActivity = JSON.parse(localStorage.getItem('recentActivity') || '[]');
-      
-      activityList.innerHTML = '';
-      recentActivity.forEach(activity => {
-        const item = document.createElement('div');
-        item.className = 'activity-item';
-        item.innerHTML = `
-          <span>${activity.action}</span>
-          <span>${new Date(activity.timestamp).toLocaleString()}</span>
-        `;
-        activityList.appendChild(item);
-      });
+      try {
+        console.log('Loading recent activity...');
+        const activityList = document.getElementById('activity-list');
+        if (!activityList) {
+          console.error('Activity list container not found');
+          return;
+        }
+
+        const recentActivity = JSON.parse(localStorage.getItem('recentActivity') || '[]');
+        console.log('Loaded recent activity:', recentActivity);
+        
+        activityList.innerHTML = '';
+        
+        if (recentActivity.length === 0) {
+          const emptyMessage = document.createElement('div');
+          emptyMessage.className = 'activity-item empty';
+          emptyMessage.textContent = 'No recent activity';
+          activityList.appendChild(emptyMessage);
+          return;
+        }
+        
+        recentActivity.forEach(activity => {
+          if (!activity) return;
+          const item = document.createElement('div');
+          item.className = 'activity-item';
+          try {
+            item.innerHTML = `
+              <span>${activity.action || ''}</span>
+              <span>${activity.timestamp ? new Date(activity.timestamp).toLocaleString() : ''}</span>
+            `;
+            activityList.appendChild(item);
+          } catch (error) {
+            console.error('Error creating activity item:', error, activity);
+          }
+        });
+      } catch (error) {
+        console.error('Error loading recent activity:', error);
+      }
     }
     
     function addActivity(action) {
