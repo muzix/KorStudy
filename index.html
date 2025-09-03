@@ -1466,89 +1466,88 @@
       button.textContent = 'Playing...';
       button.disabled = true;
 
-      // Create hidden iframe for audio
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.onload = () => {
-        console.log('Audio iframe loaded');
-        setTimeout(() => {
-          document.body.removeChild(iframe);
-          resetButton();
-        }, 1500); // Give enough time for audio to play
-      };
-      
-      // Handle errors
-      iframe.onerror = () => {
-        console.error('Error playing audio via iframe, trying Web Speech API...');
-        document.body.removeChild(iframe);
+      // Try Web Speech API first
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ko-KR';
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
         
-        // Try Web Speech API as fallback
-        if ('speechSynthesis' in window) {
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'ko-KR';
-          utterance.rate = 0.9;
-          utterance.pitch = 1;
-          
-          utterance.onend = () => {
-            console.log('Speech synthesis completed');
-            resetButton();
-          };
-          
-          utterance.onerror = () => {
-            console.error('Speech synthesis failed');
-            resetButton();
-          };
-          
-          window.speechSynthesis.speak(utterance);
-        } else {
-          console.error('No audio playback method available');
+        utterance.onend = () => {
+          console.log('Speech synthesis completed');
           resetButton();
-        }
-      };
+        };
+        
+        utterance.onerror = () => {
+          console.error('Speech synthesis failed, trying audio element...');
+          playWithAudio();
+        };
+        
+        window.speechSynthesis.speak(utterance);
+      } else {
+        playWithAudio();
+      }
 
-      // Use Google Translate TTS via iframe
-      const encodedText = encodeURIComponent(text);
-      iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob`;
-      document.body.appendChild(iframe);
+      // Fallback to audio element
+      function playWithAudio() {
+        const audio = new Audio();
+        const encodedText = encodeURIComponent(text);
+        audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob`;
+        
+        audio.onended = () => {
+          console.log('Audio playback completed');
+          resetButton();
+        };
+        
+        audio.onerror = () => {
+          console.error('Audio playback failed');
+          resetButton();
+        };
+        
+        // Play the audio
+        audio.play().catch(error => {
+          console.error('Error playing audio:', error);
+          resetButton();
+        });
+      }
     }
     
     // Separate function for playing audio without button UI updates
     function playPlainAudio(text) {
       console.log('Starting playPlainAudio for text:', text);
       
-      // Create hidden iframe for audio
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      
-      // Remove iframe after audio plays
-      iframe.onload = () => {
-        console.log('Audio iframe loaded');
-        setTimeout(() => {
-          document.body.removeChild(iframe);
-        }, 1500); // Give enough time for audio to play
-      };
-      
-      // Handle errors
-      iframe.onerror = () => {
-        console.error('Error playing audio via iframe, trying Web Speech API...');
-        document.body.removeChild(iframe);
+      // Try Web Speech API first
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ko-KR';
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
         
-        // Try Web Speech API as fallback
-        if ('speechSynthesis' in window) {
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'ko-KR';
-          utterance.rate = 0.9;
-          utterance.pitch = 1;
-          window.speechSynthesis.speak(utterance);
-        } else {
-          console.error('No audio playback method available');
-        }
-      };
-      
-      // Use Google Translate TTS via iframe
-      const encodedText = encodeURIComponent(text);
-      iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob`;
-      document.body.appendChild(iframe);
+        utterance.onerror = () => {
+          console.error('Speech synthesis failed, trying audio element...');
+          playWithAudio();
+        };
+        
+        window.speechSynthesis.speak(utterance);
+      } else {
+        playWithAudio();
+      }
+
+      // Fallback to audio element
+      function playWithAudio() {
+        const audio = new Audio();
+        const encodedText = encodeURIComponent(text);
+        audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob`;
+        
+        audio.onerror = () => {
+          console.error('Audio playback failed');
+        };
+        
+        // Play the audio
+        audio.play().catch(error => {
+          console.error('Error playing audio:', error);
+        });
+      }
     }
     
     // Helper: detect if a word is a verb (ends with '다')
