@@ -1582,6 +1582,123 @@
     });
     
     // Dictionary Functionality
+    // Audio system setup and management
+    let audioContext = null;
+    let audioQueue = [];
+    let isPlaying = false;
+
+    // Initialize audio context with user interaction
+    function initAudioContext() {
+      if (!audioContext) {
+        try {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          console.log('Audio context initialized');
+          
+          // Setup audio context resume on visibility change
+          document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+              resumeAudioContext();
+            }
+          });
+
+          // Setup audio context resume on user interaction
+          const resumeAudioContextOnInteraction = () => {
+            resumeAudioContext();
+            ['click', 'touchstart', 'keydown'].forEach(event => {
+              document.removeEventListener(event, resumeAudioContextOnInteraction);
+            });
+          };
+
+          ['click', 'touchstart', 'keydown'].forEach(event => {
+            document.addEventListener(event, resumeAudioContextOnInteraction);
+          });
+        } catch (error) {
+          console.error('Failed to initialize audio context:', error);
+        }
+      }
+      return audioContext;
+    }
+
+    // Ensure audio context is running
+    async function resumeAudioContext() {
+      if (audioContext && audioContext.state === 'suspended') {
+        try {
+          await audioContext.resume();
+          console.log('Audio context resumed');
+        } catch (error) {
+          console.error('Failed to resume audio context:', error);
+        }
+      }
+    }
+
+    // Process audio queue
+    async function processAudioQueue() {
+      if (isPlaying || audioQueue.length === 0) return;
+      
+      isPlaying = true;
+      const nextAudio = audioQueue.shift();
+      
+      try {
+        await playAudioItem(nextAudio);
+      } catch (error) {
+        console.error('Error playing queued audio:', error);
+      } finally {
+        isPlaying = false;
+        processAudioQueue(); // Process next item if any
+      }
+    }
+
+    // Add audio to queue
+    function queueAudio(audioData) {
+      audioQueue.push(audioData);
+      processAudioQueue();
+    }
+
+    // Play a single audio item
+    async function playAudioItem(audioData) {
+      const { text, button } = audioData;
+      
+      // Initialize and resume audio context
+      try {
+        await initAudioContext();
+        await resumeAudioContext();
+      } catch (error) {
+        console.error('Audio context initialization failed:', error);
+        return tryFallbackMethods(text, button);
+      }
+
+      try {
+        const encodedText = encodeURIComponent(text);
+        const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
+        
+        const response = await fetch(audioUrl);
+        if (!response.ok) throw new Error('Network response was not ok');
+        
+        const blob = await response.blob();
+        const arrayBuffer = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsArrayBuffer(blob);
+        });
+
+        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+        const source = audioContext.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(audioContext.destination);
+        
+        return new Promise((resolve, reject) => {
+          source.onended = resolve;
+          source.onerror = reject;
+          source.start(0);
+        });
+      } catch (error) {
+        console.error('WebAudio playback failed:', error);
+        return tryFallbackMethods(text, button);
+      }
+    }
+
+    // Main audio play function
     function playAudio(text, button) {
       console.log('Starting playAudio for text:', text);
       
@@ -1599,7 +1716,7 @@
         return;
       }
       
-      // Reset button state
+      // Reset button state function
       const resetButton = () => {
         indicator.classList.remove('playing');
         button.innerHTML = '<span class="audio-indicator"></span>Listen';
@@ -1611,28 +1728,16 @@
       button.textContent = 'Playing...';
       button.disabled = true;
 
-      // Create audio element first
-      const audio = new Audio();
-      const encodedText = encodeURIComponent(text);
-      const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
-      
-      // Try to preload the audio
-      fetch(audioUrl)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.blob();
-        })
-        .then(blob => {
-          audio.src = URL.createObjectURL(blob);
-        })
-        .catch(error => {
-          console.log('Could not preload audio, falling back to direct URL:', error);
-          audio.src = audioUrl;
-        });
-      
-      audio.crossOrigin = 'anonymous';
+      // Queue the audio
+      queueAudio({ 
+        text, 
+        button,
+        onComplete: resetButton,
+        onError: () => {
+          console.error('Audio playback failed');
+          resetButton();
+        }
+      });
       
       // Set up audio event handlers
       audio.onplay = () => {
@@ -1723,94 +1828,88 @@
     }
     
     // Separate function for playing audio without button UI updates
-    function playPlainAudio(text) {
-      console.log('Starting playPlainAudio for text:', text);
+    // Try fallback methods for audio playback
+    async function tryFallbackMethods(text, button) {
+      console.log('Trying fallback methods for audio playback');
       
-      // Create audio element first
-      const audio = new Audio();
-      const encodedText = encodeURIComponent(text);
-      audio.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
-      audio.crossOrigin = 'anonymous';
-      
-      // Set up audio event handlers
-      audio.onplay = () => {
-        console.log('Audio started playing');
-      };
-      
-      audio.onended = () => {
-        console.log('Audio playback completed');
-      };
-      
-      audio.onerror = (e) => {
-        console.error('Audio playback failed:', e);
-        // Create hidden iframe for audio
-        console.log('Trying iframe method...');
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.onload = () => {
-          console.log('Audio iframe loaded');
-          setTimeout(() => {
-            document.body.removeChild(iframe);
-          }, 2000); // Give enough time for audio to play
-        };
-        
-        iframe.onerror = () => {
-          console.error('Iframe failed, trying Web Speech API...');
-          document.body.removeChild(iframe);
-          tryWebSpeech();
-        };
-        
-        iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
-        document.body.appendChild(iframe);
-      };
-      
-      function tryWebSpeech() {
-        if ('speechSynthesis' in window) {
-          console.log('Trying Web Speech API...');
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'ko-KR';
-          utterance.rate = 0.9;
-          utterance.pitch = 1;
-          utterance.volume = 1;
-          
-          utterance.onend = () => {
-            console.log('Speech synthesis completed');
-          };
-          
-          utterance.onerror = (e) => {
-            console.error('Speech synthesis failed:', e);
-          };
-          
-          window.speechSynthesis.cancel(); // Cancel any ongoing speech
-          window.speechSynthesis.speak(utterance);
-        } else {
-          console.error('No audio playback method available');
-        }
+      // Try HTML5 Audio first
+      try {
+        await tryHtml5Audio(text);
+        return;
+      } catch (error) {
+        console.error('HTML5 Audio failed:', error);
       }
       
-      // Try to play the audio
-      console.log('Attempting to play audio...');
-      audio.play().catch(error => {
-        console.error('Error playing audio:', error);
-        // Try iframe method
-        console.log('Audio failed, trying iframe...');
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.onload = () => {
-          console.log('Audio iframe loaded');
-          setTimeout(() => {
-            document.body.removeChild(iframe);
-          }, 2000); // Give enough time for audio to play
+      // Then try Web Speech API
+      try {
+        await tryWebSpeech(text);
+      } catch (error) {
+        console.error('Web Speech API failed:', error);
+        throw new Error('All audio playback methods failed');
+      }
+    }
+
+    // Try playing audio with HTML5 Audio element
+    function tryHtml5Audio(text) {
+      return new Promise((resolve, reject) => {
+        const audio = new Audio();
+        const encodedText = encodeURIComponent(text);
+        const audioUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
+        
+        audio.src = audioUrl;
+        audio.crossOrigin = 'anonymous';
+        
+        audio.onplay = () => console.log('HTML5 Audio started playing');
+        audio.onended = () => {
+          console.log('HTML5 Audio completed');
+          resolve();
+        };
+        audio.onerror = (error) => {
+          console.error('HTML5 Audio failed:', error);
+          reject(error);
         };
         
-        iframe.onerror = () => {
-          console.error('Iframe failed, trying Web Speech API...');
-          document.body.removeChild(iframe);
-          tryWebSpeech();
+        audio.play().catch(reject);
+      });
+    }
+
+    // Try playing audio with Web Speech API
+    function tryWebSpeech(text) {
+      return new Promise((resolve, reject) => {
+        if (!('speechSynthesis' in window)) {
+          reject(new Error('Web Speech API not available'));
+          return;
+        }
+
+        console.log('Trying Web Speech API...');
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ko-KR';
+        utterance.rate = 0.9;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+        
+        utterance.onend = () => {
+          console.log('Speech synthesis completed');
+          resolve();
         };
         
-        iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
-        document.body.appendChild(iframe);
+        utterance.onerror = (error) => {
+          console.error('Speech synthesis failed:', error);
+          reject(error);
+        };
+        
+        window.speechSynthesis.cancel(); // Cancel any ongoing speech
+        window.speechSynthesis.speak(utterance);
+      });
+    }
+
+    // Play audio without button UI
+    function playPlainAudio(text) {
+      console.log('Starting playPlainAudio for text:', text);
+      queueAudio({ 
+        text,
+        onComplete: () => console.log('Plain audio completed'),
+        onError: (error) => console.error('Plain audio failed:', error)
       });
     }
     
