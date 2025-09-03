@@ -1433,8 +1433,8 @@
         }
 
         // Initialize dictionary display
-        filterDictionary();
-        
+      filterDictionary();
+      
         // Initialize study mode UI
         console.log('Initializing study mode UI...');
         
@@ -1621,6 +1621,30 @@
       }
     }
 
+    // Quiz functionality
+    function startNewWordsQuiz() {
+      // Get words that haven't been studied yet
+      const unstudiedWords = koreanDictionary.filter(word => !studyProgress[word.korean]);
+      
+      if (unstudiedWords.length === 0) {
+        alert('Congratulations! You have studied all words. Try reviewing them instead.');
+        return;
+      }
+
+      // Randomly select 10 words or all unstudied words if less than 10
+      const quizWords = [];
+      const numWords = Math.min(10, unstudiedWords.length);
+      const wordsCopy = [...unstudiedWords];
+
+      for (let i = 0; i < numWords; i++) {
+        const randomIndex = Math.floor(Math.random() * wordsCopy.length);
+        quizWords.push(wordsCopy.splice(randomIndex, 1)[0]);
+      }
+
+      // Start quiz with these words
+      startQuiz(quizWords);
+    }
+
     // Initialize audio system
     function initAudioSystem() {
       // Pre-create audio elements pool
@@ -1727,8 +1751,7 @@
         
         // Setup audio URL with CORS proxy
         const encodedText = encodeURIComponent(text);
-        const googleTTSUrl = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
-        const audioUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(googleTTSUrl)}`;
+        const audioUrl = `https://cors-anywhere.herokuapp.com/https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
         
         return new Promise((resolve, reject) => {
           audio.oncanplaythrough = () => {
@@ -1787,22 +1810,20 @@
       indicator.classList.add('playing');
       button.textContent = 'Playing...';
       button.disabled = true;
-
-      // Queue the audio
+      
+      // Queue the audio with callbacks
       queueAudio({ 
         text, 
         button,
-        onComplete: resetButton,
+        onComplete: () => {
+          console.log('Audio playback completed');
+          resetButton();
+        },
         onError: () => {
           console.error('Audio playback failed');
           resetButton();
         }
       });
-      
-      audio.onended = () => {
-        console.log('Audio playback completed');
-        resetButton();
-      };
       
       audio.onerror = (e) => {
         console.error('Audio playback failed:', e);
@@ -1879,7 +1900,7 @@
         
         iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
         document.body.appendChild(iframe);
-      });
+        });
     }
     
     // Separate function for playing audio without button UI updates
@@ -1957,7 +1978,7 @@
         text,
         onComplete: () => console.log('Plain audio completed'),
         onError: (error) => console.error('Plain audio failed:', error)
-      });
+        });
     }
     
     // Helper: detect if a word is a verb (ends with '다')
@@ -3764,17 +3785,17 @@
           progressContainer.appendChild(activityList);
         }
         
-        // Load progress data
-        const progressData = JSON.parse(localStorage.getItem('koreanProgress') || '{}');
+      // Load progress data
+      const progressData = JSON.parse(localStorage.getItem('koreanProgress') || '{}');
         console.log('Loaded progress data:', progressData);
-        
-        // Update stats
-        updateProgressStats(progressData);
-        
-        // Load recent activity
-        loadRecentActivity();
-        
-        // Set up export/import handlers
+      
+      // Update stats
+      updateProgressStats(progressData);
+      
+      // Load recent activity
+      loadRecentActivity();
+      
+      // Set up export/import handlers
         console.log('Progress tracking initialized successfully');
       } catch (error) {
         console.error('Error initializing progress:', error);
@@ -3806,23 +3827,23 @@
       // Update progress bar if it exists
       const progressBar = document.getElementById('progress-bar');
       if (progressBar) {
-        progressBar.style.width = `${completionPercentage}%`;
+      progressBar.style.width = `${completionPercentage}%`;
       }
     }
     
     function loadRecentActivity() {
       try {
         console.log('Loading recent activity...');
-        const activityList = document.getElementById('activity-list');
+      const activityList = document.getElementById('activity-list');
         if (!activityList) {
           console.error('Activity list container not found');
           return;
         }
 
-        const recentActivity = JSON.parse(localStorage.getItem('recentActivity') || '[]');
+      const recentActivity = JSON.parse(localStorage.getItem('recentActivity') || '[]');
         console.log('Loaded recent activity:', recentActivity);
-        
-        activityList.innerHTML = '';
+      
+      activityList.innerHTML = '';
         
         if (recentActivity.length === 0) {
           const emptyMessage = document.createElement('div');
@@ -3832,20 +3853,20 @@
           return;
         }
         
-        recentActivity.forEach(activity => {
+      recentActivity.forEach(activity => {
           if (!activity) return;
-          const item = document.createElement('div');
-          item.className = 'activity-item';
+        const item = document.createElement('div');
+        item.className = 'activity-item';
           try {
-            item.innerHTML = `
+        item.innerHTML = `
               <span>${activity.action || ''}</span>
               <span>${activity.timestamp ? new Date(activity.timestamp).toLocaleString() : ''}</span>
-            `;
-            activityList.appendChild(item);
+        `;
+        activityList.appendChild(item);
           } catch (error) {
             console.error('Error creating activity item:', error, activity);
           }
-        });
+      });
       } catch (error) {
         console.error('Error loading recent activity:', error);
       }
@@ -3977,7 +3998,7 @@
         console.log('Checking dictionary...');
         if (window.koreanDictionary && window.koreanDictionary.length > 0) {
           console.log('Dictionary loaded with', window.koreanDictionary.length, 'words');
-          initializeProgress();
+      initializeProgress();
         } else {
           console.log('Dictionary not loaded yet, retrying...');
           setTimeout(checkDictionary, 500);
@@ -4567,6 +4588,81 @@
         document.querySelector('.grammar-container').style.display = 'block';
         showGrammarTopicSelection();
       }
+    }
+  </script>
+</body>
+    // Quiz functionality
+    function startQuiz(quizWords) {
+      const quizContainer = document.getElementById('quiz-container');
+      if (!quizContainer) {
+        console.error('Quiz container not found');
+        return;
+      }
+
+      let currentWordIndex = 0;
+      let score = 0;
+
+      function showNextWord() {
+        if (currentWordIndex >= quizWords.length) {
+          // Quiz finished
+          quizContainer.innerHTML = `
+            <h2>Quiz Complete!</h2>
+            <p>Your score: ${score} out of ${quizWords.length}</p>
+            <button onclick="startNewWordsQuiz()">Try Another Quiz</button>
+          `;
+          return;
+        }
+
+        const currentWord = quizWords[currentWordIndex];
+        const otherWords = koreanDictionary
+          .filter(w => w.korean !== currentWord.korean)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3);
+        
+        const allOptions = [...otherWords, currentWord]
+          .sort(() => Math.random() - 0.5);
+
+        quizContainer.innerHTML = `
+          <div class="quiz-word">
+            <h3>${currentWord.korean}</h3>
+            <button class="audio-button" onclick="playPlainAudio('${currentWord.korean}')">
+              <span class="audio-indicator"></span>Listen
+            </button>
+          </div>
+          <div class="quiz-options">
+            ${allOptions.map((word, index) => `
+              <button class="quiz-option" onclick="checkAnswer(${index}, '${currentWord.english.replace(/'/g, "\\'")}')"
+                ${word.english}
+              </button>
+            `).join('')}
+          </div>
+          <p>Question ${currentWordIndex + 1} of ${quizWords.length}</p>
+        `;
+      }
+
+      window.checkAnswer = function(index, correctAnswer) {
+        const selectedOption = document.querySelectorAll('.quiz-option')[index];
+        const allOptions = document.querySelectorAll('.quiz-option');
+        
+        allOptions.forEach(opt => opt.disabled = true);
+        
+        if (selectedOption.textContent.trim() === correctAnswer) {
+          selectedOption.classList.add('correct');
+          score++;
+        } else {
+          selectedOption.classList.add('incorrect');
+          Array.from(allOptions).find(opt => 
+            opt.textContent.trim() === correctAnswer
+          ).classList.add('correct');
+        }
+
+        setTimeout(() => {
+          currentWordIndex++;
+          showNextWord();
+        }, 1500);
+      };
+
+      showNextWord();
     }
   </script>
 </body>
