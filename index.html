@@ -1471,20 +1471,23 @@
       button.textContent = 'Playing...';
       button.disabled = true;
 
-      // Create audio element
-      const audio = new Audio();
-      
-      // Handle completion
-      audio.onended = () => {
-        console.log('Audio playback completed successfully');
-        resetButton();
+      // Create hidden iframe for audio
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.onload = () => {
+        console.log('Audio iframe loaded');
+        setTimeout(() => {
+          document.body.removeChild(iframe);
+          resetButton();
+        }, 1500); // Give enough time for audio to play
       };
-
+      
       // Handle errors
-      audio.onerror = () => {
-        console.error('Error playing audio, trying Web Speech API...');
+      iframe.onerror = () => {
+        console.error('Error playing audio via iframe, trying Web Speech API...');
+        document.body.removeChild(iframe);
         
-        // Try Web Speech API
+        // Try Web Speech API as fallback
         if ('speechSynthesis' in window) {
           const utterance = new SpeechSynthesisUtterance(text);
           utterance.lang = 'ko-KR';
@@ -1508,59 +1511,49 @@
         }
       };
 
-      // Try direct audio first
-      const url = new URL('https://translate.google.com/translate_tts');
-      url.searchParams.set('ie', 'UTF-8');
-      url.searchParams.set('q', text);
-      url.searchParams.set('tl', 'ko-KR');
-      url.searchParams.set('client', 'tw-ob');
-      
-      audio.crossOrigin = 'anonymous';
-      audio.src = url.toString();
-      
-      // Play the audio
-      audio.play().catch(error => {
-        console.error('Error playing audio:', error);
-        audio.onerror();
-      });
+      // Use Google Translate TTS via iframe
+      const encodedText = encodeURIComponent(text);
+      iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob`;
+      document.body.appendChild(iframe);
     }
     
     // Separate function for playing audio without button UI updates
     function playPlainAudio(text) {
       console.log('Starting playPlainAudio for text:', text);
       
-      // Try Web Speech API first
-      if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'ko-KR';
-        utterance.rate = 0.9;
-        utterance.pitch = 1;
-        window.speechSynthesis.speak(utterance);
-        return;
-      }
+      // Create hidden iframe for audio
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
       
-      // Fallback to Audio element
-      const audio = new Audio();
+      // Remove iframe after audio plays
+      iframe.onload = () => {
+        console.log('Audio iframe loaded');
+        setTimeout(() => {
+          document.body.removeChild(iframe);
+        }, 1500); // Give enough time for audio to play
+      };
       
       // Handle errors
-      audio.onerror = () => {
-        console.error('Error playing audio');
+      iframe.onerror = () => {
+        console.error('Error playing audio via iframe, trying Web Speech API...');
+        document.body.removeChild(iframe);
+        
+        // Try Web Speech API as fallback
+        if ('speechSynthesis' in window) {
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'ko-KR';
+          utterance.rate = 0.9;
+          utterance.pitch = 1;
+          window.speechSynthesis.speak(utterance);
+        } else {
+          console.error('No audio playback method available');
+        }
       };
-
-      // Try direct audio
-      const url = new URL('https://translate.google.com/translate_tts');
-      url.searchParams.set('ie', 'UTF-8');
-      url.searchParams.set('q', text);
-      url.searchParams.set('tl', 'ko-KR');
-      url.searchParams.set('client', 'tw-ob');
       
-      audio.crossOrigin = 'anonymous';
-      audio.src = url.toString();
-      
-      // Play the audio
-      audio.play().catch(error => {
-        console.error('Error playing audio:', error);
-      });
+      // Use Google Translate TTS via iframe
+      const encodedText = encodeURIComponent(text);
+      iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob`;
+      document.body.appendChild(iframe);
     }
     
     // Helper: detect if a word is a verb (ends with '다')
