@@ -1359,6 +1359,18 @@
           <div class="settings-group">
             <h3>Audio Settings</h3>
             <div class="settings-option">
+              <label for="voice-select">Voice:</label>
+              <select id="voice-select" class="voice-selector" style="margin-left: 10px; padding: 5px; border-radius: 5px; border: 1px solid #ddd;">
+                <option value="">Default Voice</option>
+              </select>
+              <button id="test-voice-btn" style="margin-left: 10px; padding: 5px 10px; background: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer;">Test Voice</button>
+            </div>
+            <div class="settings-option">
+              <label for="speech-rate">Speech Rate:</label>
+              <input type="range" id="speech-rate" min="0.5" max="2" step="0.1" value="0.9" style="margin-left: 10px; width: 150px;">
+              <span id="speech-rate-value" style="margin-left: 10px;">0.9</span>
+            </div>
+            <div class="settings-option">
               <input type="checkbox" id="auto-play" checked>
               <label for="auto-play">Auto-play pronunciation when viewing words</label>
             </div>
@@ -1390,6 +1402,118 @@
       // Initialize speech synthesis first
       if ('speechSynthesis' in window) {
         console.log('Speech synthesis available, loading voices...');
+        
+        // Make initializeVoiceSelector globally accessible
+        window.initializeVoiceSelector = function() {
+          const voiceSelect = document.getElementById('voice-select');
+          const testVoiceBtn = document.getElementById('test-voice-btn');
+          const speechRateInput = document.getElementById('speech-rate');
+          const speechRateValue = document.getElementById('speech-rate-value');
+          
+          if (!voiceSelect) {
+            console.log('Voice select element not found, likely settings section not visible');
+            return;
+          }
+          
+          // Load available voices
+          const loadVoicesIntoSelector = () => {
+            const voices = speechSynthesis.getVoices();
+            console.log('Loading voices into selector. Total voices:', voices.length);
+            
+            // Filter for Korean voices
+            const koreanVoices = voices.filter(voice => 
+              voice.lang.includes('ko') || 
+              voice.lang.includes('KR') || 
+              voice.lang.toLowerCase().includes('korean')
+            );
+            
+            console.log('Korean voices found:', koreanVoices.length, koreanVoices.map(v => v.name));
+            
+            // Clear existing options
+            voiceSelect.innerHTML = '<option value="">Default Voice</option>';
+            
+            // Add Korean voices first if available
+            if (koreanVoices.length > 0) {
+              const koreanGroup = document.createElement('optgroup');
+              koreanGroup.label = 'Korean Voices';
+              koreanVoices.forEach(voice => {
+                const option = document.createElement('option');
+                option.value = voice.name;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                koreanGroup.appendChild(option);
+              });
+              voiceSelect.appendChild(koreanGroup);
+            }
+            
+            // Add all other voices in a separate group
+            if (voices.length > 0) {
+              const allGroup = document.createElement('optgroup');
+              allGroup.label = koreanVoices.length > 0 ? 'Other Voices' : 'All Available Voices';
+              voices.filter(voice => !koreanVoices.includes(voice)).forEach(voice => {
+                const option = document.createElement('option');
+                option.value = voice.name;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                allGroup.appendChild(option);
+              });
+              voiceSelect.appendChild(allGroup);
+            }
+            
+            // Load saved voice preference
+            const savedVoice = localStorage.getItem('selectedVoice');
+            if (savedVoice) {
+              voiceSelect.value = savedVoice;
+            }
+          };
+          
+          // Try loading voices immediately
+          const initialVoices = speechSynthesis.getVoices();
+          if (initialVoices.length > 0) {
+            console.log('Voices available immediately');
+            loadVoicesIntoSelector();
+          } else {
+            console.log('Waiting for voices to load...');
+            // Force voice loading by creating a dummy utterance
+            const dummy = new SpeechSynthesisUtterance('');
+            speechSynthesis.speak(dummy);
+            speechSynthesis.cancel();
+          }
+          
+          // Also set up the event listener for when voices change
+          speechSynthesis.onvoiceschanged = () => {
+            console.log('Voices changed event fired');
+            loadVoicesIntoSelector();
+          };
+          
+          // Save voice selection
+          voiceSelect.addEventListener('change', () => {
+            localStorage.setItem('selectedVoice', voiceSelect.value);
+          });
+          
+          // Test voice button
+          if (testVoiceBtn) {
+            testVoiceBtn.addEventListener('click', () => {
+              playPlainAudio('안녕하세요. 이것은 음성 테스트입니다.');
+            });
+          }
+          
+          // Speech rate control
+          if (speechRateInput && speechRateValue) {
+            // Load saved rate
+            const savedRate = localStorage.getItem('speechRate') || '0.9';
+            speechRateInput.value = savedRate;
+            speechRateValue.textContent = savedRate;
+            
+            speechRateInput.addEventListener('input', () => {
+              const rate = speechRateInput.value;
+              speechRateValue.textContent = rate;
+              localStorage.setItem('speechRate', rate);
+            });
+          }
+        }
+        
+        // Initialize voice selector
+        window.initializeVoiceSelector();
+        
         // Load voices
         function loadVoices() {
           return new Promise((resolve) => {
@@ -1576,6 +1700,14 @@
           section.classList.remove('active');
           if (section.id === `${sectionId}-section`) {
             section.classList.add('active');
+            
+            // Re-initialize voice selector when settings section is shown
+            if (sectionId === 'settings' && typeof initializeVoiceSelector === 'function') {
+              console.log('Settings section opened, reinitializing voice selector');
+              setTimeout(() => {
+                initializeVoiceSelector();
+              }, 100);
+            }
           }
         });
       });
@@ -1757,13 +1889,18 @@
         return new Promise((resolve, reject) => {
           const utterance = new SpeechSynthesisUtterance(text);
           utterance.lang = 'ko-KR';
-          utterance.rate = 0.9;
+          utterance.rate = getSpeechRate();
           
-          // Get Korean voices if available
-          const voices = speechSynthesis.getVoices();
-          const koreanVoice = voices.find(voice => voice.lang.includes('ko'));
-          if (koreanVoice) {
-            utterance.voice = koreanVoice;
+          // Use selected voice or default Korean voice
+          const selectedVoice = getSelectedVoice();
+          if (selectedVoice) {
+            utterance.voice = selectedVoice;
+          } else {
+            const voices = speechSynthesis.getVoices();
+            const koreanVoice = voices.find(voice => voice.lang.includes('ko'));
+            if (koreanVoice) {
+              utterance.voice = koreanVoice;
+            }
           }
           
           utterance.onend = () => {
@@ -1786,6 +1923,29 @@
       }
     }
 
+    // Get selected voice from settings
+    function getSelectedVoice() {
+      const savedVoice = localStorage.getItem('selectedVoice');
+      if (!savedVoice) {
+        const voiceSelect = document.getElementById('voice-select');
+        if (!voiceSelect || !voiceSelect.value) return null;
+        return speechSynthesis.getVoices().find(voice => voice.name === voiceSelect.value);
+      }
+      
+      const voices = speechSynthesis.getVoices();
+      return voices.find(voice => voice.name === savedVoice);
+    }
+    
+    // Get speech rate from settings
+    function getSpeechRate() {
+      const savedRate = localStorage.getItem('speechRate');
+      if (savedRate) {
+        return parseFloat(savedRate);
+      }
+      const rateInput = document.getElementById('speech-rate');
+      return rateInput ? parseFloat(rateInput.value) : 0.9;
+    }
+    
     // Main audio play function
     function playAudio(text, button) {
       console.log('Starting playAudio for text:', text);
