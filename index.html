@@ -1726,8 +1726,16 @@
       
       try {
         await playAudioItem(nextAudio);
+        // Call onComplete callback if provided
+        if (nextAudio.onComplete) {
+          nextAudio.onComplete();
+        }
       } catch (error) {
         console.error('Error playing queued audio:', error);
+        // Call onError callback if provided
+        if (nextAudio.onError) {
+          nextAudio.onError(error);
+        }
       } finally {
         isPlaying = false;
         processAudioQueue(); // Process next item if any
@@ -1744,40 +1752,37 @@
     async function playAudioItem(audioData) {
       const { text, button } = audioData;
       
-      try {
-        // Get audio element from pool
-        const audioEntry = getAudioElement();
-        const audio = audioEntry.element;
-        
-        // Setup audio URL with CORS proxy
-        const encodedText = encodeURIComponent(text);
-        const audioUrl = `https://cors-anywhere.herokuapp.com/https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
-        
+      // Use Web Speech API as primary method
+      if ('speechSynthesis' in window) {
         return new Promise((resolve, reject) => {
-          audio.oncanplaythrough = () => {
-            audio.play().catch(error => {
-              console.error('Audio playback failed:', error);
-              reject(error);
-            });
-          };
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'ko-KR';
+          utterance.rate = 0.9;
           
-          audio.onended = () => {
-            releaseAudioElement(audioEntry);
+          // Get Korean voices if available
+          const voices = speechSynthesis.getVoices();
+          const koreanVoice = voices.find(voice => voice.lang.includes('ko'));
+          if (koreanVoice) {
+            utterance.voice = koreanVoice;
+          }
+          
+          utterance.onend = () => {
+            console.log('Speech synthesis completed');
             resolve();
           };
           
-          audio.onerror = (error) => {
-            console.error('Audio loading failed:', error);
-            releaseAudioElement(audioEntry);
+          utterance.onerror = (error) => {
+            console.error('Speech synthesis failed:', error);
             reject(error);
           };
           
-          // Load the audio
-          audio.src = audioUrl;
+          // Cancel any ongoing speech and speak
+          speechSynthesis.cancel();
+          speechSynthesis.speak(utterance);
         });
-      } catch (error) {
-        console.error('Audio playback failed:', error);
-        return tryFallbackMethods(text, button);
+      } else {
+        console.error('Web Speech API not available');
+        return Promise.reject('No TTS method available');
       }
     }
 
@@ -1824,32 +1829,9 @@
           resetButton();
         }
       });
-      
-      audio.onerror = (e) => {
-        console.error('Audio playback failed:', e);
-        // Create hidden iframe for audio
-        console.log('Trying iframe method...');
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.onload = () => {
-          console.log('Audio iframe loaded');
-          setTimeout(() => {
-            document.body.removeChild(iframe);
-            resetButton();
-          }, 2000); // Give enough time for audio to play
-        };
-        
-        iframe.onerror = () => {
-          console.error('Iframe failed, trying Web Speech API...');
-          document.body.removeChild(iframe);
-          tryWebSpeech();
-        };
-        
-        iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
-        document.body.appendChild(iframe);
-      };
-      
-      function tryWebSpeech() {
+    }
+    
+    function tryWebSpeech() {
         if ('speechSynthesis' in window) {
           console.log('Trying Web Speech API...');
           const utterance = new SpeechSynthesisUtterance(text);
@@ -1874,33 +1856,6 @@
           console.error('No audio playback method available');
           resetButton();
         }
-      }
-      
-      // Try to play the audio
-      console.log('Attempting to play audio...');
-      audio.play().catch(error => {
-        console.error('Error playing audio:', error);
-        // Try iframe method
-        console.log('Audio failed, trying iframe...');
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.onload = () => {
-          console.log('Audio iframe loaded');
-          setTimeout(() => {
-            document.body.removeChild(iframe);
-            resetButton();
-          }, 2000); // Give enough time for audio to play
-        };
-        
-        iframe.onerror = () => {
-          console.error('Iframe failed, trying Web Speech API...');
-          document.body.removeChild(iframe);
-          tryWebSpeech();
-        };
-        
-        iframe.src = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=ko-KR&client=tw-ob&total=${encodeURIComponent(text.length)}`;
-        document.body.appendChild(iframe);
-        });
     }
     
     // Separate function for playing audio without button UI updates
@@ -3901,8 +3856,6 @@
       } else {
         console.log('Some data handler elements not found, skipping setup');
       }
-      
-      document.getElementById('import-file').addEventListener('change', importProgress);
     }
     
     function exportProgress() {
@@ -4631,7 +4584,7 @@
           </div>
           <div class="quiz-options">
             ${allOptions.map((word, index) => `
-              <button class="quiz-option" onclick="checkAnswer(${index}, '${currentWord.english.replace(/'/g, "\\'")}')"
+              <button class="quiz-option" onclick="checkAnswer(${index}, '${currentWord.english.replace(/'/g, "\\'")}')"}>
                 ${word.english}
               </button>
             `).join('')}
